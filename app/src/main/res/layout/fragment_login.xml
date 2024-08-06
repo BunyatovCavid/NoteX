@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragments.LoginFragment"
+    android:padding="30dp">
+
+    <LinearLayout
+        android:id="@+id/logintoplayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <ImageView
+            android:id="@+id/loginbackbutton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/baseline_arrow_back_24"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Log In"
+            android:textSize="20dp"
+            />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/loginwelcomelayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logintoplayout"
+        android:layout_marginTop="60dp"
+        >
+    <TextView
+        android:id="@+id/loginwelcometext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome back!"
+        android:textSize="40dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:layout_below="@id/loginwelcometext"
+        android:text="Please login with your crediantials"
+        />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/logininputlayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loginwelcomelayout"
+        android:layout_marginTop="100dp">
+
+        <EditText
+            android:id="@+id/loginemailinput"
+            android:layout_width="343dp"
+            android:layout_height="42dp"
+            android:hint="Email Address"
+            android:drawableLeft="@drawable/baseline_email_24"
+            android:padding="5dp"
+            android:background="@drawable/inpt1"
+            />
+
+        <EditText
+            android:id="@+id/loginpasswordinput"
+            android:layout_width="343dp"
+            android:layout_height="42dp"
+            android:hint="Password"
+            android:drawableLeft="@drawable/baseline_lock_outline_24"
+            android:layout_below="@+id/loginemailinput"
+            android:layout_marginTop="15dp"
+            android:padding="5dp"
+            android:background="@drawable/inpt1"
+            />
+
+        <TextView
+            android:id="@+id/loginforgotpassText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="Forgot Password?"
+            android:textSize="18dp"
+            android:layout_below="@id/loginpasswordinput"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/loginaccountlayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logininputlayout"
+        android:layout_marginTop="80dp"
+        >
+        <TextView
+            android:id="@+id/logindontaccounttext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Don’t have an account yet ?"
+            android:textSize="18dp"
+            />
+
+        <TextView
+            android:id="@+id/logincreateaccounttext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:textColor="#FFB347"
+            android:layout_below="@id/logindontaccounttext"
+            android:text="Create an account here"
+            />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/loginLogInbutton"
+        android:layout_width="343dp"
+        android:layout_height="52dp"
+        android:background="@drawable/btn1"
+        android:text="LOG IN"
+        android:textColor="@color/white"
+        android:textSize="18dp"
+        android:layout_below="@id/loginaccountlayout"
+        android:layout_marginTop="90dp"
+        />
+
+</RelativeLayout>

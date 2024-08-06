@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/welcomepagejpg"
+    android:padding="40dp"
+    tools:context=".ui.fragments.WelcomingFragment">
+
+
+    <TextView
+        android:id="@+id/welcomingWelcometext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:text="Welcome NoteX"
+        android:textColor="#FF3D00"
+        android:textSize="40dp"
+        android:textStyle="bold"
+        app:flow_horizontalAlign="center"
+        app:flow_verticalAlign="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.209"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/welcomingAuthLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:flow_verticalAlign="bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/welcomingRegisterButton"
+            android:layout_width="343dp"
+            android:layout_height="52dp"
+            android:background="@drawable/btn1"
+            android:text="Create Account"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            android:layout_marginBottom="10dp"
+            android:padding="15dp"
+            />
+        <Button
+            android:id="@+id/welcomingLoginButton"
+            android:layout_width="343dp"
+            android:layout_height="52dp"
+            android:background="@drawable/btn2"
+            android:text="LOG IN"
+            android:textColor="@color/base"
+            android:textSize="18dp"
+            android:padding="15dp"
+            android:layout_below="@id/welcomingRegisterButton"
+            />
+
+    </RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
