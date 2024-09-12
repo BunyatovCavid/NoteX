@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.LoginFragment"
     android:padding="30dp">
 
@@ -58,7 +59,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/loginwelcomelayout"
-        android:layout_marginTop="100dp">
+        android:layout_marginTop="100dp"
+        >
 
         <EditText
             android:id="@+id/loginemailinput"
@@ -70,17 +72,27 @@
             android:background="@drawable/inpt1"
             />
 
-        <EditText
-            android:id="@+id/loginpasswordinput"
-            android:layout_width="343dp"
-            android:layout_height="42dp"
-            android:hint="Password"
-            android:drawableLeft="@drawable/baseline_lock_outline_24"
-            android:layout_below="@+id/loginemailinput"
-            android:layout_marginTop="15dp"
-            android:padding="5dp"
-            android:background="@drawable/inpt1"
-            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/logintextinputlayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="172dp"
+            app:passwordToggleEnabled="true"
+            android:layout_below="@id/loginemailinput"
+            android:layout_marginTop="15dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/loginpasswordinput"
+                android:layout_width="343dp"
+                android:layout_height="42dp"
+                android:hint="Password"
+                android:drawableLeft="@drawable/baseline_lock_outline_24"
+                android:padding="5dp"
+                android:background="@drawable/inpt1"
+                android:inputType="textPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/loginforgotpassText"
@@ -89,7 +101,7 @@
             android:gravity="right"
             android:text="Forgot Password?"
             android:textSize="18dp"
-            android:layout_below="@id/loginpasswordinput"
+            android:layout_below="@id/logintextinputlayout"
             android:layout_alignParentRight="true"
             android:layout_marginTop="10dp"
             />

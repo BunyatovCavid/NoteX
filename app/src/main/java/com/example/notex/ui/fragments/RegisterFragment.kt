@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import com.example.notex.Independents.BaseDatas
 import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
 import com.example.notex.databinding.FragmentLoginBinding
@@ -45,24 +44,30 @@ class RegisterFragment : Fragment() {
 
         binding.registerbackbutton.setOnClickListener(){
             clearInputs()
-            replacefrg.replace(this, WelcomingFragment())
+            replacefrg.replace(this, R.id.action_registerFragment_to_welcomingFragment)
         }
 
         binding.registerLoginaccounttext.setOnClickListener{
-            replacefrg.replace(this, LoginFragment())
+            replacefrg.replace(this, R.id.action_registerFragment_to_loginFragment2)
         }
 
+
+
         binding.registerRegisterbutton.setOnClickListener(){
-            if(!binding.registeremailinput.text.isNullOrEmpty() && !binding.registerpasswordinput.text.isNullOrEmpty()  && !binding.registerRepasswordinput.text.isNullOrEmpty()) {
-              if(binding.registerpasswordinput.text.toString() == binding.registerRepasswordinput.text.toString()){
-                  authViewModel.singUp(
-                    binding.registeremailinput.text.toString(),
-                    binding.registerpasswordinput.text.toString(),
-                    this
-                )
-                if (BaseDatas.checkRegister) {
-                    clearInputs()
-                }
+            val email = binding.registeremailinput.text.toString()
+            val password = binding.registerpasswordinput.text.toString()
+            val rePassword = binding.registerRepasswordinput.text.toString()
+
+            if (email.isNotEmpty() && password.isNotEmpty() && rePassword.isNotEmpty()) {
+                if (password == rePassword) {
+                    authViewModel.signUp(email, password)
+                    authViewModel.signUpResult.observe(viewLifecycleOwner, { result ->
+                        Toast.makeText(context, result, Toast.LENGTH_LONG).show()
+                        if (result == "Successful") {
+                            clearInputs()
+                            replacefrg.replace(this, R.id.action_registerFragment_to_homeFragment)
+                        }
+                    })
              }
               else
                Toast.makeText(context, "Password and Re-Password don't equal.", Toast.LENGTH_LONG).show()
@@ -82,12 +87,14 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onStop() {
+        super.onStop()
         (activity as? MainActivity)?.let {
             it.findViewById<BottomNavigationView>(R.id.bottomNav).visibility = View.VISIBLE
         }
     }
+
+
 
 
 
@@ -98,8 +105,8 @@ class RegisterFragment : Fragment() {
 
     private fun clearInputs(){
         binding.registeremailinput.text.clear()
-        binding.registerpasswordinput.text.clear()
-        binding.registerRepasswordinput.text.clear()
+        binding.registerpasswordinput.text?.clear()
+        binding.registerRepasswordinput.text?.clear()
     }
 
 

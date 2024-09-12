@@ -43,10 +43,14 @@ class ForgotPasswordFragment : DialogFragment() {
         binding.forgotsendbutton.setOnClickListener{
             if (!binding.forgotemailinput.text.isNullOrEmpty())
             {
-                authViewModel.resetPassword(email = binding.forgotemailinput.text.toString())
+                val email =binding.forgotemailinput.text.toString()
+
+                authViewModel.resetPassword(email)
                 binding.forgotemailinput.text.clear()
                 dismiss()
-                Toast.makeText(context, "Reset link send you.", Toast.LENGTH_LONG).show()
+                authViewModel.resetPasswordResult.observe(viewLifecycleOwner, { result ->
+                    Toast.makeText(context, result, Toast.LENGTH_LONG).show()
+            })
             }
             else
             {

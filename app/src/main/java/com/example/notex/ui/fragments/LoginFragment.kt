@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import com.example.notex.Independents.BaseDatas
 import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
 import com.example.notex.databinding.FragmentLoginBinding
@@ -51,28 +50,38 @@ class LoginFragment : Fragment() {
 
         binding.loginbackbutton.setOnClickListener(){
             clearInputs()
-            replacefrg.replace(this, WelcomingFragment())
+            replacefrg.replace(this, R.id.action_loginFragment_to_welcomingFragment)
           //  getView()?.let { it1 -> Navigation.findNavController(it1).navigate(R.layout.fragment_welcoming) }
         }
 
-        binding.loginLogInbutton.setOnClickListener(){
-            if(!binding.loginemailinput.text.isNullOrEmpty() && !binding.loginpasswordinput.text.isNullOrEmpty()) {
-                authViewModel.logIn(
-                    binding.loginemailinput.text.toString(),
-                    binding.loginpasswordinput.text.toString(),
-                    this
-                )
-                if (BaseDatas.checkLogin) {
-                    clearInputs()
-                }
-            }
-            else
+
+        authViewModel.checkSavedUser()
+
+        binding.loginLogInbutton.setOnClickListener {
+            val email = binding.loginemailinput.text.toString()
+            val password = binding.loginpasswordinput.text.toString()
+
+            if (email.isNotEmpty() && password.isNotEmpty()) {
+                authViewModel.logIn(email, password)
+
+                authViewModel.loginResult.observe(viewLifecycleOwner, { result ->
+                    Toast.makeText(context, result, Toast.LENGTH_LONG).show()
+
+                    if (result == "Welcome") {
+                        replacefrg.replace(this, R.id.action_loginFragment_to_homeFragment)
+                    }
+                })
+
+
+            } else {
                 Toast.makeText(context, "You can't send empty field", Toast.LENGTH_LONG).show()
+            }
         }
+
 
         binding.logincreateaccounttext.setOnClickListener() {
             clearInputs()
-            replacefrg.replace(this, RegisterFragment())
+            replacefrg.replace(this, R.id.action_loginFragment_to_registerFragment2)
         }
     }
 
@@ -83,13 +92,12 @@ class LoginFragment : Fragment() {
         }
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onStop() {
+        super.onStop()
         (activity as? MainActivity)?.let {
             it.findViewById<BottomNavigationView>(R.id.bottomNav).visibility = View.VISIBLE
         }
     }
-
 
 
     override fun onDestroyView() {
@@ -99,7 +107,7 @@ class LoginFragment : Fragment() {
 
     private fun clearInputs(){
         binding.loginemailinput.text.clear()
-        binding.loginpasswordinput.text.clear()
+        binding.loginpasswordinput.text?.clear()
     }
 
 }

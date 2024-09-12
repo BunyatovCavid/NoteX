@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.notex.R
+import com.example.notex.ui.MainActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class SetUpProfileFragment : Fragment() {
@@ -16,6 +18,14 @@ class SetUpProfileFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_set_up_profile, container, false)
+    }
+
+
+    override fun onStop() {
+        super.onStop()
+        (activity as? MainActivity)?.let {
+            it.findViewById<BottomNavigationView>(R.id.bottomNav).visibility = View.VISIBLE
+        }
     }
 
 }

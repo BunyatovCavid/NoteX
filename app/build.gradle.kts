@@ -45,9 +45,22 @@ android {
 
 }
 
+
 dependencies {
 
     //implementation("com.android.support:appcompat-v7:23.2.0")
+
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4")
+
+    kapt("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.room:room-runtime:2.6.1")
+    implementation ("androidx.room:room-ktx:2.6.1")
+    annotationProcessor("androidx.room:room-compiler:2.6.1")
+
+    implementation ("androidx.fragment:fragment-ktx:1.7.0")
+
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.7.0")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.7.0")
 
     implementation("androidx.constraintlayout:constraintlayout:2.2.0-alpha13")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha13")

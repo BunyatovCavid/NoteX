@@ -1,27 +1,42 @@
 package com.example.notex.ui
 
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import com.example.notex.Independents.BaseDatas
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
+import androidx.room.Room
 import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
+import com.example.notex.data.Database.AppDatabase
 import com.example.notex.databinding.ActivityMainBinding
 import com.example.notex.ui.fragments.LoginFragment
 import com.example.notex.ui.fragments.RegisterFragment
 import com.example.notex.ui.fragments.SetUpProfileFragment
 import com.example.notex.ui.fragments.WelcomingFragment
+import com.example.notex.viewmodels.authorizationViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val authViewModel: authorizationViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,21 +51,28 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        replaceFragment(WelcomingFragment())
+        setSupportActionBar(binding.toolbar)
 
-        binding.bottomNav.setOnClickListener{
-            when(it.id)
-            {
-                R.id.home -> replaceFragment(SetUpProfileFragment())
+
+
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.loginFragment, R.id.homeFragment, R.id.registerFragment, R.id.welcomingFragment,
+            R.id.forgotPasswordFragment, R.id.setUpProfileFragment))
+        setupActionBarWithNavController(navController, appBarConfiguration)
+
+        binding.bottomNav.setupWithNavController(navController)
+
+        this.lifecycleScope.launch {
+            authViewModel.checkSavedUser()
+            authViewModel.loginResult.observe(this@MainActivity) { result ->
+                when (result) {
+                    "Welcome" -> navController.graph.setStartDestination(R.id.homeFragment)
+                    else -> navController.graph.setStartDestination(R.id.welcomingFragment)
+                }
             }
         }
 
-    }
-
-    private  fun replaceFragment(fragment: Fragment){
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container,fragment)
-        transaction.commit()
     }
 
 

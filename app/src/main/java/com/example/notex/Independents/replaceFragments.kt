@@ -11,13 +11,14 @@ import com.example.notex.R
 
 class replaceFragments {
 
-     fun replace(f:Fragment, g:Fragment)=
-      f.parentFragmentManager.beginTransaction().replace(R.id.container, g).commit()
+     fun replace(f:Fragment, g:Int)=
+         f.findNavController().navigate(g)
+//      f.parentFragmentManager.beginTransaction().replace(R.id.container, g).commit()
 
-    fun replace(f: Fragment, g:Fragment, b:Bundle)
+    fun replace(f: Fragment, g:Int, b:Bundle)
     {
         f.arguments = b
-        f.parentFragmentManager.beginTransaction().replace(R.id.container, g).commit()
+        f.findNavController().navigate(g)
     }
 
 }

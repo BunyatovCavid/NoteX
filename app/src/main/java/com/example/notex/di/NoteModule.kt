@@ -1,5 +1,6 @@
 package com.example.notex.di
 
+import com.example.notex.data.Database.Dao.LoginDao
 import com.example.notex.data.interfaces.authorizationInterface
 import com.example.notex.data.repositories.authorizationRepository
 import dagger.Module
@@ -15,8 +16,11 @@ object NoteModule {
 
     @Provides
     @Singleton
-    fun getAuth():authorizationInterface=
-         authorizationRepository()
+    fun getAuthRepository(loginDao: LoginDao): authorizationInterface {
+        return authorizationRepository(loginDao)
+    }
+
+
 
 
 }
