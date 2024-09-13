@@ -1,5 +1,7 @@
 package com.example.notex.ui
 
+import android.content.Context
+import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Bundle
@@ -36,7 +38,7 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val authViewModel: authorizationViewModel by viewModels()
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,31 +52,19 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-
         setSupportActionBar(binding.toolbar)
 
-
-
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
+        navController = navHostFragment.navController
+
         val appBarConfiguration = AppBarConfiguration(setOf(R.id.loginFragment, R.id.homeFragment, R.id.registerFragment, R.id.welcomingFragment,
-            R.id.forgotPasswordFragment, R.id.setUpProfileFragment))
+            R.id.forgotPasswordFragment, R.id.setUpProfileFragment, R.id.onBoardingFragment, R.id.noteFragment))
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         binding.bottomNav.setupWithNavController(navController)
 
-        this.lifecycleScope.launch {
-            authViewModel.checkSavedUser()
-            authViewModel.loginResult.observe(this@MainActivity) { result ->
-                when (result) {
-                    "Welcome" -> navController.graph.setStartDestination(R.id.homeFragment)
-                    else -> navController.graph.setStartDestination(R.id.welcomingFragment)
-                }
-            }
-        }
-
     }
 
-
-
 }
+
+

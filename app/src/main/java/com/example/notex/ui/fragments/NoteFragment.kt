@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.example.notex.R
 
 
-class DontConnectionWifi : Fragment() {
+class NoteFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +20,7 @@ class DontConnectionWifi : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dont_connection_wifi, container, false)
+        return inflater.inflate(R.layout.fragment_note, container, false)
     }
 
 }

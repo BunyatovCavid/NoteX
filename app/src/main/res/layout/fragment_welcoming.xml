@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/welcomepagejpg"
+    android:background="@drawable/background1"
     android:padding="40dp"
     tools:context=".ui.fragments.WelcomingFragment">
 
@@ -13,7 +13,7 @@
         android:id="@+id/welcomingWelcometext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="24dp"
         android:text="Welcome NoteX"
         android:textColor="#FF3D00"
         android:textSize="40dp"
@@ -21,7 +21,6 @@
         app:flow_horizontalAlign="center"
         app:flow_verticalAlign="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.209"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

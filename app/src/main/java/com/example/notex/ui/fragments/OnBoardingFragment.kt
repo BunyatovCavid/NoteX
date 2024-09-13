@@ -1,56 +1,73 @@
 package com.example.notex.ui.fragments
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation.findNavController
 import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
-import com.example.notex.databinding.FragmentRegisterBinding
-import com.example.notex.databinding.FragmentWelcomingBinding
 import com.example.notex.ui.MainActivity
 import com.example.notex.viewmodels.authorizationViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class WelcomingFragment : Fragment() {
+class OnBoardingFragment : Fragment() {
 
-    private var _binding: FragmentWelcomingBinding? = null
-    private val binding get() = _binding!!
-
+    private val authViewModel: authorizationViewModel by viewModels()
     private lateinit var replacefrg: replaceFragments
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        _binding = FragmentWelcomingBinding.inflate(inflater, container, false)
-        val view = binding.root
+
+
+        val view = inflater.inflate(R.layout.fragment_on_boarding, container, false)
+
         return view
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         replacefrg = replaceFragments()
+        var check:String = "noLogin"
 
 
-        binding.welcomingLoginButton.setOnClickListener{
-            replacefrg.replace(this,R.id.action_welcomingFragment_to_loginFragment)
+        viewLifecycleOwner.lifecycleScope.launch {
+            authViewModel.checkSavedUser()
+            authViewModel.loginResult.observe(viewLifecycleOwner) { result ->
+                if (result == "Welcome") {
+                    check = result
+                    replacefrg.replace(
+                        this@OnBoardingFragment,
+                        R.id.action_onBoardingFragment_to_homeFragment
+                    )
+                }
+            }
         }
 
-        binding.welcomingRegisterButton.setOnClickListener{
-            replacefrg.replace(this, R.id.action_welcomingFragment_to_registerFragment)
-        }
+        Handler(Looper.getMainLooper()).postDelayed({
+                if(check =="noLogin")
+                {
+                    replacefrg.replace(this@OnBoardingFragment, R.id.action_onBoardingFragment_to_welcomingFragment)
+                }
+        }, 3000)
     }
 
     override fun onResume() {
@@ -67,14 +84,6 @@ class WelcomingFragment : Fragment() {
             it.findViewById<BottomNavigationView>(R.id.bottomNav).visibility = View.VISIBLE
         }
     }
-
-
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
 
 
 }
