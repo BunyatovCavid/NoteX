@@ -44,14 +44,26 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNav.setupWithNavController(navController)
 
+        binding.bottomNav.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.noteFragment -> {
+                    navController.navigate(R.id.noteFragment)
+                    true
+                }
+                R.id.homeFragment -> {
+                    navController.navigate(R.id.homeFragment)
+                    true
+                }
+                else -> false
+            }
+        }
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.noteFragment, R.id.newNoteFragment, R.id.updateNoteFragment -> {
-                    // Bu fragmentlərdə toolbar gizlədilir
                     binding.toolbar.visibility = View.VISIBLE
                 }
                 else -> {
-                    // Digər fragmentlərdə toolbar göstərilir
                     binding.toolbar.visibility = View.INVISIBLE
                 }
             }
