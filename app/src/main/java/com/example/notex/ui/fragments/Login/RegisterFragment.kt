@@ -1,4 +1,4 @@
-package com.example.notex.ui.fragments
+package com.example.notex.ui.fragments.Login
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.fragment.app.viewModels
 import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
-import com.example.notex.databinding.FragmentLoginBinding
 import com.example.notex.databinding.FragmentRegisterBinding
 import com.example.notex.ui.MainActivity
 import com.example.notex.viewmodels.authorizationViewModel

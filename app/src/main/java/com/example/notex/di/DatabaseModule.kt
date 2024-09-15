@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.example.notex.data.Database.AppDatabase
 import com.example.notex.data.Database.Dao.LoginDao
+import com.example.notex.data.Database.Dao.NoteDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,4 +31,11 @@ object DatabaseModule {
     fun provideLoginDao(db: AppDatabase): LoginDao {
         return db.loginDao()
     }
+
+    @Provides
+    fun provideNoteDao(db: AppDatabase): NoteDao {
+        return db.noteDao()
+    }
+
+
 }

@@ -1,4 +1,4 @@
-package com.example.notex.ui.fragments
+package com.example.notex.ui.fragments.Login
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.fragment.app.viewModels
 import com.example.notex.Independents.replaceFragments
 import com.example.notex.R

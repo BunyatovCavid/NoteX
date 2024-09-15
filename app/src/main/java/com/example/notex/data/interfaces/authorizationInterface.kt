@@ -1,7 +1,6 @@
 package com.example.notex.data.interfaces
 
-import androidx.fragment.app.Fragment
-import com.example.notex.data.Entities.LoginEntity
+import com.example.notex.data.models.LoginEntity
 import com.google.firebase.auth.FirebaseAuth
 
 interface authorizationInterface {

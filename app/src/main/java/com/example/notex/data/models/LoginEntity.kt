@@ -1,4 +1,4 @@
-package com.example.notex.data.Entities
+package com.example.notex.data.models
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

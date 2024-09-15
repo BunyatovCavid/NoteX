@@ -4,6 +4,8 @@ plugins {
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
     alias(libs.plugins.google.gms.google.services)
+    id ("kotlin-parcelize")
+    id ("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -61,6 +63,7 @@ dependencies {
 
     implementation ("androidx.navigation:navigation-fragment-ktx:2.7.0")
     implementation ("androidx.navigation:navigation-ui-ktx:2.7.0")
+    implementation ("androidx.navigation:navigation-dynamic-features-fragment:2.3.4")
 
     implementation("androidx.constraintlayout:constraintlayout:2.2.0-alpha13")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha13")
@@ -76,6 +79,8 @@ dependencies {
     implementation(libs.androidx.annotation)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
+
     kapt("com.google.dagger:hilt-android-compiler:2.47")
 
 

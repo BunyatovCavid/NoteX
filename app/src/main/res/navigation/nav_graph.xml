@@ -7,7 +7,7 @@
     >
     <fragment
         android:id="@+id/welcomingFragment"
-        android:name="com.example.notex.ui.fragments.WelcomingFragment"
+        android:name="com.example.notex.ui.fragments.Login.WelcomingFragment"
         android:label="fragment_welcoming"
         tools:layout="@layout/fragment_welcoming" >
         <action
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.notex.ui.fragments.LoginFragment"
+        android:name="com.example.notex.ui.fragments.Login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.notex.ui.fragments.RegisterFragment"
+        android:name="com.example.notex.ui.fragments.Login.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action
@@ -55,7 +55,7 @@
     </fragment>
     <dialog
         android:id="@+id/forgotPasswordFragment"
-        android:name="com.example.notex.ui.fragments.ForgotPasswordFragment"
+        android:name="com.example.notex.ui.fragments.Login.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
         tools:layout="@layout/fragment_forgot_password" >
         <action
@@ -78,7 +78,7 @@
         tools:layout="@layout/fragment_set_up_profile" />
     <fragment
         android:id="@+id/onBoardingFragment"
-        android:name="com.example.notex.ui.fragments.OnBoardingFragment"
+        android:name="com.example.notex.ui.fragments.Login.OnBoardingFragment"
         android:label="fragment_on_boarding"
         tools:layout="@layout/fragment_on_boarding" >
         <action
@@ -90,7 +90,57 @@
     </fragment>
     <fragment
         android:id="@+id/noteFragment"
-        android:name="com.example.notex.ui.fragments.NoteFragment"
-        android:label="fragment_note"
-        tools:layout="@layout/fragment_note" />
+        android:name="com.example.notex.ui.fragments.Notes.NoteFragment"
+        android:label="Note"
+        tools:layout="@layout/fragment_note" >
+        <action
+            android:id="@+id/action_noteFragment_to_newNoteFragment"
+            app:destination="@id/newNoteFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_left"
+            />
+        <action
+            android:id="@+id/action_noteFragment_to_updateNoteFragment"
+            app:destination="@id/updateNoteFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_left"
+            />
+        <action
+            android:id="@+id/action_noteFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newNoteFragment"
+        android:name="com.example.notex.ui.fragments.Notes.NewNoteFragment"
+        android:label="New Note"
+        tools:layout="@layout/fragment_new_note" >
+        <action
+            android:id="@+id/action_newNoteFragment_to_noteFragment"
+            app:destination="@id/noteFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_left"/>
+    </fragment>
+    <fragment
+        android:id="@+id/updateNoteFragment"
+        android:name="com.example.notex.ui.fragments.Notes.UpdateNoteFragment"
+        android:label="Update Note"
+        tools:layout="@layout/fragment_update_note" >
+        <action
+            android:id="@+id/action_updateNoteFragment_to_noteFragment"
+            app:destination="@id/noteFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_left"/>
+        <argument
+            android:name="note"
+            app:argType="com.example.notex.data.models.Note"
+            app:nullable="true" />
+    </fragment>
 </navigation>

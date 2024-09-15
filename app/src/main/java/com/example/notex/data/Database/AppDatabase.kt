@@ -2,14 +2,17 @@ package com.example.notex.data.Database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.example.notex.data.Entities.LoginEntity
+import com.example.notex.data.models.LoginEntity
 import com.example.notex.data.Database.Dao.LoginDao
+import com.example.notex.data.Database.Dao.NoteDao
+import com.example.notex.data.models.Note
 
-@Database(entities = [LoginEntity::class], version = 1)
+@Database(entities = [LoginEntity::class, Note::class], version = 2, exportSchema = false )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun loginDao(): LoginDao
+    abstract fun noteDao(): NoteDao
 
     companion object{
-        const val Name = "login-database"
+        const val Name = "notex-database"
     }
 }

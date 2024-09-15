@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background1"
     android:padding="40dp"
-    tools:context=".ui.fragments.WelcomingFragment">
+    tools:context=".ui.fragments.Login.WelcomingFragment">
 
 
     <TextView
