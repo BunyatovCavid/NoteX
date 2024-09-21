@@ -85,7 +85,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/loginpasswordinput"
-                android:layout_width="343dp"
+                android:layout_width="330dp"
                 android:layout_height="42dp"
                 android:hint="Password"
                 android:drawableLeft="@drawable/baseline_lock_outline_24"

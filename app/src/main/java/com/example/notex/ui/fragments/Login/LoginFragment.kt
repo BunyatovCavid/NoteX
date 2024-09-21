@@ -18,7 +18,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginFragment : Fragment() {
+class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
@@ -46,7 +46,6 @@ class LoginFragment : Fragment() {
         binding.loginforgotpassText.setOnClickListener(){
             val showpopUp = ForgotPasswordFragment()
             fragmentManager?.let { it1 -> showpopUp.show(it1,"Hello") }
-
         }
 
         binding.loginbackbutton.setOnClickListener(){

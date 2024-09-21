@@ -94,7 +94,6 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
             }
             setNegativeButton("CANCEL", null)
         }.create().show()
-
     }
 
 

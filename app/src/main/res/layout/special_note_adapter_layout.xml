@@ -36,14 +36,6 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <View
-                    android:id="@+id/ib_color"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="8dp"
-                    android:gravity="center" />
-
             </LinearLayout>
 
             <TextView

@@ -64,12 +64,18 @@
     </dialog>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.notex.ui.fragments.HomeFragment"
+        android:name="com.example.notex.ui.fragments.SpecialNotes.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_noteFragment"
             app:destination="@id/noteFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_categorieFragment"
+            app:destination="@id/categorieFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_newSpeacialNote"
+            app:destination="@id/newSpeacialNote" />
     </fragment>
     <fragment
         android:id="@+id/setUpProfileFragment"
@@ -142,5 +148,60 @@
             android:name="note"
             app:argType="com.example.notex.data.models.Note"
             app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/categorieFragment"
+        android:name="com.example.notex.ui.fragments.Categories.CategorieFragment"
+        android:label="fragment_categorie"
+        tools:layout="@layout/fragment_categorie" >
+        <action
+            android:id="@+id/action_categorieFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_categorieFragment_to_newCategoryFragment"
+            app:destination="@id/newCategoryFragment" />
+        <action
+            android:id="@+id/action_categorieFragment_to_detailCategoryFragment"
+            app:destination="@id/detailCategoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newCategoryFragment"
+        android:name="com.example.notex.ui.fragments.Categories.NewCategoryFragment"
+        android:label="fragment_new_category"
+        tools:layout="@layout/fragment_new_category" >
+        <action
+            android:id="@+id/action_newCategoryFragment_to_categorieFragment"
+            app:destination="@id/categorieFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newSpeacialNote"
+        android:name="com.example.notex.ui.fragments.SpecialNotes.NewSpeacialNote"
+        android:label="fragment_new_speacial_note"
+        tools:layout="@layout/fragment_new_speacial_note" >
+        <action
+            android:id="@+id/action_newSpeacialNote_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/useCategoryFragment"
+        android:name="com.example.notex.ui.fragments.SpecialNotes.UseCategoryFragment"
+        android:label="fragment_use_category"
+        tools:layout="@layout/fragment_use_category" >
+        <action
+            android:id="@+id/action_useCategoryFragment_to_newSpeacialNote"
+            app:destination="@id/newSpeacialNote" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailCategoryFragment"
+        android:name="com.example.notex.ui.fragments.Categories.DetailCategoryFragment"
+        android:label="fragment_detail_category"
+        tools:layout="@layout/fragment_detail_category" >
+        <action
+            android:id="@+id/action_detailCategoryFragment_to_categorieFragment"
+            app:destination="@id/categorieFragment" />
+        <argument
+            android:name="category"
+            app:argType="com.example.notex.data.models.CategoryModel"
+            />
     </fragment>
 </navigation>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragments.Categories.DetailCategoryFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <EditText
+            android:id="@+id/categoryTitlenew"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:padding="5dp"
+            android:hint="Category Title"
+            android:background="@drawable/inpt1"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/categoryTitlenew"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/categoryCheck1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/categoryTitlenew"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/categoryCheck1Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:hint="Field Title"
+                    android:padding="5dp"
+                    android:background="@drawable/inpt1"/>
+
+                <TextView
+                    android:id="@+id/textCheck1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/inpt1"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/categoryCheck2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/categoryCheck2Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:hint="Field Title"
+                    android:padding="5dp"
+                    android:background="@drawable/inpt1"/>
+
+                <TextView
+                    android:id="@+id/textCheck2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/inpt1"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/categoryCheck3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/categoryCheck3Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:hint="Field Title"
+                    android:padding="5dp"
+                    android:background="@drawable/inpt1"/>
+
+                <TextView
+                    android:id="@+id/textCheck3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/inpt1"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/categoryCheck4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/categoryCheck4Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:hint="Field Title"
+                    android:padding="5dp"
+                    android:background="@drawable/inpt1"/>
+
+                <TextView
+                    android:id="@+id/textCheck4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/inpt1"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/categoryCheck5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/categoryCheck5Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:hint="Field Title"
+                    android:padding="5dp"
+                    android:background="@drawable/inpt1"/>
+
+                <TextView
+                    android:id="@+id/textCheck5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/inpt1"
+                    />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/categoryCheck6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/categoryCheck6Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:hint="Field Title"
+                    android:padding="5dp"
+                    android:background="@drawable/inpt1"/>
+
+                <TextView
+                    android:id="@+id/textCheck6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/inpt1"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/categoryCheck7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/categoryCheck7Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:hint="Field Title"
+                    android:padding="5dp"
+                    android:background="@drawable/inpt1"/>
+
+                <TextView
+                    android:id="@+id/textCheck7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/inpt1"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</ScrollView>

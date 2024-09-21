@@ -8,12 +8,13 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.example.notex.Independents.replaceFragments
+import com.example.notex.R
 import com.example.notex.databinding.FragmentForgotPasswordBinding
 import com.example.notex.viewmodels.authorizationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ForgotPasswordFragment : DialogFragment() {
+class ForgotPasswordFragment : DialogFragment(R.layout.fragment_forgot_password) {
 
 
     private var _binding: FragmentForgotPasswordBinding? = null

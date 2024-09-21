@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragments.Categories.NewCategoryFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <EditText
+            android:id="@+id/categoryTitlenew"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:padding="5dp"
+            android:hint="Category Title"
+            android:background="@drawable/inpt1"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/categoryTitlenew"
+            android:orientation="vertical">
+
+        <LinearLayout
+        android:id="@+id/categoryCheck1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+            android:layout_below="@id/categoryTitlenew"
+            android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/categoryCheck1Title"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="Field Title"
+            android:padding="5dp"
+            android:background="@drawable/inpt1"/>
+
+            <Spinner
+                android:id="@+id/spinnerCheck1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/inpt1"
+                />
+
+
+            <Button
+                android:id="@+id/deleteButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="right"
+                android:layout_marginTop="10dp"
+                android:text="Delete"
+                android:background="@drawable/btn3"
+                android:textColor="@android:color/white"/>
+    </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/categoryCheck2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/categoryCheck2Title"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="Field Title"
+                android:padding="5dp"
+                android:background="@drawable/inpt1"/>
+
+            <Spinner
+                android:id="@+id/spinnerCheck2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/inpt1"
+                />
+
+            <Button
+                android:id="@+id/deleteButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="right"
+                android:layout_marginTop="10dp"
+                android:text="Delete"
+                android:background="@drawable/btn3"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/categoryCheck3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/categoryCheck3Title"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="Field Title"
+                android:padding="5dp"
+                android:background="@drawable/inpt1"/>
+
+            <Spinner
+                android:id="@+id/spinnerCheck3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/inpt1"
+                />
+            <Button
+                android:id="@+id/deleteButton3"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="right"
+                android:layout_marginTop="10dp"
+                android:text="Delete"
+                android:background="@drawable/btn3"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/categoryCheck4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/categoryCheck4Title"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="Field Title"
+                android:padding="5dp"
+                android:background="@drawable/inpt1"/>
+
+            <Spinner
+                android:id="@+id/spinnerCheck4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/inpt1"
+                />
+
+            <Button
+                android:id="@+id/deleteButton4"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="right"
+                android:layout_marginTop="10dp"
+                android:text="Delete"
+                android:background="@drawable/btn3"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/categoryCheck5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/categoryCheck5Title"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="Field Title"
+                android:padding="5dp"
+                android:background="@drawable/inpt1"/>
+
+            <Spinner
+                android:id="@+id/spinnerCheck5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/inpt1"
+                />
+
+            <Button
+                android:id="@+id/deleteButton5"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="right"
+                android:layout_marginTop="10dp"
+                android:text="Delete"
+                android:background="@drawable/btn3"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/categoryCheck6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/categoryCheck6Title"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="Field Title"
+                android:padding="5dp"
+                android:background="@drawable/inpt1"/>
+
+            <Spinner
+                android:id="@+id/spinnerCheck6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/inpt1"
+                />
+
+            <Button
+                android:id="@+id/deleteButton6"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="right"
+                android:layout_marginTop="10dp"
+                android:text="Delete"
+                android:background="@drawable/btn3"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/categoryCheck7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/categoryCheck7Title"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="Field Title"
+                android:padding="5dp"
+                android:background="@drawable/inpt1"/>
+
+            <Spinner
+                android:id="@+id/spinnerCheck7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/inpt1"
+                />
+
+            <Button
+                android:id="@+id/deleteButton7"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="right"
+                android:layout_marginTop="10dp"
+                android:text="Delete"
+                android:background="@drawable/btn3"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/addButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="+"
+            android:textSize="40dp"
+            android:textStyle="bold"
+            android:background="@drawable/btn4"
+            android:textColor="@color/white"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</ScrollView>

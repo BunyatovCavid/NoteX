@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
 
         val appBarConfiguration = AppBarConfiguration(setOf(R.id.loginFragment, R.id.homeFragment, R.id.registerFragment, R.id.welcomingFragment,
-            R.id.forgotPasswordFragment, R.id.setUpProfileFragment, R.id.onBoardingFragment, R.id.noteFragment))
+            R.id.forgotPasswordFragment, R.id.setUpProfileFragment, R.id.onBoardingFragment, R.id.noteFragment, R.id.categorieFragment, R.id.newSpeacialNote))
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         binding.bottomNav.setupWithNavController(navController)
@@ -54,17 +54,21 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.homeFragment)
                     true
                 }
+                R.id.categorieFragment->{
+                    navController.navigate(R.id.categorieFragment)
+                    true
+                }
                 else -> false
             }
         }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.noteFragment, R.id.newNoteFragment, R.id.updateNoteFragment -> {
-                    binding.toolbar.visibility = View.VISIBLE
+                R.id.loginFragment, R.id.welcomingFragment, R.id.registerFragment, R.id.onBoardingFragment, R.id.forgotPasswordFragment -> {
+                    binding.toolbar.visibility = View.GONE
                 }
                 else -> {
-                    binding.toolbar.visibility = View.INVISIBLE
+                    binding.toolbar.visibility = View.VISIBLE
                 }
             }
         }

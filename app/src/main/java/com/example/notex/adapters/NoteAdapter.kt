@@ -15,8 +15,6 @@ import java.util.Random
 
 class NoteAdapter:RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(){
 
-
-
     class NoteViewHolder(val itemBinding: NoteLayoutAdapterBinding)
         :RecyclerView.ViewHolder(itemBinding.root)
 
@@ -62,7 +60,6 @@ class NoteAdapter:RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(){
         holder.itemBinding.ibColor.setBackgroundColor(color)
 
         holder.itemView.setOnClickListener { view ->
-
             val direction = NoteFragmentDirections
                 .actionNoteFragmentToUpdateNoteFragment(currentNote)
             view.findNavController().navigate(direction)

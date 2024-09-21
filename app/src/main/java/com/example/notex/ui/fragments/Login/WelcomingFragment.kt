@@ -14,7 +14,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class WelcomingFragment : Fragment() {
+class WelcomingFragment : Fragment(R.layout.fragment_welcoming) {
 
     private var _binding: FragmentWelcomingBinding? = null
     private val binding get() = _binding!!

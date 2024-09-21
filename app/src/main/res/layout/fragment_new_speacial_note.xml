@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragments.SpecialNotes.NewSpeacialNote"
+    android:padding="20dp"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/specialnoteTitle"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Title"
+        android:textColor="@color/black"
+        android:padding="10dp"
+        android:textSize="20dp"
+        android:background="@drawable/inpt1"/>
+
+    <EditText
+        android:id="@+id/specialnoteField1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:text="field1"
+        android:textColor="@color/black"
+        android:padding="10dp"
+        android:textSize="20dp"
+        android:background="@drawable/inpt1"/>
+
+    <EditText
+        android:id="@+id/specialnoteField2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:text="field2"
+        android:textColor="@color/black"
+        android:padding="10dp"
+        android:textSize="20dp"
+        android:background="@drawable/inpt1"/>
+
+    <EditText
+        android:id="@+id/specialnoteField3"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:text="field3"
+        android:textColor="@color/black"
+        android:padding="10dp"
+        android:textSize="20dp"
+        android:background="@drawable/inpt1"/>
+
+    <EditText
+        android:id="@+id/specialnoteField4"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:text="field4"
+        android:textColor="@color/black"
+        android:padding="10dp"
+        android:textSize="20dp"
+        android:background="@drawable/inpt1"/>
+
+    <EditText
+        android:id="@+id/specialnoteField5"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:text="field5"
+        android:textColor="@color/black"
+        android:padding="10dp"
+        android:textSize="20dp"
+        android:background="@drawable/inpt1"/>
+
+    <EditText
+        android:id="@+id/specialnoteField6"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:text="field6"
+        android:textColor="@color/black"
+        android:padding="10dp"
+        android:textSize="20dp"
+        android:background="@drawable/inpt1"/>
+
+    <EditText
+        android:id="@+id/specialnoteField7"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:text="field7"
+        android:textColor="@color/black"
+        android:padding="10dp"
+        android:textSize="20dp"
+        android:background="@drawable/inpt1"/>
+
+
+</LinearLayout>

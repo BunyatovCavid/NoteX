@@ -7,8 +7,14 @@
         android:icon="@drawable/baseline_home_24"/>
 
     <item
+        android:id="@+id/categorieFragment"
+        android:title="Categorie"
+        android:icon="@drawable/baseline_notes_24"/>
+
+    <item
         android:id="@+id/noteFragment"
         android:title="Note"
         android:icon="@drawable/baseline_notes_24"/>
+
 
 </menu>
