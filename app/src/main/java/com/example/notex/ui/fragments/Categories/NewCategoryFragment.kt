@@ -11,8 +11,10 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.RelativeLayout
 import android.widget.Spinner
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import androidx.fragment.app.viewModels
+import com.example.notex.Independents.CostumeDataType
 import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
 import com.example.notex.data.models.CategoryModel
@@ -40,6 +42,7 @@ class NewCategoryFragment : Fragment(R.layout.fragment_new_category) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onCreateView(
@@ -52,7 +55,7 @@ class NewCategoryFragment : Fragment(R.layout.fragment_new_category) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val options = arrayOf("Option 1", "Option 2", "Option 3")
+        val options = arrayOf(CostumeDataType.Sentence, CostumeDataType.Amount, CostumeDataType.Number)
 
         nav = replaceFragments()
 
@@ -169,9 +172,18 @@ class NewCategoryFragment : Fragment(R.layout.fragment_new_category) {
                 }
 
             }
-        var check = managedCategory.find { it.IsActiveBoolean==false }
-       if(check==null)
-           binding?.addButton?.setBackgroundResource(R.drawable.btn4)
+
+        var check = true
+       managedCategory.forEach{item->
+           if(item.IsActiveBoolean==false)
+               check =false
+           else {
+               check = true
+           }
+       }
+
+        if(check)
+            binding?.addButton?.setBackgroundResource(R.drawable.btn3)
     }
 
 
@@ -187,13 +199,18 @@ class NewCategoryFragment : Fragment(R.layout.fragment_new_category) {
                 addCategory()
                 nav.replace(this, R.id.action_newCategoryFragment_to_categorieFragment)
             }
+            android.R.id.home->{
+                nav.replace(this, R.id.action_newCategoryFragment_to_categorieFragment)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
 
     private fun addCategory(){
         var title:String=binding?.categoryTitlenew?.text.toString()
-        var categoryModel = CategoryModel(title)
+        var categoryModel = CategoryModel()
+
+        categoryModel.title = title.toString()
 
         if(binding?.categoryCheck1Title?.text?.isBlank()==false)
         {

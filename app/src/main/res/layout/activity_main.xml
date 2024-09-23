@@ -17,21 +17,19 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         />
 
+<!--    app:itemTextAppearanceActive="@style/BottomNavTextStyle"-->
+
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNav"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:scrollIndicators="start"
-            app:labelVisibilityMode="auto"
-            app:itemTextAppearanceActive="@style/BottomNavTextStyle"
-            app:itemIconSize="20dp"
             android:background="#FFEB3B"
+            app:menu="@menu/nav_bar"
+            app:itemRippleColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/nav_bar"
             />
 
     <androidx.fragment.app.FragmentContainerView

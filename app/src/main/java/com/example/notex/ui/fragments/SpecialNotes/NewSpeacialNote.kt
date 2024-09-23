@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import com.example.notex.Independents.replaceFragments
@@ -39,6 +40,7 @@ class NewSpeacialNote : Fragment(R.layout.fragment_new_speacial_note) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onCreateView(
@@ -55,41 +57,56 @@ class NewSpeacialNote : Fragment(R.layout.fragment_new_speacial_note) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        data =  arguments?.getParcelable<CategoryModel>("category")
+        val backupData =  arguments?.getParcelable<CategoryModel>("category")
+        data = backupData
 
 
-        if(data?.field1!=null)
+        binding.specialnoteTitle.setHint(data?.title)
+
+        if(data?.field1!=null) {
             binding.specialnoteField1.visibility = View.VISIBLE
-        else
+            binding.specialnoteField1.setHint(data?.field1?.title)
+        }else
             binding.specialnoteField1.visibility = View.GONE
 
-        if(data?.field2 !=null)
+        if(data?.field2 !=null) {
             binding.specialnoteField2.visibility = View.VISIBLE
-        else
+            binding.specialnoteField2.setHint(data?.field2?.title)
+        }else
             binding.specialnoteField2.visibility = View.GONE
 
-        if(data?.field3 !=null)
+        if(data?.field3 !=null){
             binding.specialnoteField3.visibility = View.VISIBLE
-        else
+            binding.specialnoteField3.setHint(data?.field3?.title)
+        }else
             binding.specialnoteField3.visibility = View.GONE
 
-        if(data?.field4 !=null)
+        if(data?.field4 !=null) {
             binding.specialnoteField4.visibility = View.VISIBLE
+            binding.specialnoteField4.setHint(data?.field4?.title)
+        }
         else
             binding.specialnoteField4.visibility = View.GONE
 
         if(data?.field5 !=null)
-            binding.specialnoteField5.visibility = View.VISIBLE
+            {
+                binding.specialnoteField5.visibility = View.VISIBLE
+                binding.specialnoteField5.setHint(data?.field5?.title)
+            }
         else
             binding.specialnoteField5.visibility = View.GONE
 
-        if(data?.field6 !=null)
+        if(data?.field6 !=null) {
             binding.specialnoteField6.visibility = View.VISIBLE
+            binding.specialnoteField6.setHint(data?.field6?.title)
+        }
         else
             binding.specialnoteField6.visibility = View.GONE
 
-        if(data?.field7 !=null)
+        if(data?.field7 !=null) {
             binding.specialnoteField7.visibility = View.VISIBLE
+            binding.specialnoteField7.setHint(data?.field7?.title)
+        }
         else
             binding.specialnoteField7.visibility = View.GONE
     }
@@ -107,6 +124,9 @@ class NewSpeacialNote : Fragment(R.layout.fragment_new_speacial_note) {
         when (item.itemId) {
             R.id.save_menu -> {
                 saveNote()
+            }
+            android.R.id.home->{
+                nav.replace(this, R.id.action_newSpeacialNote_to_useCategoryFragment)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -154,6 +174,7 @@ class NewSpeacialNote : Fragment(R.layout.fragment_new_speacial_note) {
 
 
                 specialNoteViewModel.addspecialNote(data!!.title, specialNote)
+                nav.replace(this, R.id.action_newSpeacialNote_to_homeFragment)
             } else
                 Toast.makeText(context, "You must write Title", Toast.LENGTH_SHORT).show()
         }

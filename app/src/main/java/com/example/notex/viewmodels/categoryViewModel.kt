@@ -53,8 +53,6 @@ class categoryViewModel @Inject constructor(private  val repository: categorieIn
                 val category = repository.getCategoryByDocument(collectionTitle, document)
                 val item = category?.toObject(CategoryModel::class.java)
                 _documentResult.postValue(item)
-                var i:Int=0
-                i++
             }catch(e:Exception)
             {
                 Log.e("categoryViewModel", "Kateqoriyaları alarkən xəta baş verdi", e)

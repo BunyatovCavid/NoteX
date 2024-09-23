@@ -1,10 +1,10 @@
 package com.example.notex.data.repositories
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import com.google.firebase.firestore.FieldPath
 import com.example.notex.data.interfaces.categorieInterface
 import com.example.notex.data.models.CategoryModel
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
@@ -16,22 +16,28 @@ class categorieRepository:categorieInterface {
         get() = FirebaseFirestore.getInstance()
         set(value){}
 
+    var userId = FirebaseAuth.getInstance().currentUser?.uid
+
     override suspend fun getCategories(collectionTitle:String) :QuerySnapshot =
-          firebaseStrore.collection("$collectionTitle").get().await()
+          firebaseStrore.collection("$collectionTitle").whereEqualTo("userId", userId).get().await()
 
     override suspend fun getCategoryByDocument(collectionTitle: String, document: CategoryModel): DocumentSnapshot? {
        return try {
             val documentSnapshot = firebaseStrore.collection(collectionTitle)
-                .document(document.id)
+                .whereEqualTo("userId", userId)
+                .whereEqualTo(FieldPath.documentId() ,document.id)
                 .get()
-                .await()
+                .await().documents
+                .firstOrNull()
 
-            if (documentSnapshot.exists()) {
-                val data = documentSnapshot.data
-                Log.d("Firestore", "Document Tapildi: $data")
-            } else {
-                Log.d("Firestore", "Document Yoxdu")
-            }
+           if (documentSnapshot != null) {
+               if (documentSnapshot.exists()) {
+                   val data = documentSnapshot.data
+                   Log.d("Firestore", "Document Tapildi: $data")
+               } else {
+                   Log.d("Firestore", "Document Yoxdu")
+               }
+           }
            documentSnapshot
         } catch (e: Exception) {
             Log.e("Firestore", "Document goturulen zaman  bir xeta bas verdi", e)
@@ -42,6 +48,7 @@ class categorieRepository:categorieInterface {
 
     override suspend fun addCategory(collectionTitle: String, categoryModel: CategoryModel) {
         try {
+            categoryModel.userId = userId?:""
             firebaseStrore.collection("$collectionTitle").add(categoryModel).await()
         }catch (e:Exception){
             Log.e("categorieRepository", "Kateqoriya əlavə edərkən xəta baş verdi", e)
@@ -53,36 +60,39 @@ class categorieRepository:categorieInterface {
         data: CategoryModel,
         callback: (Boolean, String?) -> Unit
     ) {
-        val batch = firebaseStrore.batch()
+        try {
+            val batch = firebaseStrore.batch()
 
-        firebaseStrore.collection(collectionTitle)
-            .document(data.id)
-            .delete().addOnSuccessListener {
-                firebaseStrore.collection(data.title)
-                    .get()
-                    .addOnSuccessListener { querySnapshot ->
-                        for (document in querySnapshot) {
-                            val docRef = firebaseStrore.collection(data.title).document(document.id)
-                            batch.delete(docRef)
-                        }
-                        batch.commit()
-                            .addOnSuccessListener {
-                                callback(true, "Success")
-                            }
-                            .addOnFailureListener{
-                                callback(false, "Failed")
-                            }
-                    }
-                    .addOnFailureListener { e ->
-                        callback(false, e.message)
-                    }
+
+            val documentSnapshot = firebaseStrore.collection(collectionTitle)
+                .document(data.id)
+                .get()
+                .await()
+
+            val documentUserId = documentSnapshot.getString("userId")
+
+            if (documentUserId == userId) {
+                firebaseStrore.collection(collectionTitle)
+                    .document(data.id)
+                    .delete()
+                    .await()
+
+                val querySnapshot = firebaseStrore.collection(data.title).get().await()
+
+                for (document in querySnapshot) {
+                    val docRef = firebaseStrore.collection(data.title).document(document.id)
+                    batch.delete(docRef)
+                }
+
+                batch.commit().await()
+
+                callback(true, "Success")
+            } else {
+                callback(false, "Unauthorized: You can't delete this document")
             }
-            .addOnFailureListener { e ->
-                callback(false, e.message)
-            }
-
-
+        } catch (e: Exception) {
+            callback(false, e.message)
+        }
 
     }
-
 }

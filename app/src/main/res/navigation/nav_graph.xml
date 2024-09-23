@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/onBoardingFragment"
+    app:startDestination="@id/homeFragment"
     >
     <fragment
         android:id="@+id/welcomingFragment"
@@ -76,6 +76,9 @@
         <action
             android:id="@+id/action_homeFragment_to_newSpeacialNote"
             app:destination="@id/newSpeacialNote" />
+        <action
+            android:id="@+id/action_homeFragment_to_useCategoryFragment"
+            app:destination="@id/useCategoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/setUpProfileFragment"
@@ -181,6 +184,9 @@
         <action
             android:id="@+id/action_newSpeacialNote_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_newSpeacialNote_to_useCategoryFragment"
+            app:destination="@id/useCategoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/useCategoryFragment"
@@ -190,6 +196,9 @@
         <action
             android:id="@+id/action_useCategoryFragment_to_newSpeacialNote"
             app:destination="@id/newSpeacialNote" />
+        <action
+            android:id="@+id/action_useCategoryFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailCategoryFragment"

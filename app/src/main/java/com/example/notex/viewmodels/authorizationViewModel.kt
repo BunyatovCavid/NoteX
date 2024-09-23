@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.notex.data.models.LoginEntity
-import com.example.notex.data.Database.Dao.LoginDao
+import com.example.notex.data.repositories.Database.Dao.LoginDao
 import com.example.notex.data.interfaces.authorizationInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import com.example.notex.Independents.helper.toast
 import com.example.notex.Independents.replaceFragments
@@ -36,6 +37,7 @@ class NewNoteFragment : Fragment(R.layout.fragment_new_note) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
 
@@ -91,6 +93,9 @@ class NewNoteFragment : Fragment(R.layout.fragment_new_note) {
         when (item.itemId) {
             R.id.save_menu -> {
                 saveNote(mView)
+            }
+            android.R.id.home->{
+                nav.replace(this, R.id.action_newNoteFragment_to_noteFragment)
             }
         }
         return super.onOptionsItemSelected(item)

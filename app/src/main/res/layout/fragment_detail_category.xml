@@ -10,13 +10,15 @@
         android:layout_height="match_parent"
         android:padding="10dp">
 
-        <EditText
+        <TextView
             android:id="@+id/categoryTitlenew"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:padding="5dp"
             android:hint="Category Title"
             android:background="@drawable/inpt1"
+            android:textColor="@color/black"
+            android:paddingLeft="10dp"
             />
 
         <LinearLayout
@@ -39,7 +41,9 @@
                     android:layout_height="40dp"
                     android:hint="Field Title"
                     android:padding="5dp"
-                    android:background="@drawable/inpt1"/>
+                    android:background="@drawable/inpt1"
+                    android:textColor="@color/black"
+                    android:paddingLeft="10dp"/>
 
                 <TextView
                     android:id="@+id/textCheck1"
@@ -47,6 +51,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/inpt1"
+                    android:textColor="@color/black"
+                    android:paddingLeft="10dp"
                     />
 
             </LinearLayout>
@@ -65,7 +71,10 @@
                     android:layout_height="40dp"
                     android:hint="Field Title"
                     android:padding="5dp"
-                    android:background="@drawable/inpt1"/>
+                    android:background="@drawable/inpt1"
+                    android:textColor="@color/black"
+                    android:paddingLeft="10dp"
+                    />
 
                 <TextView
                     android:id="@+id/textCheck2"
@@ -73,6 +82,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/inpt1"
+                    android:textColor="@color/black"
+                    android:paddingLeft="10dp"
                     />
 
             </LinearLayout>
@@ -91,7 +102,9 @@
                     android:layout_height="40dp"
                     android:hint="Field Title"
                     android:padding="5dp"
-                    android:background="@drawable/inpt1"/>
+                    android:background="@drawable/inpt1"
+                    android:textColor="@color/black"
+                    android:paddingLeft="10dp"/>
 
                 <TextView
                     android:id="@+id/textCheck3"
@@ -99,6 +112,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/inpt1"
+                    android:textColor="@color/black"
+                    android:paddingLeft="10dp"
                     />
 
             </LinearLayout>
@@ -117,7 +132,9 @@
                     android:layout_height="40dp"
                     android:hint="Field Title"
                     android:padding="5dp"
-                    android:background="@drawable/inpt1"/>
+                    android:background="@drawable/inpt1"
+                    android:textColor="@color/black"
+                    android:paddingLeft="10dp"/>
 
                 <TextView
                     android:id="@+id/textCheck4"
@@ -125,6 +142,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/inpt1"
+                    android:textColor="@color/black"
+                    android:paddingLeft="10dp"
                     />
 
             </LinearLayout>
@@ -143,7 +162,9 @@
                     android:layout_height="40dp"
                     android:hint="Field Title"
                     android:padding="5dp"
-                    android:background="@drawable/inpt1"/>
+                    android:background="@drawable/inpt1"
+                    android:textColor="@color/black"
+                    android:paddingLeft="10dp"/>
 
                 <TextView
                     android:id="@+id/textCheck5"
@@ -151,6 +172,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/inpt1"
+                    android:textColor="@color/black"
+                    android:paddingLeft="10dp"
                     />
 
 
@@ -170,7 +193,9 @@
                     android:layout_height="40dp"
                     android:hint="Field Title"
                     android:padding="5dp"
-                    android:background="@drawable/inpt1"/>
+                    android:background="@drawable/inpt1"
+                    android:textColor="@color/black"
+                    android:paddingLeft="10dp"/>
 
                 <TextView
                     android:id="@+id/textCheck6"
@@ -178,6 +203,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/inpt1"
+                    android:textColor="@color/black"
+                    android:paddingLeft="10dp"
                     />
 
             </LinearLayout>
@@ -196,7 +223,9 @@
                     android:layout_height="40dp"
                     android:hint="Field Title"
                     android:padding="5dp"
-                    android:background="@drawable/inpt1"/>
+                    android:background="@drawable/inpt1"
+                    android:textColor="@color/black"
+                    android:paddingLeft="10dp"/>
 
                 <TextView
                     android:id="@+id/textCheck7"
@@ -204,6 +233,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/inpt1"
+                    android:textColor="@color/black"
+                    android:paddingLeft="10dp"
                     />
             </LinearLayout>
         </LinearLayout>

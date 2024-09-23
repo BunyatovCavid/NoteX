@@ -9,5 +9,6 @@ data class SpecialNoteModel(
     var specialField4: specialField?=null,
     var specialField5: specialField?=null,
     var specialField6: specialField?=null,
-    var specialField7: specialField?=null
+    var specialField7: specialField?=null,
+    var userId: String = ""
     )

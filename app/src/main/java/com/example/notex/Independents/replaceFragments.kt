@@ -13,12 +13,10 @@ class replaceFragments {
 
      fun replace(f:Fragment, g:Int)=
          f.findNavController().navigate(g)
-//      f.parentFragmentManager.beginTransaction().replace(R.id.container, g).commit()
 
     fun replace(f: Fragment, g:Int, b:Bundle)
     {
-        f.arguments = b
-        f.findNavController().navigate(g)
+        f.findNavController().navigate(g, b)
     }
 
 }

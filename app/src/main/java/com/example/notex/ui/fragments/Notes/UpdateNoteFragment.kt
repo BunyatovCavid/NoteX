@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
@@ -37,8 +38,8 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setHasOptionsMenu(true)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onCreateView(
@@ -107,6 +108,9 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
         when (item.itemId) {
             R.id.delete_menu -> {
                 deleteNote()
+            }
+            android.R.id.home->{
+                nav.replace(this, R.id.action_updateNoteFragment_to_noteFragment)
             }
         }
 

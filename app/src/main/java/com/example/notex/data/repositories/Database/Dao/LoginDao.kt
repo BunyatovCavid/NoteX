@@ -1,4 +1,4 @@
-package com.example.notex.data.Database.Dao
+package com.example.notex.data.repositories.Database.Dao
 
 import androidx.room.Dao
 import androidx.room.Insert

@@ -2,7 +2,7 @@ package com.example.notex.data.repositories
 
 import android.util.Log
 import com.example.notex.data.models.LoginEntity
-import com.example.notex.data.Database.Dao.LoginDao
+import com.example.notex.data.repositories.Database.Dao.LoginDao
 import com.example.notex.data.interfaces.authorizationInterface
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException

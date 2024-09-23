@@ -10,16 +10,20 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.notex.Independents.helper.toast
 import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
 import com.example.notex.adapters.CategorieAdapter
 import com.example.notex.data.models.CategoryModel
 import com.example.notex.databinding.FragmentDetailCategoryBinding
+import com.example.notex.ui.MainActivity
 import com.example.notex.viewmodels.categoryViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -37,7 +41,8 @@ class DetailCategoryFragment : Fragment(R.layout.fragment_detail_category) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setHasOptionsMenu(true)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onCreateView(
@@ -130,10 +135,10 @@ class DetailCategoryFragment : Fragment(R.layout.fragment_detail_category) {
                 categoryViewModel.deleteResult.observe(viewLifecycleOwner, { result ->
                     if (result == "Success"){
                         nav.replace(this@DetailCategoryFragment, R.id.action_detailCategoryFragment_to_categorieFragment)
-                        Toast.makeText(context, result, Toast.LENGTH_LONG).show()
+                        context.toast(result)
                     }
                     else
-                        Toast.makeText(context, result, Toast.LENGTH_LONG).show()
+                        context.toast(result)
                 })
             }
             setNegativeButton("CANCEL", null)
@@ -151,9 +156,26 @@ class DetailCategoryFragment : Fragment(R.layout.fragment_detail_category) {
             R.id.delete_menu -> {
                 deleteNote()
             }
+            android.R.id.home->{
+                nav.replace(this, R.id.action_detailCategoryFragment_to_categorieFragment)
+            }
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as? MainActivity)?.let {
+            it.findViewById<BottomNavigationView>(R.id.bottomNav).visibility = View.GONE
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (activity as? MainActivity)?.let {
+            it.findViewById<BottomNavigationView>(R.id.bottomNav).visibility = View.VISIBLE
+        }
     }
 
 

@@ -12,6 +12,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import com.example.notex.R
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.notex.Independents.helper.toast
 import com.example.notex.Independents.replaceFragments
 import com.example.notex.adapters.NoteAdapter
 import com.example.notex.adapters.SpecialNoteAdapter
@@ -50,13 +51,58 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+
+        var categories = mutableListOf<Category>()
+        var options = mutableListOf<String>()
+
+
+        categoryViewModel.getCategories("Categories")
+
+        categoryViewModel.categoryResult.observe(viewLifecycleOwner, {result->
+            categories.clear()
+            options.clear()
+
+            options.add("Please Select Category")
+
+            result.forEach { item ->
+                categories.add(Category(item.id, item.title))
+            }
+
+            categories.forEach { item ->
+                options.add(item.title)
+            }
+
+            val adapter = ArrayAdapter(requireContext(), R.layout.use_spinner_item, options)
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.searchCategory.adapter = adapter
+
+        })
+
+        var previousSelectedCategory: String? = null
+
+        binding.searchCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                val selectedCategory = options[position]
+
+                if (selectedCategory != "Please Select Category" && selectedCategory != previousSelectedCategory) {
+                    previousSelectedCategory = selectedCategory
+                    specialNoteViewModel.getCategories(selectedCategory)
+                    setUpRecyclerView()
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+            }
+        }
+
+
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (backPressedOnce) {
                     requireActivity().finish()
                 } else {
                     backPressedOnce = true
-                    Toast.makeText(context, "Press back again to exit", Toast.LENGTH_SHORT).show()
+                    context?.toast("Press back again to exit")
                     view?.postDelayed({
                         backPressedOnce = false
                     }, 2000)
@@ -71,46 +117,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.fabAddNote.setOnClickListener{mView->
 
-            categoryViewModel.getCategories("Categories")
-
-            setUpRecyclerView()
-            var categories = mutableListOf<Category>()
-            var options = mutableListOf<String>()
-            options.add("Please Select Category")
-
-            categoryViewModel.categoryResult.observe(viewLifecycleOwner, {result->
-                var bundle =Bundle()
+        binding.fabAddNote.setOnClickListener {
+            categoryViewModel.categoryResult.observe(viewLifecycleOwner, { result ->
+                var bundle = Bundle()
                 bundle.putParcelableArrayList("categories", ArrayList(result))
-
-                result.forEach{item->
-                    categories.add(Category(item.id, item.title))
-                }
-
-                val showpopUp = UseCategoryFragment().apply { arguments = bundle }
-                fragmentManager?.let { it1 -> showpopUp.show(it1, "UseCategoryFragment") }
+                nav.replace(this, R.id.action_homeFragment_to_useCategoryFragment, bundle)
             })
-
-            categories.forEach{item->
-                options.add(item.title)
-            }
-
-            val adapter = ArrayAdapter(requireContext(), R.layout.use_spinner_item, options)
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.searchCategory.adapter = adapter
-
-
-
-            binding.searchCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                    categoryViewModel.getCategories(options[position])
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>) {
-                }
-            }
-
 
         }
 
