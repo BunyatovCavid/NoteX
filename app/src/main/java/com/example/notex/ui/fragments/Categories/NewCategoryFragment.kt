@@ -215,43 +215,43 @@ class NewCategoryFragment : Fragment(R.layout.fragment_new_category) {
         if(binding?.categoryCheck1Title?.text?.isBlank()==false)
         {
             val fieldtitle = binding?.categoryCheck1Title?.text.toString()
-            val datatype =  binding?.spinnerCheck1?.selectedItem as String
+            val datatype =  binding?.spinnerCheck1?.selectedItem.toString()
             categoryModel.field1 = specialField(fieldtitle,datatype)
         }
         if(binding?.categoryCheck2Title?.text?.isBlank()==false)
         {
             val fieldtitle = binding?.categoryCheck2Title?.text.toString()
-            val datatype =  binding?.spinnerCheck2?.selectedItem as String
+            val datatype =  binding?.spinnerCheck2?.selectedItem.toString()
             categoryModel.field2 = specialField(fieldtitle, datatype)
         }
         if(binding?.categoryCheck3Title?.text?.isBlank()==false)
         {
             val fieldtitle = binding?.categoryCheck3Title?.text.toString()
-            val datatype =  binding?.spinnerCheck3?.selectedItem as String
+            val datatype =  binding?.spinnerCheck3?.selectedItem.toString()
             categoryModel.field3 = specialField(fieldtitle, datatype)
         }
         if(binding?.categoryCheck4Title?.text?.isBlank()==false)
         {
             val fieldtitle = binding?.categoryCheck4Title?.text.toString()
-            val datatype =  binding?.spinnerCheck4?.selectedItem as String
+            val datatype =  binding?.spinnerCheck4?.selectedItem.toString()
             categoryModel.field4 = specialField(fieldtitle, datatype)
         }
         if(binding?.categoryCheck5Title?.text?.isBlank()==false)
         {
             val fieldtitle = binding?.categoryCheck5Title?.text.toString()
-            val datatype =  binding?.spinnerCheck5?.selectedItem as String
+            val datatype =  binding?.spinnerCheck5?.selectedItem.toString()
             categoryModel.field5 = specialField(fieldtitle, datatype)
         }
         if(binding?.categoryCheck6Title?.text?.isBlank()==false)
         {
             val fieldtitle = binding?.categoryCheck6Title?.text.toString()
-            val datatype =  binding?.spinnerCheck6?.selectedItem as String
+            val datatype =  binding?.spinnerCheck6?.selectedItem.toString()
             categoryModel.field6 = specialField(fieldtitle, datatype)
         }
         if(binding?.categoryCheck7Title?.text?.isBlank()==false)
         {
             val fieldtitle = binding?.categoryCheck7Title?.text.toString()
-            val datatype =  binding?.spinnerCheck7?.selectedItem as String
+            val datatype =  binding?.spinnerCheck7?.selectedItem.toString()
             categoryModel.field7 = specialField(fieldtitle, datatype)
         }
 

@@ -107,7 +107,7 @@ class SpecialNoteDetailFragment : Fragment(R.layout.fragment_special_note_detail
         else
             binding.specialnoteField7.visibility = View.GONE
 
-//
+
 //        var number =1
 //        var amount = 0
 //        var check = mutableListOf<CostumeDataType>()
