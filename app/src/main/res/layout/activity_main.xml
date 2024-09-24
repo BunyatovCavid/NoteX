@@ -17,8 +17,6 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         />
 
-<!--    app:itemTextAppearanceActive="@style/BottomNavTextStyle"-->
-
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNav"
             android:layout_width="match_parent"
@@ -40,7 +38,6 @@
         android:layout_below="@id/toolbar"
         app:navGraph="@navigation/nav_graph"
         app:defaultNavHost="true" />
-
 
 
 </RelativeLayout>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.fragments.SpecialNotes.SpecialNoteDetailFragment"
+        android:padding="20dp"
+        >
+        <LinearLayout
+            android:id="@+id/fieldsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/specialnoteTitle"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Title"
+                android:textColor="@color/black"
+                android:padding="10dp"
+                android:textSize="20dp"
+                android:background="@drawable/inpt1"
+                android:clickable="false"/>
+
+            <EditText
+                android:id="@+id/specialnoteField1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:hint="field1"
+                android:textColor="@color/black"
+                android:padding="10dp"
+                android:textSize="20dp"
+                android:background="@drawable/inpt1"
+                android:clickable="false"/>
+
+            <EditText
+                android:id="@+id/specialnoteField2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:hint="field2"
+                android:textColor="@color/black"
+                android:padding="10dp"
+                android:textSize="20dp"
+                android:background="@drawable/inpt1"
+                android:clickable="false"/>
+
+            <EditText
+                android:id="@+id/specialnoteField3"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:hint="field3"
+                android:textColor="@color/black"
+                android:padding="10dp"
+                android:textSize="20dp"
+                android:background="@drawable/inpt1"
+                android:clickable="false"/>
+
+            <EditText
+                android:id="@+id/specialnoteField4"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:hint="field4"
+                android:textColor="@color/black"
+                android:padding="10dp"
+                android:textSize="20dp"
+                android:background="@drawable/inpt1"
+                android:clickable="false"/>
+
+            <EditText
+                android:id="@+id/specialnoteField5"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:hint="field5"
+                android:textColor="@color/black"
+                android:padding="10dp"
+                android:textSize="20dp"
+                android:background="@drawable/inpt1"
+                android:clickable="false"/>
+
+            <EditText
+                android:id="@+id/specialnoteField6"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:hint="field6"
+                android:textColor="@color/black"
+                android:padding="10dp"
+                android:textSize="20dp"
+                android:background="@drawable/inpt1"
+                android:clickable="false"/>
+
+            <EditText
+                android:id="@+id/specialnoteField7"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:hint="field7"
+                android:textColor="@color/black"
+                android:padding="10dp"
+                android:textSize="20dp"
+                android:background="@drawable/inpt1"
+                android:clickable="false"/>
+
+            <TextView
+                android:id="@+id/totalAmount"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:hint="Total Amount"
+                android:textColor="@color/black"
+                android:padding="10dp"
+                android:textSize="20dp"
+                android:background="@drawable/inpt1"
+                android:clickable="false"/>
+        </LinearLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:backgroundTint="@color/base"
+            android:layout_marginBottom="10dp"
+            android:tintMode="@color/white"
+            android:src="@drawable/baseline_edit_note_24"
+            android:contentDescription="@string/bersyte"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>

@@ -59,7 +59,7 @@ class DetailCategoryFragment : Fragment(R.layout.fragment_detail_category) {
          currentCategory = args.category
          nav = replaceFragments()
 
-
+        binding.categoryTitlenew.setText(currentCategory.title)
         if(currentCategory.field1 !=null)
         {
             binding.categoryCheck1Title.setText(currentCategory?.field1?.title)
@@ -133,11 +133,7 @@ class DetailCategoryFragment : Fragment(R.layout.fragment_detail_category) {
                 categoryViewModel.deleteCategory("Categories", currentCategory)
 
                 categoryViewModel.deleteResult.observe(viewLifecycleOwner, { result ->
-                    if (result == "Success"){
                         nav.replace(this@DetailCategoryFragment, R.id.action_detailCategoryFragment_to_categorieFragment)
-                        context.toast(result)
-                    }
-                    else
                         context.toast(result)
                 })
             }

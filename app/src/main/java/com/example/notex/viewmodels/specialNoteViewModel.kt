@@ -5,9 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.notex.data.interfaces.categorieInterface
 import com.example.notex.data.interfaces.specialNotesInterface
-import com.example.notex.data.models.CategoryModel
 import com.example.notex.data.models.SpecialNoteModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -19,7 +17,13 @@ class specialNoteViewModel @Inject constructor(private  val repository: specialN
     private val _specialNoteResult = MutableLiveData<List<SpecialNoteModel>>()
     val specialNoteResult: LiveData<List<SpecialNoteModel>> get() = _specialNoteResult
 
-    fun getCategories(collectionTitle:String)
+    private val _deleteResult = MutableLiveData<String>()
+    val deleteResult: LiveData<String> get() = _deleteResult
+
+    private val _updateResult = MutableLiveData<SpecialNoteModel>()
+    val updateResult: LiveData<SpecialNoteModel> get() = _updateResult
+
+    fun getSpecialNotes(collectionTitle:String)
     {
         viewModelScope.launch {
             try {
@@ -27,6 +31,7 @@ class specialNoteViewModel @Inject constructor(private  val repository: specialN
                 var datas = mutableListOf<SpecialNoteModel>()
                 for (document in categories) {
                     val item = document.toObject(SpecialNoteModel::class.java)
+                    item.id=document.id
                     datas.add(item)
                 }
 
@@ -50,5 +55,27 @@ class specialNoteViewModel @Inject constructor(private  val repository: specialN
         }
     }
 
+    fun updateSpecialNote(specialNoteModel: SpecialNoteModel){
+        viewModelScope.launch {
+            repository.updateSpecialNote(specialNoteModel)
+            val document =  repository.getspeacialNoteById(specialNoteModel.categoryTitle, specialNoteModel.id)
+            lateinit var item:SpecialNoteModel
+            document.forEach{i->
+             item = i.toObject(SpecialNoteModel::class.java)
+                item.id = i.id
+            }
+            _updateResult.postValue(item)
+        }
+    }
+
+
+    fun deleteSpecialNote(specialNoteModel: SpecialNoteModel){
+        viewModelScope.launch {
+            repository.deleteSpecialNote(specialNoteModel.categoryTitle, specialNoteModel.id){succes, result->
+                _deleteResult.postValue(result)
+            }
+
+        }
+    }
 
 }

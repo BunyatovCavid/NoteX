@@ -86,7 +86,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
                 if (selectedCategory != "Please Select Category" && selectedCategory != previousSelectedCategory) {
                     previousSelectedCategory = selectedCategory
-                    specialNoteViewModel.getCategories(selectedCategory)
+                    specialNoteViewModel.getSpecialNotes(selectedCategory)
                     setUpRecyclerView()
                 }
             }

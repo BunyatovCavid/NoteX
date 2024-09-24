@@ -77,12 +77,13 @@ class categorieRepository:categorieInterface {
                     .delete()
                     .await()
 
-                val querySnapshot = firebaseStrore.collection(data.title).get().await()
+                firebaseStrore.collection(data.title).get().addOnSuccessListener {result->
+                    for (document in result) {
+                        val docRef = firebaseStrore.collection(data.title).document(document.id)
+                        batch.delete(docRef)
+                    }
+                }.addOnFailureListener{}.await()
 
-                for (document in querySnapshot) {
-                    val docRef = firebaseStrore.collection(data.title).document(document.id)
-                    batch.delete(docRef)
-                }
 
                 batch.commit().await()
 

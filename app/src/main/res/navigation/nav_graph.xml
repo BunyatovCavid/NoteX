@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment"
+    app:startDestination="@id/categorieFragment"
     >
     <fragment
         android:id="@+id/welcomingFragment"
@@ -79,6 +79,9 @@
         <action
             android:id="@+id/action_homeFragment_to_useCategoryFragment"
             app:destination="@id/useCategoryFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_specialNoteDetailFragment"
+            app:destination="@id/specialNoteDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/setUpProfileFragment"
@@ -187,6 +190,10 @@
         <action
             android:id="@+id/action_newSpeacialNote_to_useCategoryFragment"
             app:destination="@id/useCategoryFragment" />
+        <argument
+            android:name="specialnote"
+            app:argType="com.example.notex.data.models.SpecialNoteModel"/>
+
     </fragment>
     <fragment
         android:id="@+id/useCategoryFragment"
@@ -211,6 +218,19 @@
         <argument
             android:name="category"
             app:argType="com.example.notex.data.models.CategoryModel"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/specialNoteDetailFragment"
+        android:name="com.example.notex.ui.fragments.SpecialNotes.SpecialNoteDetailFragment"
+        android:label="fragment_special_note_detail"
+        tools:layout="@layout/fragment_special_note_detail" >
+        <action
+            android:id="@+id/action_specialNoteDetailFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <argument
+            android:name="specialnote"
+            app:argType="com.example.notex.data.models.SpecialNoteModel"
             />
     </fragment>
 </navigation>

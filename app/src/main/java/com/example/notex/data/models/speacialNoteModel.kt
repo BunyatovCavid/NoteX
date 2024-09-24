@@ -1,6 +1,11 @@
 package com.example.notex.data.models
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class SpecialNoteModel(
+    var id:String="",
     var title: String ="",
     var categoryTitle:String ="",
     var specialField1: specialField?=null,
@@ -11,4 +16,4 @@ data class SpecialNoteModel(
     var specialField6: specialField?=null,
     var specialField7: specialField?=null,
     var userId: String = ""
-    )
+    ):Parcelable
