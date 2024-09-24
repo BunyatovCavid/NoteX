@@ -1,6 +1,7 @@
 package com.example.notex.ui.fragments.SpecialNotes
 
 import android.os.Bundle
+import android.text.InputType
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
@@ -12,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
+import com.example.notex.Independents.CostumeDataType
 import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
 import com.example.notex.data.models.CategoryModel
@@ -60,9 +62,11 @@ class NewSpeacialNote : Fragment(R.layout.fragment_new_speacial_note) {
         val backupData =  arguments?.getParcelable<CategoryModel>("category")
         data = backupData
 
+        updateView()
+    }
 
-        binding.specialnoteTitle.setHint(data?.title)
-
+    private  fun updateView()
+    {
         if(data?.field1!=null) {
             binding.specialnoteField1.visibility = View.VISIBLE
             binding.specialnoteField1.setHint(data?.field1?.title)
@@ -89,10 +93,10 @@ class NewSpeacialNote : Fragment(R.layout.fragment_new_speacial_note) {
             binding.specialnoteField4.visibility = View.GONE
 
         if(data?.field5 !=null)
-            {
-                binding.specialnoteField5.visibility = View.VISIBLE
-                binding.specialnoteField5.setHint(data?.field5?.title)
-            }
+        {
+            binding.specialnoteField5.visibility = View.VISIBLE
+            binding.specialnoteField5.setHint(data?.field5?.title)
+        }
         else
             binding.specialnoteField5.visibility = View.GONE
 
@@ -109,8 +113,55 @@ class NewSpeacialNote : Fragment(R.layout.fragment_new_speacial_note) {
         }
         else
             binding.specialnoteField7.visibility = View.GONE
+
+
+        updateEditText()
     }
 
+
+    private fun updateEditText()
+    {
+        if(data?.field1?.datatype.toString() == CostumeDataType.Number.toString()||data?.field1?.datatype.toString() == CostumeDataType.Amount.toString())
+            binding.specialnoteField1.inputType = InputType.TYPE_CLASS_NUMBER
+        else
+            binding.specialnoteField1.inputType = InputType.TYPE_CLASS_TEXT
+
+        if(data?.field2?.datatype.toString()== CostumeDataType.Number.toString()||data?.field2?.datatype.toString() == CostumeDataType.Amount.toString())
+            binding.specialnoteField2.inputType = InputType.TYPE_CLASS_NUMBER
+        else
+            binding.specialnoteField2.inputType = InputType.TYPE_CLASS_TEXT
+
+
+        if(data?.field3?.datatype.toString() == CostumeDataType.Number.toString()||data?.field3?.datatype.toString() == CostumeDataType.Amount.toString())
+            binding.specialnoteField3.inputType = InputType.TYPE_CLASS_NUMBER
+        else
+            binding.specialnoteField3.inputType = InputType.TYPE_CLASS_TEXT
+
+
+        if(data?.field4?.datatype.toString() == CostumeDataType.Number.toString()||data?.field4?.datatype.toString() == CostumeDataType.Amount.toString())
+            binding.specialnoteField4.inputType = InputType.TYPE_CLASS_NUMBER
+        else
+            binding.specialnoteField4.inputType = InputType.TYPE_CLASS_TEXT
+
+
+        if(data?.field5?.datatype.toString() == CostumeDataType.Number.toString()||data?.field5?.datatype.toString() == CostumeDataType.Amount.toString())
+            binding.specialnoteField5.inputType = InputType.TYPE_CLASS_NUMBER
+        else
+            binding.specialnoteField5.inputType = InputType.TYPE_CLASS_TEXT
+
+
+        if(data?.field6?.datatype.toString() == CostumeDataType.Number.toString()||data?.field6?.datatype.toString() == CostumeDataType.Amount.toString())
+            binding.specialnoteField6.inputType = InputType.TYPE_CLASS_NUMBER
+        else
+            binding.specialnoteField6.inputType = InputType.TYPE_CLASS_TEXT
+
+
+        if(data?.field7?.datatype.toString() == CostumeDataType.Number.toString()||data?.field7?.datatype.toString() == CostumeDataType.Amount.toString())
+            binding.specialnoteField7.inputType = InputType.TYPE_CLASS_NUMBER
+        else
+            binding.specialnoteField7.inputType = InputType.TYPE_CLASS_TEXT
+
+    }
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

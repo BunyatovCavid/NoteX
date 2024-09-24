@@ -211,6 +211,7 @@ class NewCategoryFragment : Fragment(R.layout.fragment_new_category) {
         var categoryModel = CategoryModel()
 
         categoryModel.title = title.toString()
+        categoryModel.description = binding?.categoryDescriptionnew?.text.toString()
 
         if(binding?.categoryCheck1Title?.text?.isBlank()==false)
         {

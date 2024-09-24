@@ -51,7 +51,7 @@ class speacialNoteRepository: specialNotesInterface {
             val documentRef = querySnapshot.documents[0].reference
 
             val updateMap = mutableMapOf<String, Any?>()
-
+            updateMap["title"] = specialNoteModel.title
             updateMap["specialField1"] = specialNoteModel.specialField1
             updateMap["specialField2"] = specialNoteModel.specialField2
             updateMap["specialField3"] = specialNoteModel.specialField3

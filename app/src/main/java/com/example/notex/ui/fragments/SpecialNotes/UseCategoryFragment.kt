@@ -11,12 +11,15 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import com.example.notex.Independents.CostumeDataType
 import com.example.notex.Independents.helper.toast
 import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
 import com.example.notex.data.models.CategoryModel
+import com.example.notex.data.models.specialField
 import com.example.notex.databinding.FragmentUseCategoryBinding
 import com.example.notex.viewmodels.categoryViewModel
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,6 +31,8 @@ class UseCategoryFragment : Fragment(R.layout.fragment_use_category) {
 
     private lateinit var options:MutableList<String>
     private lateinit var backupDatas: MutableList<CategoryModel>
+
+    var userId = FirebaseAuth.getInstance().currentUser?.uid
 
     private val categoryViewModel: categoryViewModel by viewModels()
 
@@ -93,6 +98,24 @@ class UseCategoryFragment : Fragment(R.layout.fragment_use_category) {
             }
         }
 
+
+        binding.withoutButton.setOnClickListener{
+            var result = CategoryModel("WithoutCategory", "WithoutCategory",
+                specialField("", datatype = CostumeDataType.Sentence.toString()),
+                specialField("", datatype = CostumeDataType.Sentence.toString()),
+                specialField("", datatype = CostumeDataType.Sentence.toString()),
+                specialField("", datatype = CostumeDataType.Sentence.toString()),
+                specialField("", datatype = CostumeDataType.Sentence.toString()),
+                specialField("", datatype = CostumeDataType.Sentence.toString()),
+                specialField("", datatype = CostumeDataType.Sentence.toString()),
+                userId.toString()
+            )
+
+            var bundle = Bundle()
+            bundle.putParcelable("category",result)
+            nav.replace(this , R.id.action_useCategoryFragment_to_newSpeacialNote,bundle)
+
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

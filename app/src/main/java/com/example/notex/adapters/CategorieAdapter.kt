@@ -53,7 +53,8 @@ class CategorieAdapter():RecyclerView.Adapter<CategorieAdapter.CategorieViewHold
 
     override fun onBindViewHolder(holder: CategorieViewHolder, position: Int) {
         var currentcategorie:CategoryModel = differ.currentList[position]
-        holder.itemBinding.categorieTitle.text = currentcategorie.title.toString()
+        holder.itemBinding.textViewTitle.text = currentcategorie.title.toString()
+        holder.itemBinding.textViewSubtitle.text = currentcategorie.description.toString()
 
         holder.itemView.setOnClickListener { view ->
            val direction = CategorieFragmentDirections.actionCategorieFragmentToDetailCategoryFragment(currentcategorie)

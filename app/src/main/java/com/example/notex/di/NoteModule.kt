@@ -1,7 +1,7 @@
 package com.example.notex.di
 
-import com.example.notex.data.repositories.Database.Dao.LoginDao
-import com.example.notex.data.repositories.Database.Dao.NoteDao
+import com.example.notex.data.interfaces.Dao.LoginDao
+import com.example.notex.data.interfaces.Dao.NoteDao
 import com.example.notex.data.interfaces.authorizationInterface
 import com.example.notex.data.interfaces.categorieInterface
 import com.example.notex.data.interfaces.noteInteface

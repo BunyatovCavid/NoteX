@@ -2,7 +2,7 @@ package com.example.notex.data.repositories
 
 import android.util.Log
 import com.example.notex.data.models.LoginEntity
-import com.example.notex.data.repositories.Database.Dao.LoginDao
+import com.example.notex.data.interfaces.Dao.LoginDao
 import com.example.notex.data.interfaces.authorizationInterface
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -54,6 +54,10 @@ class authorizationRepository @Inject constructor(private val loginDao: LoginDao
                       Log.e("AuthError", "Firebase ilə əlaqə problemi: ${exception.message}")
                       callback(false, "Firebase ilə əlaqə problemi: ${exception.message}")
                   }
+    }
+
+    override fun singOut() {
+        firebaseAuth.signOut()
     }
 
     override fun resetPassword(email: String, onResult: (Boolean, String?) -> Unit) {

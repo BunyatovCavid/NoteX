@@ -10,6 +10,8 @@ interface authorizationInterface {
 
     fun singUp(email:String, password:String, callback: (Boolean, String?) -> Unit)
 
+    fun singOut()
+
     fun resetPassword(email: String, onResult: (Boolean, String?) -> Unit)
 
     suspend fun saveUserToLocalDatabase(loginEntity: LoginEntity)

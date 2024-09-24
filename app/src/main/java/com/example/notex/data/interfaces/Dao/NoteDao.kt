@@ -1,4 +1,4 @@
-package com.example.notex.data.repositories.Database.Dao
+package com.example.notex.data.interfaces.Dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/categorieFragment"
+    app:startDestination="@id/onBoardingFragment"
     >
     <fragment
         android:id="@+id/welcomingFragment"
@@ -65,7 +65,7 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.notex.ui.fragments.SpecialNotes.HomeFragment"
-        android:label="fragment_home"
+        android:label="Special Notes"
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_noteFragment"
@@ -82,6 +82,9 @@
         <action
             android:id="@+id/action_homeFragment_to_specialNoteDetailFragment"
             app:destination="@id/specialNoteDetailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_profileFragment2"
+            app:destination="@id/profileFragment2" />
     </fragment>
     <fragment
         android:id="@+id/setUpProfileFragment"
@@ -99,6 +102,9 @@
         <action
             android:id="@+id/action_onBoardingFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <argument
+            android:name="check"
+            app:argType="com.example.notex.data.models.CheckLoginData"/>
     </fragment>
     <fragment
         android:id="@+id/noteFragment"
@@ -158,7 +164,7 @@
     <fragment
         android:id="@+id/categorieFragment"
         android:name="com.example.notex.ui.fragments.Categories.CategorieFragment"
-        android:label="fragment_categorie"
+        android:label="Categories"
         tools:layout="@layout/fragment_categorie" >
         <action
             android:id="@+id/action_categorieFragment_to_homeFragment"
@@ -232,5 +238,17 @@
             android:name="specialnote"
             app:argType="com.example.notex.data.models.SpecialNoteModel"
             />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment2"
+        android:name="com.example.notex.ui.fragments.Profile.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment2_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_profileFragment2_to_onBoardingFragment"
+            app:destination="@id/onBoardingFragment" />
     </fragment>
 </navigation>

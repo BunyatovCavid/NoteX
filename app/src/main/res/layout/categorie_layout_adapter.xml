@@ -1,23 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp"
+    android:layout_margin="12dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="8dp"
     android:background="?android:attr/selectableItemBackground"
-    android:gravity="center_vertical">
+    android:padding="0dp"
+    android:foreground="?android:attr/selectableItemBackground">
 
-    <TextView
-        android:id="@+id/categorieTitle"
+    <!-- Arka plan için bir Container -->
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textColor="@android:color/black"
-        android:padding="8dp"
-        android:textStyle="bold"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:text="Sample Title"
-        android:background="@drawable/inpt3"/>
+        android:background="@drawable/background_gradient"
+        android:padding="16dp"
+        android:layout_margin="4dp">
 
-</LinearLayout>
+        <!-- Başlık TextView -->
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Başlık"
+            android:textSize="20sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:fontFamily="sans-serif-medium" />
+
+        <!-- Açıklama TextView -->
+        <TextView
+            android:id="@+id/textViewSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bu, RecyclerView iteminin kısa açıklaması."
+            android:textSize="14sp"
+            android:textColor="@android:color/white"
+            android:layout_below="@id/textViewTitle"
+            android:layout_marginTop="4dp"
+            android:layout_alignParentStart="true"
+            android:fontFamily="sans-serif-light" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

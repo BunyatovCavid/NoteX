@@ -1,7 +1,7 @@
 package com.example.notex.data.repositories
 
 import androidx.lifecycle.LiveData
-import com.example.notex.data.repositories.Database.Dao.NoteDao
+import com.example.notex.data.interfaces.Dao.NoteDao
 import com.example.notex.data.interfaces.noteInteface
 import com.example.notex.data.models.Note
 import javax.inject.Inject

@@ -1,34 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".ui.fragments.SpecialNotes.UseCategoryFragment"
+    android:layout_height="match_parent"
     android:padding="30dp"
+    android:gravity="center"
     android:orientation="vertical"
-    android:gravity="center_vertical"
-    >
+    tools:context=".ui.fragments.SpecialNotes.UseCategoryFragment">
 
     <Spinner
         android:id="@+id/spinnerCheck"
         android:layout_width="343dp"
-        android:layout_height="42dp"
+        android:layout_height="50dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/inpt1"
-        android:layout_centerHorizontal="true"
-        />
+        android:background="@drawable/inpt1" />
 
     <Button
         android:id="@+id/useButton"
         android:layout_width="300dp"
         android:layout_height="42dp"
-        android:layout_below="@id/spinnerCheck"
         android:layout_marginTop="12dp"
         android:background="@drawable/btn1"
         android:padding="10dp"
-        android:text="Use"
-        android:layout_centerHorizontal="true"
-        />
+        android:text="Use" />
 
+    <Button
+        android:id="@+id/withoutButton"
+        android:layout_width="300dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/btn5"
+        android:textColor="@color/white"
+        android:padding="10dp"
+        android:text="Without Category" />
 
-</RelativeLayout>
+</LinearLayout>

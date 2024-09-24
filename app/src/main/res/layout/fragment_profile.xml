@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragments.Profile.ProfileFragment"
+    android:orientation="vertical"
+    android:gravity="bottom"
+    android:padding="20dp"
+    >
+
+    <Button
+        android:id="@+id/signOutButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/btn1"
+        android:padding="15dp"
+        android:textColor="@color/white"
+        android:text="Sign Out"
+        android:textSize="24dp"
+        android:layout_centerHorizontal="true"
+        />
+
+</RelativeLayout>

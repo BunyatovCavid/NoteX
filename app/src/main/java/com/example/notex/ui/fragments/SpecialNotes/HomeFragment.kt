@@ -72,6 +72,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 options.add(item.title)
             }
 
+            options.add("WithoutCategory")
+
             val adapter = ArrayAdapter(requireContext(), R.layout.use_spinner_item, options)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.searchCategory.adapter = adapter

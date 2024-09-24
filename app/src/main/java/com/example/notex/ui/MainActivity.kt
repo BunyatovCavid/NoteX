@@ -59,8 +59,8 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.categorieFragment)
                     true
                 }
-                R.id.profileFragment->{
-                    navController.navigate(R.id.profileFragment)
+                R.id.profileFragment2->{
+                    navController.navigate(R.id.profileFragment2)
                     true
                 }
                 else -> false

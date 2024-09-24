@@ -19,10 +19,21 @@
             android:background="@drawable/inpt1"
             />
 
+        <EditText
+            android:id="@+id/categoryDescriptionnew"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_marginTop="10dp"
+            android:hint="Category Description"
+            android:layout_below="@id/categoryTitlenew"
+            android:background="@drawable/inpt1"
+            />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/categoryTitlenew"
+            android:layout_below="@id/categoryDescriptionnew"
             android:orientation="vertical">
 
         <LinearLayout

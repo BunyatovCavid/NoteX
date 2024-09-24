@@ -3,8 +3,8 @@ package com.example.notex.di
 import android.content.Context
 import androidx.room.Room
 import com.example.notex.data.repositories.Database.AppDatabase
-import com.example.notex.data.repositories.Database.Dao.LoginDao
-import com.example.notex.data.repositories.Database.Dao.NoteDao
+import com.example.notex.data.interfaces.Dao.LoginDao
+import com.example.notex.data.interfaces.Dao.NoteDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

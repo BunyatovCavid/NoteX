@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.notex.data.models.LoginEntity
-import com.example.notex.data.repositories.Database.Dao.LoginDao
+import com.example.notex.data.interfaces.Dao.LoginDao
 import com.example.notex.data.interfaces.authorizationInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -17,12 +17,32 @@ class authorizationViewModel @Inject constructor( private val repository:authori
     private val _loginResult = MutableLiveData<String?>()
     val loginResult: LiveData<String?> get() = _loginResult
 
+    private val _loginEntity = MutableLiveData<String>()
+    val loginEntity:LiveData<String> get() = _loginEntity
+
     private val _signUpResult = MutableLiveData<String?>()
     val signUpResult: LiveData<String?> get() = _signUpResult
 
     private val _resetPasswordResult = MutableLiveData<String?>()
     val resetPasswordResult: LiveData<String?> get() = _resetPasswordResult
 
+
+    fun singOut()
+    {
+        viewModelScope.launch {
+            try {
+                repository.singOut()
+
+                 val user = getUserFromLocalDatabase()
+                 if (user != null) {
+                     loginDao.deleteUser(user)
+                     _loginEntity.postValue("Deleted")
+                 }
+            } catch (e: Exception) {
+                _loginResult.postValue("Çıxma zamanı bir hata baş verdi: ${e.message}")
+            }
+        }
+    }
 
     fun logIn(email: String, password: String) {
         viewModelScope.launch {

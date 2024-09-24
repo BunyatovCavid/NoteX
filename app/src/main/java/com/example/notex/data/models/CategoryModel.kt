@@ -14,7 +14,8 @@ data class CategoryModel (
     var field5: specialField? = null,
     var field6: specialField? = null,
     var field7: specialField? = null,
-    var userId: String = ""):Parcelable
+    var userId: String = "",
+    var description:String =""):Parcelable
 
 @Parcelize
 data class specialField(

@@ -10,7 +10,7 @@
     <EditText
         android:id="@+id/specialnoteTitle"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:hint="Title"
         android:textColor="@color/black"
         android:padding="10dp"
@@ -20,7 +20,7 @@
     <EditText
         android:id="@+id/specialnoteField1"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="field1"
         android:textColor="@color/black"
@@ -31,7 +31,7 @@
     <EditText
         android:id="@+id/specialnoteField2"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="field2"
         android:textColor="@color/black"
@@ -42,7 +42,7 @@
     <EditText
         android:id="@+id/specialnoteField3"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="field3"
         android:textColor="@color/black"
@@ -53,7 +53,7 @@
     <EditText
         android:id="@+id/specialnoteField4"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="field4"
         android:textColor="@color/black"
@@ -64,7 +64,7 @@
     <EditText
         android:id="@+id/specialnoteField5"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="field5"
         android:textColor="@color/black"
@@ -75,7 +75,7 @@
     <EditText
         android:id="@+id/specialnoteField6"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="field6"
         android:textColor="@color/black"
@@ -86,7 +86,7 @@
     <EditText
         android:id="@+id/specialnoteField7"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="field7"
         android:textColor="@color/black"

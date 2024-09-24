@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toolbar
+import androidx.activity.OnBackPressedCallback
+import com.example.notex.Independents.helper.toast
 import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
 import com.example.notex.databinding.FragmentWelcomingBinding
@@ -21,6 +23,7 @@ class WelcomingFragment : Fragment(R.layout.fragment_welcoming) {
 
     private lateinit var replacefrg: replaceFragments
 
+    private var backPressedOnce = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +32,21 @@ class WelcomingFragment : Fragment(R.layout.fragment_welcoming) {
         // Inflate the layout for this fragment
         _binding = FragmentWelcomingBinding.inflate(inflater, container, false)
         val view = binding.root
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (backPressedOnce) {
+                    requireActivity().finish()
+                } else {
+                    backPressedOnce = true
+                    context?.toast("Press back again to exit")
+                    view?.postDelayed({
+                        backPressedOnce = false
+                    }, 2000)
+                }
+            }
+        })
+
         return view
     }
 

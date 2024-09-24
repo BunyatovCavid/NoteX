@@ -1,6 +1,7 @@
-package com.example.notex.data.repositories.Database.Dao
+package com.example.notex.data.interfaces.Dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -13,4 +14,7 @@ interface LoginDao {
 
     @Query("SELECT * FROM login_data LIMIT 1")
     suspend fun getLoginData(): LoginEntity?
+
+    @Delete
+    suspend fun deleteUser(user: LoginEntity)
 }
