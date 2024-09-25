@@ -34,7 +34,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class CategorieFragment : Fragment(R.layout.fragment_categorie),  SearchView.OnQueryTextListener {
+class CategorieFragment : Fragment(R.layout.fragment_categorie) {
 
     private var _binding:FragmentCategorieBinding?= null
     private val binding get() = _binding!!
@@ -55,16 +55,6 @@ class CategorieFragment : Fragment(R.layout.fragment_categorie),  SearchView.OnQ
         _binding = FragmentCategorieBinding.inflate(inflater,container,false)
 
         return  binding.root
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        menu.clear()
-        inflater.inflate(R.menu.home_menu, menu)
-
-        val mMenuSearch = menu.findItem(R.id.menu_search).actionView as SearchView
-        mMenuSearch.isSubmitButtonEnabled = true
-        mMenuSearch.setOnQueryTextListener(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -114,26 +104,6 @@ class CategorieFragment : Fragment(R.layout.fragment_categorie),  SearchView.OnQ
             binding.cardView.visibility = View.VISIBLE
             binding.categorierecycleView.visibility = View.GONE
         }
-    }
-
-
-    override fun onQueryTextSubmit(query: String?): Boolean {
-
-        if(query!=null)
-            searchNotes(query)
-
-        return true
-    }
-
-    override fun onQueryTextChange(query: String?): Boolean {
-        if(query!=null)
-            searchNotes(query)
-
-        return true
-    }
-
-    private fun searchNotes(query: String?){
-
     }
 
 

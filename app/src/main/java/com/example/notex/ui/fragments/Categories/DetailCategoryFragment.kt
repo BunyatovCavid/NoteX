@@ -9,6 +9,8 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
@@ -20,6 +22,7 @@ import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
 import com.example.notex.adapters.CategorieAdapter
 import com.example.notex.data.models.CategoryModel
+import com.example.notex.data.models.specialField
 import com.example.notex.databinding.FragmentDetailCategoryBinding
 import com.example.notex.ui.MainActivity
 import com.example.notex.viewmodels.categoryViewModel
@@ -54,73 +57,38 @@ class DetailCategoryFragment : Fragment(R.layout.fragment_detail_category) {
         return binding.root
     }
 
+    private fun setViewField(textViewTitle: TextView, textViewSpinner:TextView, data:specialField?, layout:LinearLayout)
+    {
+        if(data!=null)
+        {
+            textViewTitle.setText(data.title)
+            textViewSpinner.setText(data.datatype)
+        }
+        else
+            layout.visibility = View.GONE
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
          currentCategory = args.category
          nav = replaceFragments()
 
         binding.categoryTitlenew.setText(currentCategory.title)
-        if(currentCategory.field1 !=null)
+        if(currentCategory.description !=null)
         {
-            binding.categoryCheck1Title.setText(currentCategory?.field1?.title)
-            binding.textCheck1.setText(currentCategory.field1?.datatype)
+            binding.categoryDescriptionnew.setText(currentCategory.description)
         }
         else
-            binding.categoryCheck1.visibility = View.GONE
+            binding.categoryDescriptionnew.visibility = View.GONE
 
 
-        if(currentCategory.field2 !=null)
-        {
-            binding.categoryCheck2Title.setText(currentCategory?.field2?.title)
-            binding.textCheck2.setText(currentCategory.field2?.datatype)
-        }
-        else
-            binding.categoryCheck2.visibility = View.GONE
-
-
-        if(currentCategory.field3 !=null)
-        {
-            binding.categoryCheck3Title.setText(currentCategory?.field3?.title)
-            binding.textCheck3.setText(currentCategory.field3?.datatype)
-        }
-        else
-            binding.categoryCheck3.visibility = View.GONE
-
-
-        if(currentCategory.field4 !=null)
-        {
-            binding.categoryCheck4Title.setText(currentCategory?.field4?.title)
-            binding.textCheck4.setText(currentCategory.field4?.datatype)
-        }
-        else
-            binding.categoryCheck4.visibility = View.GONE
-
-
-        if(currentCategory.field5 !=null)
-        {
-            binding.categoryCheck5Title.setText(currentCategory?.field5?.title)
-            binding.textCheck5.setText(currentCategory.field5?.datatype)
-        }
-        else
-            binding.categoryCheck5.visibility = View.GONE
-
-
-        if(currentCategory.field6 !=null)
-        {
-            binding.categoryCheck6Title.setText(currentCategory?.field6?.title)
-            binding.textCheck6.setText(currentCategory.field6?.datatype)
-        }
-        else
-            binding.categoryCheck6.visibility = View.GONE
-
-
-        if(currentCategory.field7 !=null)
-        {
-            binding.categoryCheck7Title.setText(currentCategory?.field7?.title)
-            binding.textCheck7.setText(currentCategory.field7?.datatype)
-        }
-        else
-            binding.categoryCheck7.visibility = View.GONE
+        setViewField(binding.categoryCheck1Title, binding.textCheck1, currentCategory.field1, binding.categoryCheck1 )
+        setViewField(binding.categoryCheck2Title, binding.textCheck2, currentCategory.field2, binding.categoryCheck2 )
+        setViewField(binding.categoryCheck3Title, binding.textCheck3, currentCategory.field3, binding.categoryCheck3 )
+        setViewField(binding.categoryCheck4Title, binding.textCheck4, currentCategory.field4, binding.categoryCheck4 )
+        setViewField(binding.categoryCheck5Title, binding.textCheck5, currentCategory.field5, binding.categoryCheck5 )
+        setViewField(binding.categoryCheck6Title, binding.textCheck6, currentCategory.field6, binding.categoryCheck6 )
+        setViewField(binding.categoryCheck7Title, binding.textCheck7, currentCategory.field7, binding.categoryCheck7 )
 
     }
 
@@ -174,8 +142,6 @@ class DetailCategoryFragment : Fragment(R.layout.fragment_detail_category) {
         }
     }
 
-
-
     override fun onDestroy() {
         super.onDestroy()
         binding.categoryCheck1.visibility =View.VISIBLE
@@ -185,6 +151,7 @@ class DetailCategoryFragment : Fragment(R.layout.fragment_detail_category) {
         binding.categoryCheck5.visibility =View.VISIBLE
         binding.categoryCheck6.visibility =View.VISIBLE
         binding.categoryCheck7.visibility =View.VISIBLE
+        binding.categoryDescriptionnew.visibility =View.VISIBLE
     }
 
 

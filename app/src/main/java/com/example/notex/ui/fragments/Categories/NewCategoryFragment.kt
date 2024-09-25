@@ -1,5 +1,6 @@
 package com.example.notex.ui.fragments.Categories
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,12 +10,17 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import androidx.fragment.app.viewModels
 import com.example.notex.Independents.CostumeDataType
+import com.example.notex.Independents.helper.toast
 import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
 import com.example.notex.data.models.CategoryModel
@@ -31,7 +37,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class NewCategoryFragment : Fragment(R.layout.fragment_new_category) {
 
     private var _binding:FragmentNewCategoryBinding?= null
-    private val binding get() =_binding
+    private val binding get() =_binding!!
 
     private val categoryViewModel:categoryViewModel by viewModels()
     private lateinit var managedCategory:MutableList<ManagedCategoryModel>
@@ -61,13 +67,13 @@ class NewCategoryFragment : Fragment(R.layout.fragment_new_category) {
 
         val adapter = ArrayAdapter(requireContext(), R.layout.spinnet_item, options)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding?.spinnerCheck1?.adapter = adapter
-        binding?.spinnerCheck2?.adapter = adapter
-        binding?.spinnerCheck3?.adapter = adapter
-        binding?.spinnerCheck4?.adapter = adapter
-        binding?.spinnerCheck5?.adapter = adapter
-        binding?.spinnerCheck6?.adapter = adapter
-        binding?.spinnerCheck7?.adapter = adapter
+        binding.spinnerCheck1.adapter = adapter
+        binding.spinnerCheck2.adapter = adapter
+        binding.spinnerCheck3.adapter = adapter
+        binding.spinnerCheck4.adapter = adapter
+        binding.spinnerCheck5.adapter = adapter
+        binding.spinnerCheck6.adapter = adapter
+        binding.spinnerCheck7.adapter = adapter
 
 
         managedCategory = mutableListOf<ManagedCategoryModel>(ManagedCategoryModel(1, true),
@@ -79,112 +85,76 @@ class NewCategoryFragment : Fragment(R.layout.fragment_new_category) {
             ManagedCategoryModel(7, false),
         )
 
-        binding?.addButton?.setOnClickListener{
+        binding.addButton.setOnClickListener{
             managedFieldAreas()
         }
 
-        binding?.deleteButton1?.setOnClickListener{
-            binding?.categoryCheck1?.visibility =View.GONE
-            binding?.addButton?.setBackgroundResource(R.drawable.btn4)
-            managedCategory.find { it.id==1 }?.IsActiveBoolean = false
+        binding.deleteButton1.setOnClickListener{
+            setOnClick(binding.deleteButton1, binding.categoryCheck1, 1, R.drawable.btn4)
         }
 
-
-        binding?.deleteButton2?.setOnClickListener{
-            binding?.categoryCheck2?.visibility =View.GONE
-            binding?.addButton?.setBackgroundResource(R.drawable.btn4)
-            managedCategory.find { it.id==2 }?.IsActiveBoolean = false
+        binding.deleteButton2.setOnClickListener{
+            setOnClick(binding.deleteButton2, binding.categoryCheck2, 2, R.drawable.btn4)
         }
 
-        binding?.deleteButton3?.setOnClickListener{
-            binding?.categoryCheck3?.visibility =View.GONE
-            binding?.addButton?.setBackgroundResource(R.drawable.btn4)
-            managedCategory.find { it.id==3 }?.IsActiveBoolean = false
+        binding.deleteButton3.setOnClickListener{
+            setOnClick(binding.deleteButton3, binding.categoryCheck3, 3, R.drawable.btn4)
         }
 
-        binding?.deleteButton4?.setOnClickListener{
-            binding?.categoryCheck4?.visibility =View.GONE
-            binding?.addButton?.setBackgroundResource(R.drawable.btn4)
-            managedCategory.find { it.id==4 }?.IsActiveBoolean = false
+        binding.deleteButton4.setOnClickListener{
+            setOnClick(binding.deleteButton4, binding.categoryCheck4, 4, R.drawable.btn4)
         }
 
-        binding?.deleteButton5?.setOnClickListener{
-            binding?.categoryCheck5?.visibility =View.GONE
-            binding?.addButton?.setBackgroundResource(R.drawable.btn4)
-            managedCategory.find { it.id==5 }?.IsActiveBoolean = false
+        binding.deleteButton5.setOnClickListener{
+            setOnClick(binding.deleteButton5, binding.categoryCheck5, 5, R.drawable.btn4)
         }
 
-        binding?.deleteButton6?.setOnClickListener{
-            binding?.categoryCheck6?.visibility =View.GONE
-            binding?.addButton?.setBackgroundResource(R.drawable.btn4)
-            managedCategory.find { it.id==6 }?.IsActiveBoolean = false
+        binding.deleteButton6.setOnClickListener{
+            setOnClick(binding.deleteButton6, binding.categoryCheck6, 6, R.drawable.btn4)
         }
-        binding?.deleteButton7?.setOnClickListener{
-            binding?.categoryCheck7?.visibility =View.GONE
-            binding?.addButton?.setBackgroundResource(R.drawable.btn4)
-            managedCategory.find { it.id==7 }?.IsActiveBoolean = false
+        binding.deleteButton7.setOnClickListener{
+            setOnClick(binding.deleteButton7, binding.categoryCheck7, 7, R.drawable.btn4)
         }
+    }
+
+    private fun setOnClick(button: Button, linearLayout: LinearLayout, id:Int, drawable: Int){
+            linearLayout.visibility = View.GONE
+            button.setBackgroundResource(drawable)
+            managedCategory.find { it.id==id }?.IsActiveBoolean =false
     }
 
 
 
-
-    private fun managedFieldAreas(){
-        var lastVisibleLinearLayoutId: Int? = 1
+    private fun managedFieldAreas() {
         for (item in managedCategory) {
-                if(!item.IsActiveBoolean)
-                {
-                    when(item.id)
-                    {
-                        1->{
-                            binding?.categoryCheck2?.visibility = View.VISIBLE
-                            true
-                        }
-                        2->{
-                            binding?.categoryCheck2?.visibility = View.VISIBLE
-                            true
-                        }
-                        3->{
-                            binding?.categoryCheck3?.visibility = View.VISIBLE
-                            true
-                        }
-                        4->{
-                            binding?.categoryCheck4?.visibility = View.VISIBLE
-                            true
-                        }
-                        5->{
-                            binding?.categoryCheck5?.visibility = View.VISIBLE
-                            true
-                        }
-                        6->{
-                            binding?.categoryCheck6?.visibility = View.VISIBLE
-                            true
-                        }
-                        7->{
-                            binding?.categoryCheck7?.visibility = View.VISIBLE
-                            true
-                        }
-                        else->
-                            false
-                    }
-                    item.IsActiveBoolean = true
-                    break
-                }
-
+            if (!item.IsActiveBoolean) {
+                val view = getFieldLayoutViewById(item.id)
+                view?.visibility = View.VISIBLE
+                item.IsActiveBoolean = true
+                break
             }
+        }
 
-        var check = true
-       managedCategory.forEach{item->
-           if(item.IsActiveBoolean==false)
-               check =false
-           else {
-               check = true
-           }
-       }
+        val allActive = managedCategory.all { it.IsActiveBoolean }
 
-        if(check)
-            binding?.addButton?.setBackgroundResource(R.drawable.btn3)
+        if (allActive) {
+            binding.addButton.setBackgroundResource(R.drawable.btn3)
+        }
     }
+
+    private fun getFieldLayoutViewById(id: Int): View? {
+        return when (id) {
+            1 -> binding.categoryCheck1
+            2 -> binding.categoryCheck2
+            3 -> binding.categoryCheck3
+            4 -> binding.categoryCheck4
+            5 -> binding.categoryCheck5
+            6 -> binding.categoryCheck6
+            7 -> binding.categoryCheck7
+            else -> null
+        }
+    }
+
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -206,57 +176,41 @@ class NewCategoryFragment : Fragment(R.layout.fragment_new_category) {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun setField(editText: EditText, spinner: Spinner, ):specialField?
+    {
+        var response: specialField? = null
+        if(editText.text?.isBlank()==false)
+        {
+            response = specialField()
+            response.title = editText.text.toString()
+            response.datatype = spinner.selectedItem.toString()
+        }
+        return response
+    }
+
     private fun addCategory(){
-        var title:String=binding?.categoryTitlenew?.text.toString()
+        var title:String=binding.categoryTitlenew.text.toString()
         var categoryModel = CategoryModel()
 
-        categoryModel.title = title.toString()
-        categoryModel.description = binding?.categoryDescriptionnew?.text.toString()
+        if (!title.all { it == '.' || it.isWhitespace() }) {
+            categoryModel.title = title.toString()
+            if(binding.categoryDescriptionnew.text.isNotBlank())
+                categoryModel.description = binding.categoryDescriptionnew.text.toString()
 
-        if(binding?.categoryCheck1Title?.text?.isBlank()==false)
-        {
-            val fieldtitle = binding?.categoryCheck1Title?.text.toString()
-            val datatype =  binding?.spinnerCheck1?.selectedItem.toString()
-            categoryModel.field1 = specialField(fieldtitle,datatype)
-        }
-        if(binding?.categoryCheck2Title?.text?.isBlank()==false)
-        {
-            val fieldtitle = binding?.categoryCheck2Title?.text.toString()
-            val datatype =  binding?.spinnerCheck2?.selectedItem.toString()
-            categoryModel.field2 = specialField(fieldtitle, datatype)
-        }
-        if(binding?.categoryCheck3Title?.text?.isBlank()==false)
-        {
-            val fieldtitle = binding?.categoryCheck3Title?.text.toString()
-            val datatype =  binding?.spinnerCheck3?.selectedItem.toString()
-            categoryModel.field3 = specialField(fieldtitle, datatype)
-        }
-        if(binding?.categoryCheck4Title?.text?.isBlank()==false)
-        {
-            val fieldtitle = binding?.categoryCheck4Title?.text.toString()
-            val datatype =  binding?.spinnerCheck4?.selectedItem.toString()
-            categoryModel.field4 = specialField(fieldtitle, datatype)
-        }
-        if(binding?.categoryCheck5Title?.text?.isBlank()==false)
-        {
-            val fieldtitle = binding?.categoryCheck5Title?.text.toString()
-            val datatype =  binding?.spinnerCheck5?.selectedItem.toString()
-            categoryModel.field5 = specialField(fieldtitle, datatype)
-        }
-        if(binding?.categoryCheck6Title?.text?.isBlank()==false)
-        {
-            val fieldtitle = binding?.categoryCheck6Title?.text.toString()
-            val datatype =  binding?.spinnerCheck6?.selectedItem.toString()
-            categoryModel.field6 = specialField(fieldtitle, datatype)
-        }
-        if(binding?.categoryCheck7Title?.text?.isBlank()==false)
-        {
-            val fieldtitle = binding?.categoryCheck7Title?.text.toString()
-            val datatype =  binding?.spinnerCheck7?.selectedItem.toString()
-            categoryModel.field7 = specialField(fieldtitle, datatype)
-        }
+            categoryModel.field1 = setField(binding.categoryCheck1Title, binding.spinnerCheck1)
+            categoryModel.field2 = setField(binding.categoryCheck2Title, binding.spinnerCheck2)
+            categoryModel.field3 = setField(binding.categoryCheck3Title, binding.spinnerCheck3)
+            categoryModel.field4 = setField(binding.categoryCheck4Title, binding.spinnerCheck4)
+            categoryModel.field5 = setField(binding.categoryCheck5Title, binding.spinnerCheck5)
+            categoryModel.field6 = setField(binding.categoryCheck6Title, binding.spinnerCheck6)
+            categoryModel.field7 = setField(binding.categoryCheck7Title, binding.spinnerCheck7)
 
-        categoryViewModel.addCategory("Categories", categoryModel)
+            categoryViewModel.addCategory("Categories", categoryModel)
+        }
+        else
+        {
+            context?.toast("The category name cannot consist only of dots and spaces.")
+        }
     }
 
 

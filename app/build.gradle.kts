@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.google.gms.google.services)
     id ("kotlin-parcelize")
     id ("androidx.navigation.safeargs.kotlin")
+    alias(libs.plugins.google.firebase.crashlytics)
 }
 
 android {
@@ -60,6 +61,7 @@ dependencies {
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4")
     implementation(libs.firebase.database)
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.crashlytics)
 
     kapt("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-runtime:2.6.1")
