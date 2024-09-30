@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/welcomingFragment"
         android:name="com.example.notex.ui.fragments.Login.WelcomingFragment"
-        android:label="fragment_welcoming"
+        android:label="Welcoming"
         tools:layout="@layout/fragment_welcoming" >
         <action
             android:id="@+id/action_welcomingFragment_to_loginFragment"
@@ -23,7 +23,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.notex.ui.fragments.Login.LoginFragment"
-        android:label="fragment_login"
+        android:label="Login"
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_registerFragment2"
@@ -41,7 +41,7 @@
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.notex.ui.fragments.Login.RegisterFragment"
-        android:label="fragment_register"
+        android:label="Register"
         tools:layout="@layout/fragment_register" >
         <action
             android:id="@+id/action_registerFragment_to_loginFragment2"
@@ -89,12 +89,12 @@
     <fragment
         android:id="@+id/setUpProfileFragment"
         android:name="com.example.notex.ui.fragments.SetUpProfileFragment"
-        android:label="fragment_set_up_profile"
+        android:label="SetUp Profile"
         tools:layout="@layout/fragment_set_up_profile" />
     <fragment
         android:id="@+id/onBoardingFragment"
         android:name="com.example.notex.ui.fragments.Login.OnBoardingFragment"
-        android:label="fragment_on_boarding"
+        android:label="OnBoarding"
         tools:layout="@layout/fragment_on_boarding" >
         <action
             android:id="@+id/action_onBoardingFragment_to_welcomingFragment"
@@ -179,7 +179,7 @@
     <fragment
         android:id="@+id/newCategoryFragment"
         android:name="com.example.notex.ui.fragments.Categories.NewCategoryFragment"
-        android:label="fragment_new_category"
+        android:label="New Category"
         tools:layout="@layout/fragment_new_category" >
         <action
             android:id="@+id/action_newCategoryFragment_to_categorieFragment"
@@ -188,7 +188,7 @@
     <fragment
         android:id="@+id/newSpeacialNote"
         android:name="com.example.notex.ui.fragments.SpecialNotes.NewSpeacialNote"
-        android:label="fragment_new_speacial_note"
+        android:label="New Special Note"
         tools:layout="@layout/fragment_new_speacial_note" >
         <action
             android:id="@+id/action_newSpeacialNote_to_homeFragment"
@@ -204,7 +204,7 @@
     <fragment
         android:id="@+id/useCategoryFragment"
         android:name="com.example.notex.ui.fragments.SpecialNotes.UseCategoryFragment"
-        android:label="fragment_use_category"
+        android:label="Use Category"
         tools:layout="@layout/fragment_use_category" >
         <action
             android:id="@+id/action_useCategoryFragment_to_newSpeacialNote"
@@ -216,7 +216,7 @@
     <fragment
         android:id="@+id/detailCategoryFragment"
         android:name="com.example.notex.ui.fragments.Categories.DetailCategoryFragment"
-        android:label="fragment_detail_category"
+        android:label="Detail Category"
         tools:layout="@layout/fragment_detail_category" >
         <action
             android:id="@+id/action_detailCategoryFragment_to_categorieFragment"

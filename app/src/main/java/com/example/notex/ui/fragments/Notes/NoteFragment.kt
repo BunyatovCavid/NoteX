@@ -9,9 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.marginBottom
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.notex.Independents.helper.toast
 import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
 import com.example.notex.adapters.NoteAdapter
@@ -25,6 +27,7 @@ import com.example.notex.viewmodels.noteViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.properties.Delegates
 
 @AndroidEntryPoint
 class NoteFragment : Fragment(R.layout.fragment_note), SearchView.OnQueryTextListener {
@@ -35,6 +38,8 @@ class NoteFragment : Fragment(R.layout.fragment_note), SearchView.OnQueryTextLis
 
     private val noteViewModel: noteViewModel by viewModels()
     private lateinit var noteAdapter: NoteAdapter
+
+    private var backPressedOnce = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,9 +72,6 @@ class NoteFragment : Fragment(R.layout.fragment_note), SearchView.OnQueryTextLis
             }
         })
     }
-
-
-
 
     private fun setUpRecyclerView(){
         noteAdapter = NoteAdapter()
@@ -108,21 +110,6 @@ class NoteFragment : Fragment(R.layout.fragment_note), SearchView.OnQueryTextLis
         val mMenuSearch = menu.findItem(R.id.menu_search).actionView as SearchView
         mMenuSearch.isSubmitButtonEnabled = true
         mMenuSearch.setOnQueryTextListener(this)
-    }
-
-
-    override fun onResume() {
-        super.onResume()
-        (activity as? MainActivity)?.let {
-            it.findViewById<BottomNavigationView>(R.id.bottomNav).visibility = View.GONE
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        (activity as? MainActivity)?.let {
-            it.findViewById<BottomNavigationView>(R.id.bottomNav).visibility = View.VISIBLE
-        }
     }
 
 

@@ -10,7 +10,9 @@ import androidx.fragment.app.viewModels
 import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
 import com.example.notex.databinding.FragmentForgotPasswordBinding
+import com.example.notex.ui.MainActivity
 import com.example.notex.viewmodels.authorizationViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -55,6 +57,20 @@ class ForgotPasswordFragment : DialogFragment(R.layout.fragment_forgot_password)
             }
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as? MainActivity)?.let {
+            it.findViewById<BottomNavigationView>(R.id.bottomNav).visibility = View.GONE
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (activity as? MainActivity)?.let {
+            it.findViewById<BottomNavigationView>(R.id.bottomNav).visibility = View.VISIBLE
+        }
     }
 
 }

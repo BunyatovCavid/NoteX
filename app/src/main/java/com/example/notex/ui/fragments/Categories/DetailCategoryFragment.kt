@@ -128,20 +128,6 @@ class DetailCategoryFragment : Fragment(R.layout.fragment_detail_category) {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onResume() {
-        super.onResume()
-        (activity as? MainActivity)?.let {
-            it.findViewById<BottomNavigationView>(R.id.bottomNav).visibility = View.GONE
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        (activity as? MainActivity)?.let {
-            it.findViewById<BottomNavigationView>(R.id.bottomNav).visibility = View.VISIBLE
-        }
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         binding.categoryCheck1.visibility =View.VISIBLE
