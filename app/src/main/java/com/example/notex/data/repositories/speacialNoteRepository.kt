@@ -1,7 +1,7 @@
 package com.example.notex.data.repositories
 
 import android.util.Log
-import com.example.notex.data.interfaces.specialNotesInterface
+import com.example.notex.data.interfaces.SpecialNotesInterface
 import com.example.notex.data.models.SpecialNoteModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentId
@@ -11,7 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.tasks.await
 
-class speacialNoteRepository: specialNotesInterface {
+class SpeacialNoteRepository: SpecialNotesInterface {
     var firebaseStrore: FirebaseFirestore
         get() = FirebaseFirestore.getInstance()
         set(value) {}

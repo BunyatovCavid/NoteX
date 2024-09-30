@@ -18,8 +18,8 @@ import com.example.notex.data.models.Note
 import com.example.notex.databinding.FragmentNewNoteBinding
 import com.example.notex.databinding.FragmentNoteBinding
 import com.example.notex.ui.MainActivity
-import com.example.notex.viewmodels.authorizationViewModel
-import com.example.notex.viewmodels.noteViewModel
+import com.example.notex.viewmodels.AuthorizationViewModel
+import com.example.notex.viewmodels.NoteViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,7 +31,7 @@ class NewNoteFragment : Fragment(R.layout.fragment_new_note) {
     private val binding get() = _binding!!
     private lateinit var nav: replaceFragments
 
-    private val noteViewModel: noteViewModel by viewModels()
+    private val noteViewModel: NoteViewModel by viewModels()
     private lateinit var mView:View
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +45,9 @@ class NewNoteFragment : Fragment(R.layout.fragment_new_note) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+
+        nav = replaceFragments()
 
         _binding = FragmentNewNoteBinding.inflate(
             inflater,

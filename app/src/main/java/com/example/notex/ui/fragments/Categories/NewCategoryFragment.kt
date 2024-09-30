@@ -28,7 +28,7 @@ import com.example.notex.data.models.ManagedCategoryModel
 import com.example.notex.data.models.specialField
 import com.example.notex.databinding.FragmentNewCategoryBinding
 import com.example.notex.ui.MainActivity
-import com.example.notex.viewmodels.categoryViewModel
+import com.example.notex.viewmodels.CategoryViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,7 +39,7 @@ class NewCategoryFragment : Fragment(R.layout.fragment_new_category) {
     private var _binding:FragmentNewCategoryBinding?= null
     private val binding get() =_binding!!
 
-    private val categoryViewModel:categoryViewModel by viewModels()
+    private val categoryViewModel:CategoryViewModel by viewModels()
     private lateinit var managedCategory:MutableList<ManagedCategoryModel>
 
     private lateinit var nav:replaceFragments

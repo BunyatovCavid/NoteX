@@ -3,7 +3,7 @@ package com.example.notex.data.repositories
 import android.util.Log
 import com.example.notex.data.models.LoginEntity
 import com.example.notex.data.interfaces.Dao.LoginDao
-import com.example.notex.data.interfaces.authorizationInterface
+import com.example.notex.data.interfaces.AuthorizationInterface
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class authorizationRepository @Inject constructor(private val loginDao: LoginDao) :authorizationInterface {
+class AuthorizationRepository @Inject constructor(private val loginDao: LoginDao) :AuthorizationInterface {
 
     override var firebaseAuth: FirebaseAuth
         get() = FirebaseAuth.getInstance()

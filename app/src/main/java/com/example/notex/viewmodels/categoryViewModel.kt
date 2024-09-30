@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.notex.data.interfaces.categorieInterface
+import com.example.notex.data.interfaces.CategorieInterface
 import com.example.notex.data.models.CategoryModel
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +14,7 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 @HiltViewModel
-class categoryViewModel @Inject constructor(private  val repository: categorieInterface): ViewModel() {
+class CategoryViewModel @Inject constructor(private  val repository: CategorieInterface): ViewModel() {
 
     private val _categoryResult = MutableLiveData<List<CategoryModel>>()
     val categoryResult: LiveData<List<CategoryModel>> get() = _categoryResult

@@ -6,13 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.notex.data.models.LoginEntity
 import com.example.notex.data.interfaces.Dao.LoginDao
-import com.example.notex.data.interfaces.authorizationInterface
+import com.example.notex.data.interfaces.AuthorizationInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class authorizationViewModel @Inject constructor( private val repository:authorizationInterface, private val loginDao: LoginDao) : ViewModel() {
+class AuthorizationViewModel @Inject constructor( private val repository:AuthorizationInterface, private val loginDao: LoginDao) : ViewModel() {
 
     private val _loginResult = MutableLiveData<String?>()
     val loginResult: LiveData<String?> get() = _loginResult

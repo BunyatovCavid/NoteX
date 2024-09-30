@@ -2,7 +2,7 @@ package com.example.notex.data.repositories
 
 import android.util.Log
 import com.google.firebase.firestore.FieldPath
-import com.example.notex.data.interfaces.categorieInterface
+import com.example.notex.data.interfaces.CategorieInterface
 import com.example.notex.data.models.CategoryModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
@@ -10,7 +10,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.tasks.await
 
-class categorieRepository:categorieInterface {
+class CategorieRepository:CategorieInterface {
 
     var firebaseStrore:FirebaseFirestore
         get() = FirebaseFirestore.getInstance()

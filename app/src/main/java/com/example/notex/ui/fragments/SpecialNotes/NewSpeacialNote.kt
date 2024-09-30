@@ -21,8 +21,8 @@ import com.example.notex.data.models.ManagedCategoryModel
 import com.example.notex.data.models.SpecialNoteModel
 import com.example.notex.data.models.specialField
 import com.example.notex.databinding.FragmentNewSpeacialNoteBinding
-import com.example.notex.viewmodels.categoryViewModel
-import com.example.notex.viewmodels.specialNoteViewModel
+import com.example.notex.viewmodels.CategoryViewModel
+import com.example.notex.viewmodels.SpecialNoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,8 +31,8 @@ class NewSpeacialNote : Fragment(R.layout.fragment_new_speacial_note) {
     private var _binding:FragmentNewSpeacialNoteBinding?=null
     private val binding get()= _binding!!
 
-    private val specialNoteViewModel: specialNoteViewModel by viewModels()
-    private val categoryViewModel: categoryViewModel by viewModels()
+    private val specialNoteViewModel: SpecialNoteViewModel by viewModels()
+    private val categoryViewModel: CategoryViewModel by viewModels()
 
     private var data:CategoryModel?=null
 

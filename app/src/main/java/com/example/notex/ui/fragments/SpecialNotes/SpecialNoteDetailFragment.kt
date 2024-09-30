@@ -29,7 +29,7 @@ import com.example.notex.databinding.FragmentSpecialNoteDetailBinding
 import com.example.notex.databinding.FragmentUpdateNoteBinding
 import com.example.notex.ui.MainActivity
 import com.example.notex.ui.fragments.Notes.UpdateNoteFragmentArgs
-import com.example.notex.viewmodels.specialNoteViewModel
+import com.example.notex.viewmodels.SpecialNoteViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,7 +39,7 @@ class SpecialNoteDetailFragment : Fragment(R.layout.fragment_special_note_detail
 
     private val args: SpecialNoteDetailFragmentArgs by navArgs()
     private lateinit var currentNote: SpecialNoteModel
-    private val specialViewModel:specialNoteViewModel by viewModels()
+    private val specialViewModel:SpecialNoteViewModel by viewModels()
 
     private var _binding: FragmentSpecialNoteDetailBinding? = null
     private val binding get() = _binding!!

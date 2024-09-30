@@ -25,7 +25,7 @@ import com.example.notex.data.models.Note
 import com.example.notex.databinding.FragmentCategorieBinding
 import com.example.notex.databinding.FragmentNoteBinding
 import com.example.notex.ui.MainActivity
-import com.example.notex.viewmodels.categoryViewModel
+import com.example.notex.viewmodels.CategoryViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -40,7 +40,7 @@ class CategorieFragment : Fragment(R.layout.fragment_categorie) {
     private val binding get() = _binding!!
     private lateinit var nav: replaceFragments
 
-    private val categoryViewModel: categoryViewModel by viewModels()
+    private val categoryViewModel: CategoryViewModel by viewModels()
     private lateinit var categoryAdapter:CategorieAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {

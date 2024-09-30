@@ -18,7 +18,7 @@ import com.example.notex.R
 import com.example.notex.data.models.CategoryModel
 import com.example.notex.data.models.specialField
 import com.example.notex.databinding.FragmentUseCategoryBinding
-import com.example.notex.viewmodels.categoryViewModel
+import com.example.notex.viewmodels.CategoryViewModel
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,10 +34,11 @@ class UseCategoryFragment : Fragment(R.layout.fragment_use_category) {
 
     var userId = FirebaseAuth.getInstance().currentUser?.uid
 
-    private val categoryViewModel: categoryViewModel by viewModels()
+    private val categoryViewModel: CategoryViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 

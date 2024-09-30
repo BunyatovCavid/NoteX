@@ -3,7 +3,7 @@ package com.example.notex.data.interfaces
 import com.example.notex.data.models.SpecialNoteModel
 import com.google.firebase.firestore.QuerySnapshot
 
-interface specialNotesInterface {
+interface SpecialNotesInterface {
     suspend fun getspeacialNote(collectionTitle:String): QuerySnapshot
     suspend fun getspeacialNoteById(collectionTitle:String, documentId: String): QuerySnapshot
     suspend fun addspeacialNote(speacialNotetitle:String, speacialNoteModel: SpecialNoteModel)

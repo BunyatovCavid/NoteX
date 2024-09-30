@@ -17,7 +17,7 @@ import com.example.notex.R
 import com.example.notex.data.models.CheckLoginData
 import com.example.notex.databinding.FragmentProfileBinding
 import com.example.notex.ui.MainActivity
-import com.example.notex.viewmodels.authorizationViewModel
+import com.example.notex.viewmodels.AuthorizationViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,7 +27,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private var _binding :FragmentProfileBinding? = null
     private val binding get() =_binding!!
 
-    private val authViewModel :authorizationViewModel by viewModels()
+    private val authViewModel :AuthorizationViewModel by viewModels()
 
     private lateinit var  nav:replaceFragments
 

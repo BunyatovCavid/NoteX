@@ -2,14 +2,14 @@ package com.example.notex.di
 
 import com.example.notex.data.interfaces.Dao.LoginDao
 import com.example.notex.data.interfaces.Dao.NoteDao
-import com.example.notex.data.interfaces.authorizationInterface
-import com.example.notex.data.interfaces.categorieInterface
-import com.example.notex.data.interfaces.noteInteface
-import com.example.notex.data.interfaces.specialNotesInterface
-import com.example.notex.data.repositories.authorizationRepository
-import com.example.notex.data.repositories.categorieRepository
-import com.example.notex.data.repositories.noteRepository
-import com.example.notex.data.repositories.speacialNoteRepository
+import com.example.notex.data.interfaces.AuthorizationInterface
+import com.example.notex.data.interfaces.CategorieInterface
+import com.example.notex.data.interfaces.NoteInteface
+import com.example.notex.data.interfaces.SpecialNotesInterface
+import com.example.notex.data.repositories.AuthorizationRepository
+import com.example.notex.data.repositories.CategorieRepository
+import com.example.notex.data.repositories.NoteRepository
+import com.example.notex.data.repositories.SpeacialNoteRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,27 +23,27 @@ object NoteModule {
 
     @Provides
     @Singleton
-    fun getAuthRepository(loginDao: LoginDao): authorizationInterface {
-        return authorizationRepository(loginDao)
+    fun getAuthRepository(loginDao: LoginDao): AuthorizationInterface {
+        return AuthorizationRepository(loginDao)
     }
 
     @Provides
     @Singleton
-    fun getNoteRepository(noteDao: NoteDao): noteInteface {
-        return noteRepository(noteDao)
+    fun getNoteRepository(noteDao: NoteDao): NoteInteface {
+        return NoteRepository(noteDao)
     }
 
 
     @Provides
     @Singleton
-    fun getCategoryRepository(): categorieInterface {
-        return categorieRepository()
+    fun getCategoryRepository(): CategorieInterface {
+        return CategorieRepository()
     }
 
     @Provides
     @Singleton
-    fun getspecialNoteRepository(): specialNotesInterface {
-        return speacialNoteRepository()
+    fun getspecialNoteRepository(): SpecialNotesInterface {
+        return SpeacialNoteRepository()
     }
 
 

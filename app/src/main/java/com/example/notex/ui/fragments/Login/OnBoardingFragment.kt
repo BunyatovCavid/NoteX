@@ -18,7 +18,7 @@ import com.example.notex.R
 import com.example.notex.data.models.CheckLoginData
 import com.example.notex.ui.MainActivity
 import com.example.notex.ui.fragments.Notes.UpdateNoteFragmentArgs
-import com.example.notex.viewmodels.authorizationViewModel
+import com.example.notex.viewmodels.AuthorizationViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -26,7 +26,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class OnBoardingFragment : Fragment() {
 
-    private val authViewModel: authorizationViewModel by viewModels()
+    private val authViewModel: AuthorizationViewModel by viewModels()
     private lateinit var replacefrg: replaceFragments
 
 

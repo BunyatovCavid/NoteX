@@ -13,7 +13,7 @@ import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
 import com.example.notex.databinding.FragmentLoginBinding
 import com.example.notex.ui.MainActivity
-import com.example.notex.viewmodels.authorizationViewModel
+import com.example.notex.viewmodels.AuthorizationViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,7 +23,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
-    private val authViewModel: authorizationViewModel by viewModels()
+    private val authViewModel: AuthorizationViewModel by viewModels()
     private lateinit var replacefrg: replaceFragments
 
     override fun onCreateView(

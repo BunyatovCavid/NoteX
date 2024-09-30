@@ -20,8 +20,8 @@ import com.example.notex.data.models.Category
 import com.example.notex.data.models.Note
 import com.example.notex.data.models.SpecialNoteModel
 import com.example.notex.databinding.FragmentHomeBinding
-import com.example.notex.viewmodels.categoryViewModel
-import com.example.notex.viewmodels.specialNoteViewModel
+import com.example.notex.viewmodels.CategoryViewModel
+import com.example.notex.viewmodels.SpecialNoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,8 +30,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private var _binding:FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val categoryViewModel:categoryViewModel by viewModels()
-    private val specialNoteViewModel:specialNoteViewModel by viewModels()
+    private val categoryViewModel:CategoryViewModel by viewModels()
+    private val specialNoteViewModel:SpecialNoteViewModel by viewModels()
 
 
     private lateinit var specialNoteAdapter: SpecialNoteAdapter

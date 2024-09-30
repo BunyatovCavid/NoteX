@@ -5,14 +5,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.notex.data.interfaces.specialNotesInterface
+import com.example.notex.data.interfaces.SpecialNotesInterface
 import com.example.notex.data.models.SpecialNoteModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class specialNoteViewModel @Inject constructor(private  val repository: specialNotesInterface):ViewModel() {
+class SpecialNoteViewModel @Inject constructor(private  val repository: SpecialNotesInterface):ViewModel() {
 
     private val _specialNoteResult = MutableLiveData<List<SpecialNoteModel>>()
     val specialNoteResult: LiveData<List<SpecialNoteModel>> get() = _specialNoteResult

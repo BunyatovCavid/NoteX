@@ -2,15 +2,15 @@ package com.example.notex.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.notex.data.interfaces.noteInteface
+import com.example.notex.data.interfaces.NoteInteface
 import com.example.notex.data.models.Note
-import com.example.notex.data.repositories.noteRepository
+import com.example.notex.data.repositories.NoteRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class noteViewModel @Inject constructor(private val repository:noteInteface):ViewModel() {
+class NoteViewModel @Inject constructor(private val repository:NoteInteface):ViewModel() {
 
     fun addNote(note: Note) =
         viewModelScope.launch {

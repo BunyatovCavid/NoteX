@@ -12,7 +12,7 @@ import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
 import com.example.notex.databinding.FragmentRegisterBinding
 import com.example.notex.ui.MainActivity
-import com.example.notex.viewmodels.authorizationViewModel
+import com.example.notex.viewmodels.AuthorizationViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,7 +23,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
 
-    private val authViewModel: authorizationViewModel by viewModels()
+    private val authViewModel: AuthorizationViewModel by viewModels()
     private lateinit var replacefrg: replaceFragments
 
 

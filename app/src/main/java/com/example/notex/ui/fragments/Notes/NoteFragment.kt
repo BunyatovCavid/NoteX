@@ -23,7 +23,7 @@ import com.example.notex.databinding.FragmentLoginBinding
 import com.example.notex.databinding.FragmentNoteBinding
 import com.example.notex.databinding.FragmentRegisterBinding
 import com.example.notex.ui.MainActivity
-import com.example.notex.viewmodels.noteViewModel
+import com.example.notex.viewmodels.NoteViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,7 +36,7 @@ class NoteFragment : Fragment(R.layout.fragment_note), SearchView.OnQueryTextLis
     private val binding get() = _binding!!
     private lateinit var nav: replaceFragments
 
-    private val noteViewModel: noteViewModel by viewModels()
+    private val noteViewModel: NoteViewModel by viewModels()
     private lateinit var noteAdapter: NoteAdapter
 
     private var backPressedOnce = false

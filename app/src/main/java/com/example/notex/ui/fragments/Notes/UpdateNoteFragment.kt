@@ -21,7 +21,7 @@ import com.example.notex.R
 import com.example.notex.data.models.Note
 import com.example.notex.databinding.FragmentUpdateNoteBinding
 import com.example.notex.ui.MainActivity
-import com.example.notex.viewmodels.noteViewModel
+import com.example.notex.viewmodels.NoteViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,7 +34,7 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
 
     private val args: UpdateNoteFragmentArgs by navArgs()
     private lateinit var currentNote:Note
-    private val noteViewModel: noteViewModel by viewModels()
+    private val noteViewModel: NoteViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -25,7 +25,7 @@ import com.example.notex.data.models.CategoryModel
 import com.example.notex.data.models.specialField
 import com.example.notex.databinding.FragmentDetailCategoryBinding
 import com.example.notex.ui.MainActivity
-import com.example.notex.viewmodels.categoryViewModel
+import com.example.notex.viewmodels.CategoryViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -40,7 +40,7 @@ class DetailCategoryFragment : Fragment(R.layout.fragment_detail_category) {
 
     private  lateinit var nav:replaceFragments
 
-    private val categoryViewModel: categoryViewModel by viewModels()
+    private val categoryViewModel: CategoryViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

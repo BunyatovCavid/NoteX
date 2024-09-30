@@ -7,7 +7,7 @@ import com.example.notex.data.models.Note
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 
-interface categorieInterface {
+interface CategorieInterface {
     suspend fun getCategories(collectionTitle:String):QuerySnapshot
     suspend fun getCategoryByDocument(collectionTitle: String, document:CategoryModel):DocumentSnapshot?
     suspend fun addCategory(collectionTitle:String, categoryModel: CategoryModel)
