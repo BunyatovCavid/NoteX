@@ -57,11 +57,14 @@ dependencies {
     implementation ("com.squareup.okhttp3:okhttp:4.9.1")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.9.1")
 
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
 
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4")
     implementation(libs.firebase.database)
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.storage)
 
     kapt("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-runtime:2.6.1")

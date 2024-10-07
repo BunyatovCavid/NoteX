@@ -6,10 +6,12 @@ import com.example.notex.data.interfaces.AuthorizationInterface
 import com.example.notex.data.interfaces.CategorieInterface
 import com.example.notex.data.interfaces.NoteInteface
 import com.example.notex.data.interfaces.SpecialNotesInterface
+import com.example.notex.data.interfaces.UserInterface
 import com.example.notex.data.repositories.AuthorizationRepository
 import com.example.notex.data.repositories.CategorieRepository
 import com.example.notex.data.repositories.NoteRepository
 import com.example.notex.data.repositories.SpeacialNoteRepository
+import com.example.notex.data.repositories.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,6 +46,12 @@ object NoteModule {
     @Singleton
     fun getspecialNoteRepository(): SpecialNotesInterface {
         return SpeacialNoteRepository()
+    }
+
+    @Provides
+    @Singleton
+    fun getUserRepository(): UserInterface {
+        return UserRepository()
     }
 
 
