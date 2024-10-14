@@ -65,6 +65,10 @@ class ChangePasswordFragment : DialogFragment(R.layout.fragment_change_password)
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding=null
+    }
 
 
 }

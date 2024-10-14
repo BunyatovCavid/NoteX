@@ -102,6 +102,10 @@ class WelcomingFragment : Fragment(R.layout.fragment_welcoming) {
         _binding = null
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding=null
+    }
 
 
 }

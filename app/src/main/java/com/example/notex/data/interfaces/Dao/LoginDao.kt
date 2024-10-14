@@ -17,4 +17,7 @@ interface LoginDao {
 
     @Delete
     suspend fun deleteUser(user: LoginEntity)
+
+    @Query("UPDATE login_data SET isActive = :isActive WHERE email = :email")
+    suspend fun updateIsActive(email: String, isActive: Boolean)
 }

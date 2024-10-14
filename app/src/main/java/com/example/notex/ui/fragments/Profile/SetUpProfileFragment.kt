@@ -151,4 +151,9 @@ class SetUpProfileFragment : Fragment(R.layout.fragment_set_up_profile) {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding=null
+    }
+
 }

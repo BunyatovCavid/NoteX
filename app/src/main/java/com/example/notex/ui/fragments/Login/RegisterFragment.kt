@@ -70,7 +70,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                             Toast.makeText(context, result, Toast.LENGTH_LONG).show()
                             if (result == "Successful") {
                                 clearInputs()
-                                replacefrg.replace(this, R.id.action_registerFragment_to_homeFragment)
+                                replacefrg.replace(this, R.id.action_registerFragment_to_loginFragment2)
                             }
                         }
                     } else {
@@ -113,5 +113,9 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         binding.registerRepasswordinput.text?.clear()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding=null
+    }
 
 }

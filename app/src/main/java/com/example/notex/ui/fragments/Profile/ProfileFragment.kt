@@ -117,7 +117,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
 
         authViewModel.loginEntity.observe(viewLifecycleOwner) { result ->
-            if (result == "Deleted") {
+            if (result == "Updated") {
                 val checkLoginData = CheckLoginData(true)
                 findNavController().navigate(
                     R.id.action_profileFragment2_to_onBoardingFragment,

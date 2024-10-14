@@ -119,4 +119,6 @@ class NewNoteFragment : Fragment(R.layout.fragment_new_note) {
         _binding=null
     }
 
+
+
 }

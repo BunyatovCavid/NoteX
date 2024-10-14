@@ -13,8 +13,17 @@ import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class SpeacialNoteRepository @Inject constructor(private val firebaseAuth: FirebaseAuth, private val firebaseStore: FirebaseFirestore,
-                                                 private val crashlytics : FirebaseCrashlytics): SpecialNotesInterface {
+class SpeacialNoteRepository : SpecialNotesInterface {
+
+
+    private val firebaseAuth: FirebaseAuth
+        get() = FirebaseAuth.getInstance()
+
+    private  val crashlytics: FirebaseCrashlytics
+        get() = FirebaseCrashlytics.getInstance()
+
+    private val firebaseStore:FirebaseFirestore
+        get() = FirebaseFirestore.getInstance()
 
     var userId = firebaseAuth.currentUser?.uid
 

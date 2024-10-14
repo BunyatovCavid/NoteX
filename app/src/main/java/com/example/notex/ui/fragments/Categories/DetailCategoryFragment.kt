@@ -139,6 +139,7 @@ class DetailCategoryFragment : Fragment(R.layout.fragment_detail_category) {
 
     override fun onDestroy() {
         super.onDestroy()
+        _binding = null
         binding.categoryCheck1.visibility =View.VISIBLE
         binding.categoryCheck2.visibility =View.VISIBLE
         binding.categoryCheck3.visibility =View.VISIBLE

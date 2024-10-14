@@ -15,7 +15,11 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 @HiltViewModel
-class CategoryViewModel @Inject constructor(private  val repository: CategorieInterface,  private val crashlytics : FirebaseCrashlytics): ViewModel() {
+class CategoryViewModel @Inject constructor(private  val repository: CategorieInterface): ViewModel() {
+
+    private val crashlytics : FirebaseCrashlytics
+        get() = FirebaseCrashlytics.getInstance()
+
 
     private val _categoryResult = MutableLiveData<List<CategoryModel>>()
     val categoryResult: LiveData<List<CategoryModel>> get() = _categoryResult

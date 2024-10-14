@@ -1,5 +1,6 @@
 package com.example.notex.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,14 +8,23 @@ import androidx.lifecycle.viewModelScope
 import com.example.notex.data.models.LoginEntity
 import com.example.notex.data.interfaces.Dao.LoginDao
 import com.example.notex.data.interfaces.AuthorizationInterface
+import com.example.notex.data.interfaces.UserInterface
+import com.example.notex.data.models.UserModel
+import com.example.notex.data.repositories.UserRepository
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthorizationViewModel @Inject constructor( private val repository:AuthorizationInterface, private val loginDao: LoginDao,
-                                                  private val crashlytics : FirebaseCrashlytics) : ViewModel() {
+class AuthorizationViewModel @Inject constructor( private val repository:AuthorizationInterface, private val userRepository: UserInterface,
+                                                  private val loginDao: LoginDao, ) : ViewModel() {
+
+    private val crashlytics : FirebaseCrashlytics
+        get() = FirebaseCrashlytics.getInstance()
 
     private val _loginResult = MutableLiveData<String?>()
     val loginResult: LiveData<String?> get() = _loginResult
@@ -28,21 +38,28 @@ class AuthorizationViewModel @Inject constructor( private val repository:Authori
     private val _resetPasswordResult = MutableLiveData<String?>()
     val resetPasswordResult: LiveData<String?> get() = _resetPasswordResult
 
+    fun setActiveStatus(email: String, isActive: Boolean) {
+        viewModelScope.launch(Dispatchers.IO) {
+            loginDao.updateIsActive(email, isActive)
+        }
+    }
 
     fun singOut()
     {
         viewModelScope.launch {
             try {
-                repository.singOut()
+                val user = getUserFromLocalDatabase()
+                if (user != null) {
+                    loginDao.updateIsActive(user.email, false)
+                    _loginEntity.postValue("Updated")
+                    Log.d("TestCostume", "Updated")
+                }
 
-                 val user = getUserFromLocalDatabase()
-                 if (user != null) {
-                     loginDao.deleteUser(user)
-                     _loginEntity.postValue("Deleted")
-                 }
+                repository.singOut()
             } catch (e: Exception) {
-                _loginResult.postValue("The process failed")
+                _loginResult.postValue("The process failed while Updated")
                 crashlytics.recordException(e)
+                Log.d("TestCostume", "The process failed while Updated")
             }
         }
     }
@@ -52,7 +69,15 @@ class AuthorizationViewModel @Inject constructor( private val repository:Authori
             repository.logIn(email, password) { success, message ->
                 if (success) {
                     viewModelScope.launch {
-                        repository.saveUserToLocalDatabase(LoginEntity(0, email, password))
+                        val user = getUserFromLocalDatabase()
+                        if(user==null)
+                        {
+                            repository.saveUserToLocalDatabase(LoginEntity(0, email, password, true))
+                        }
+                        else
+                        {
+                            setActiveStatus(user.email, true)
+                        }
                     }
                     _loginResult.postValue(message)
                 } else {
@@ -71,7 +96,7 @@ class AuthorizationViewModel @Inject constructor( private val repository:Authori
     fun checkSavedUser() {
         viewModelScope.launch {
             val user = getUserFromLocalDatabase()
-            if (user != null) {
+            if (user != null && user.isActive == true) {
                 logIn(user.email, user.password)
             }
         }
@@ -80,11 +105,35 @@ class AuthorizationViewModel @Inject constructor( private val repository:Authori
     fun signUp(email: String, password: String) {
         viewModelScope.launch {
             repository.singUp(email, password) { success, message ->
-                if (success) {
+
                     viewModelScope.launch {
-                        repository.saveUserToLocalDatabase(LoginEntity(0,email,password))
+                        if (success) {
+                            val defaultUser = UserModel(
+                                name = "New User"
+                            )
+
+                            val storageRef = FirebaseStorage.getInstance().reference
+                            val defaultImageRef =
+                                storageRef.child("default_images/default_profile_image.jpg")
+                            defaultImageRef.downloadUrl.addOnSuccessListener { uri ->
+                                val defaultImageUrl = uri.toString()
+                                defaultUser.imageUrl = defaultImageUrl
+
+                                userRepository.updateUser(defaultUser) { updateResult ->
+                                    if (updateResult == "Success") {
+                                        _signUpResult.postValue("Success")
+                                    } else {
+                                        _signUpResult.postValue("Failed")
+                                    }
+                                }
+
+
+                            }.addOnFailureListener { exception ->
+                                crashlytics.recordException(exception)
+                            }
+                        }
                     }
-                }
+
                 _signUpResult.postValue(message)
             }
         }

@@ -146,4 +146,9 @@ class UseCategoryFragment : Fragment(R.layout.fragment_use_category) {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding=null
+    }
+
 }

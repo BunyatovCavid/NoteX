@@ -205,6 +205,10 @@ class NewSpeacialNote : Fragment(R.layout.fragment_new_speacial_note) {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding=null
+    }
 
 
 }

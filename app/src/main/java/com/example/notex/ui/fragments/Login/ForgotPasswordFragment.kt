@@ -79,4 +79,9 @@ class ForgotPasswordFragment : DialogFragment(R.layout.fragment_forgot_password)
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding=null
+    }
+
 }

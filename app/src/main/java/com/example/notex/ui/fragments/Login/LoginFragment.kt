@@ -58,9 +58,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             replacefrg.replace(this, R.id.action_loginFragment_to_welcomingFragment)
         }
 
-
-        authViewModel.checkSavedUser()
-
         binding.loginLogInbutton.setOnClickListener {
             val email = binding.loginemailinput.text.toString()
             val password = binding.loginpasswordinput.text.toString()
@@ -105,15 +102,14 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
     }
 
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     private fun clearInputs(){
         binding.loginemailinput.text.clear()
         binding.loginpasswordinput.text?.clear()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding=null
     }
 
 }

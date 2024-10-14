@@ -13,7 +13,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SpecialNoteViewModel @Inject constructor(private  val repository: SpecialNotesInterface,  private val crashlytics : FirebaseCrashlytics):ViewModel() {
+class SpecialNoteViewModel @Inject constructor(private  val repository: SpecialNotesInterface):ViewModel() {
+
+    private val crashlytics : FirebaseCrashlytics
+        get() = FirebaseCrashlytics.getInstance()
+
 
     private val _specialNoteResult = MutableLiveData<List<SpecialNoteModel>>()
     val specialNoteResult: LiveData<List<SpecialNoteModel>> get() = _specialNoteResult

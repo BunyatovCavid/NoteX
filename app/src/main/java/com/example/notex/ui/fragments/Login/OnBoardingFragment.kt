@@ -3,6 +3,7 @@ package com.example.notex.ui.fragments.Login
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -83,6 +84,7 @@ class OnBoardingFragment : Fragment() {
                             loginCheck = null
                             activity?.findNavController(R.id.nav_host_fragment)
                                 ?.navigate(R.id.action_onBoardingFragment_to_homeFragment)
+                            Log.d("TestCostume", "BITDI.")
                         }
                     }
                 }

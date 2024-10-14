@@ -12,9 +12,17 @@ import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class CategorieRepository @Inject constructor(private val firebaseAuth: FirebaseAuth,
-                                              private val firebaseStrore:FirebaseFirestore
-                                              , private val crashlytics : FirebaseCrashlytics):CategorieInterface {
+class CategorieRepository:CategorieInterface {
+
+
+    private val firebaseAuth: FirebaseAuth
+        get() = FirebaseAuth.getInstance()
+
+    private  val crashlytics: FirebaseCrashlytics
+        get() = FirebaseCrashlytics.getInstance()
+
+    private val firebaseStrore:FirebaseFirestore
+        get() = FirebaseFirestore.getInstance()
 
     var userId = firebaseAuth.currentUser?.uid
 
@@ -93,7 +101,7 @@ class CategorieRepository @Inject constructor(private val firebaseAuth: Firebase
             }
         } catch (e: Exception) {
             crashlytics.recordException(e)
-            callback(false, "The process failed")
+            callback(false, "The category could not be deleted")
         }
 
     }

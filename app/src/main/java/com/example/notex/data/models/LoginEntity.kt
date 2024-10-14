@@ -8,5 +8,6 @@ import androidx.room.PrimaryKey
 data class LoginEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "email") val email: String,
-    @ColumnInfo(name = "password") val password: String
+    @ColumnInfo(name = "password") val password: String,
+    @ColumnInfo(name = "isActive") val isActive:Boolean
 )
