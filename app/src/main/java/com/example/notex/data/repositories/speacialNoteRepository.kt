@@ -4,25 +4,25 @@ import android.util.Log
 import com.example.notex.data.interfaces.SpecialNotesInterface
 import com.example.notex.data.models.SpecialNoteModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class SpeacialNoteRepository: SpecialNotesInterface {
-    var firebaseStrore: FirebaseFirestore
-        get() = FirebaseFirestore.getInstance()
-        set(value) {}
+class SpeacialNoteRepository @Inject constructor(private val firebaseAuth: FirebaseAuth, private val firebaseStore: FirebaseFirestore,
+                                                 private val crashlytics : FirebaseCrashlytics): SpecialNotesInterface {
 
-    var userId = FirebaseAuth.getInstance().currentUser?.uid
+    var userId = firebaseAuth.currentUser?.uid
 
     override suspend fun getspeacialNote(collectionTitle: String): QuerySnapshot =
-        firebaseStrore.collection("$collectionTitle").whereEqualTo("userId", userId).get().await()
+        firebaseStore.collection("$collectionTitle").whereEqualTo("userId", userId).get().await()
 
     override suspend fun getspeacialNoteById(collectionTitle: String, documentId: String): QuerySnapshot =
-        firebaseStrore.collection(collectionTitle).whereEqualTo("userId", userId).whereEqualTo(FieldPath.documentId(), documentId)
+        firebaseStore.collection(collectionTitle).whereEqualTo("userId", userId).whereEqualTo(FieldPath.documentId(), documentId)
             .get().await()
 
 
@@ -33,15 +33,15 @@ class SpeacialNoteRepository: SpecialNotesInterface {
     ) {
         try {
             speacialNoteModel.userId = userId ?: ""
-            firebaseStrore.collection("$categoryTitle").add(speacialNoteModel).await()
+            firebaseStore.collection("$categoryTitle").add(speacialNoteModel).await()
         } catch (e: Exception) {
-            Log.e("categorieRepository", "Kateqoriya əlavə edərkən xəta baş verdi", e)
+            crashlytics.recordException(e)
         }
     }
 
     override suspend fun updateSpecialNote(specialNoteModel: SpecialNoteModel) {
         var querySnapshot =
-            firebaseStrore.collection(specialNoteModel.categoryTitle).whereEqualTo("userId", userId)
+            firebaseStore.collection(specialNoteModel.categoryTitle).whereEqualTo("userId", userId)
                 .whereEqualTo(
                     FieldPath.documentId(), specialNoteModel.id
                 ).get().await()
@@ -63,20 +63,20 @@ class SpeacialNoteRepository: SpecialNotesInterface {
 
             documentRef.update(updateMap)
                 .addOnSuccessListener {
-                    Log.d("Firestore", "Belge başarıyla güncellendi!")
+                    Log.d("Firestore", "Note uğurla dəyişildi!")
                 }
                 .addOnFailureListener { e ->
-                    Log.w("Firestore", "Belge güncelleme hatası", e)
+                    crashlytics.recordException(e)
                 }
         } else {
-            Log.d("Firestore", "Belge bulunamadı.")
+            Log.d("Firestore", "Note tapılmadı.")
         }
 
     }
 
     override suspend fun deleteSpecialNote(collectionTitle:String, specialNoteId:String, callback : (Boolean, String)->Unit) {
         try {
-            val documentSnapshot = firebaseStrore.collection(collectionTitle)
+            val documentSnapshot = firebaseStore.collection(collectionTitle)
                 .document(specialNoteId)
                 .get()
                 .await()
@@ -85,24 +85,24 @@ class SpeacialNoteRepository: SpecialNotesInterface {
                 val documentUserId = documentSnapshot.getString("userId")
 
                 if (documentUserId == userId) {
-                    firebaseStrore.collection(collectionTitle)
+                    firebaseStore.collection(collectionTitle)
                         .document(specialNoteId)
                         .delete()
                         .await()
 
                     callback(true, "Success")
-                    Log.d("Firestore", "Belge başarıyla silindi!")
+                    Log.d("Firestore", "Note uğurla silindi!")
                 } else {
                     callback(false, "No Authentication")
-                    Log.w("Firestore", "Belgeyi silme yetkiniz yok.")
+                    Log.w("Firestore", "Bu Note-u silmə icazəniz yoxdur.")
                 }
             } else {
                 callback(false, "Not Found")
-                Log.w("Firestore", "Belge bulunamadı.")
+                Log.w("Firestore", "Note tapılmadı.")
             }
         } catch (e: Exception) {
+            crashlytics.recordException(e)
             callback(false,"Failed")
-            Log.e("Firestore", "Silme işlemi başarısız: ${e.message}")
         }
     }
 }

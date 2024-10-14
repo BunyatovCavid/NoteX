@@ -68,7 +68,17 @@ class NoteFragment : Fragment(R.layout.fragment_note), SearchView.OnQueryTextLis
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                nav.replace(this@NoteFragment, R.id.action_noteFragment_to_homeFragment)
+                (activity as? MainActivity)?.let {
+                   var item = it.findViewById<BottomNavigationView>(R.id.bottomNav)
+                   if( item.menu.findItem(R.id.homeFragment).isEnabled==false)
+                    {
+                        nav.replace(this@NoteFragment, R.id.action_noteFragment_to_noInternetFragment)
+                    }else
+                   {
+                       nav.replace(this@NoteFragment, R.id.action_noteFragment_to_homeFragment)
+                   }
+                }
+
             }
         })
     }

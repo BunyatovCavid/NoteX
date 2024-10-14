@@ -8,16 +8,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class AuthorizationRepository @Inject constructor(private val loginDao: LoginDao) :AuthorizationInterface {
-
-    override var firebaseAuth: FirebaseAuth
-        get() = FirebaseAuth.getInstance()
-        set(value) {}
+class AuthorizationRepository @Inject constructor(private val loginDao: LoginDao, private  val firebaseAuth: FirebaseAuth, private  val crashlytics: FirebaseCrashlytics) :AuthorizationInterface {
 
     override fun logIn(email: String, password: String, callback: (Boolean, String?) -> Unit) {
                firebaseAuth.signInWithEmailAndPassword(email,password)
@@ -25,11 +22,13 @@ class AuthorizationRepository @Inject constructor(private val loginDao: LoginDao
                        if (task.isSuccessful) {
                            callback(true, "Welcome")
                        } else {
-                           callback(false, "Login failed: ${task.exception?.message}")
+                           task.exception?.let { crashlytics.recordException(it) }
+                           callback(false, "Enter email and password correctly")
                        }
                    }
                    .addOnFailureListener { exception ->
-                       callback(false, "Error: ${exception.message}")
+                       crashlytics.recordException(exception)
+                       callback(false, "The process failed.")
                    }
     }
 
@@ -41,18 +40,18 @@ class AuthorizationRepository @Inject constructor(private val loginDao: LoginDao
                           callback(true, "Successful")
                       } else {
                           val errorMessage = when (task.exception) {
-                              is FirebaseAuthUserCollisionException -> "Email artıq istifadə olunub."
-                              is FirebaseAuthWeakPasswordException -> "Çox zəif parol: ${task.exception?.message}"
-                              is FirebaseAuthInvalidCredentialsException -> "Yanlış email formatı."
-                              else -> "Digər xəta: ${task.exception?.message}"
+                              is FirebaseAuthUserCollisionException -> "Email is now available."
+                              is FirebaseAuthWeakPasswordException -> "Very weak password: ${task.exception?.message}"
+                              is FirebaseAuthInvalidCredentialsException -> "Wrong email format."
+                              else -> "The process failed"
                           }
-                          Log.e("AuthError", errorMessage)
+                          task.exception?.let { crashlytics.recordException(it) }
                           callback(false, errorMessage)
                       }
                   }
                   .addOnFailureListener { exception ->
-                      Log.e("AuthError", "Firebase ilə əlaqə problemi: ${exception.message}")
-                      callback(false, "Firebase ilə əlaqə problemi: ${exception.message}")
+                      crashlytics.recordException(exception)
+                      callback(false, "The process failed")
                   }
     }
 
@@ -64,16 +63,16 @@ class AuthorizationRepository @Inject constructor(private val loginDao: LoginDao
         firebaseAuth.sendPasswordResetEmail(email)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Log.d("AuthSuccess", "Parolu sıfırlamaq üçün email göndərildi.")
+                    Log.d("AuthSuccess", "Password reset email sent successfully.")
                     onResult(true, "Password reset email sent successfully.")
                 } else {
-                    Log.e("AuthError", "Parolu sıfırlamaq üçün email göndərilmədi: ${task.exception?.message}")
-                    onResult(false, task.exception?.message)
+                    task.exception?.let { crashlytics.recordException(it) }
+                    onResult(false, "The process failed")
                 }
             }
             .addOnFailureListener { exception ->
-                Log.e("AuthError", "Xəta: ${exception.message}")
-                onResult(false, exception.message)
+                crashlytics.recordException(exception)
+                onResult(false, "The process failed")
             }
     }
 

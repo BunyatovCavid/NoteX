@@ -7,12 +7,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.notex.data.interfaces.SpecialNotesInterface
 import com.example.notex.data.models.SpecialNoteModel
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SpecialNoteViewModel @Inject constructor(private  val repository: SpecialNotesInterface):ViewModel() {
+class SpecialNoteViewModel @Inject constructor(private  val repository: SpecialNotesInterface,  private val crashlytics : FirebaseCrashlytics):ViewModel() {
 
     private val _specialNoteResult = MutableLiveData<List<SpecialNoteModel>>()
     val specialNoteResult: LiveData<List<SpecialNoteModel>> get() = _specialNoteResult
@@ -38,7 +39,7 @@ class SpecialNoteViewModel @Inject constructor(private  val repository: SpecialN
                 _specialNoteResult.postValue(datas)
             }catch(e:Exception)
             {
-                Log.e("categoryViewModel", "Kateqoriyaları alarkən xəta baş verdi", e)
+                crashlytics.recordException(e)
             }
         }
     }
@@ -50,7 +51,7 @@ class SpecialNoteViewModel @Inject constructor(private  val repository: SpecialN
                 repository.getspeacialNote(collectionTitle)
             }catch (e:Exception)
             {
-                Log.e("specialNoteViewModel", "Kateqoriya əlavə edərkən xəta baş verdi", e)
+                crashlytics.recordException(e)
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.example.notex.ui.fragments.Profile
 
+import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
@@ -7,12 +8,16 @@ import android.os.Bundle
 import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.notex.Independents.helper.toast
+import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
+import com.example.notex.data.models.CategoryModel
 import com.example.notex.data.models.UserModel
 import com.example.notex.databinding.FragmentSetUpProfileBinding
 import com.example.notex.ui.MainActivity
@@ -29,28 +34,31 @@ class SetUpProfileFragment : Fragment(R.layout.fragment_set_up_profile) {
     private val binding get() = _binding!!
     private val userViewModel:UserViewModel by viewModels()
     private var userImageUrl:String =""
+    private lateinit var nav:replaceFragments
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentSetUpProfileBinding.inflate(inflater, container, false)
+        nav = replaceFragments()
         return binding.root
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        userViewModel.getUser()
-        userViewModel.user.observe(viewLifecycleOwner, {result->
+        val datas = arguments?.getParcelable<UserModel>("User")
             Glide.with(this)
-                .load(result.imageUrl)
+                .load(datas?.imageUrl)
                 .into(binding.userImage)
-            binding.editTextTextName.setText(result.name)
-            binding.editTextTextEmailAddress.setText(result.email)
-        })
-
+            binding.editTextTextName.setText(datas?.name)
 
         binding.userImage.setOnClickListener {
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
@@ -59,21 +67,27 @@ class SetUpProfileFragment : Fragment(R.layout.fragment_set_up_profile) {
 
 
         binding.savebutton.setOnClickListener{
+            Glide.with(this)
+                .load(userImageUrl)
+                .into(binding.userImage)
+
             var name =binding.editTextTextName.text
-            var email =binding.editTextTextEmailAddress.text
             var image =binding.userImage.drawable
 
-            if(name.isNotBlank() && email.isNotBlank()&&
+
+
+            if(name.isNotBlank()&&
                 image!=null) {
                 var userModel = UserModel()
                 userModel.name =name.toString()
-                userModel.email =email.toString()
                 userModel.imageUrl = userImageUrl
 
                 userViewModel.updateUser(userModel)
                 userViewModel.response?.observe(viewLifecycleOwner, {result->
-                    if(result=="Sucess")
+                    if(result=="Success"){
                         context?.toast(result)
+                        nav.replace(this, R.id.action_setUpProfileFragment_to_profileFragment2)
+                }
                     else
                         context?.toast(result)
                 })
@@ -109,18 +123,14 @@ class SetUpProfileFragment : Fragment(R.layout.fragment_set_up_profile) {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        (activity as? MainActivity)?.let {
-            it.findViewById<BottomNavigationView>(R.id.bottomNav).visibility = View.INVISIBLE
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home->{
+                nav.replace(this, R.id.action_setUpProfileFragment_to_profileFragment2)
+            }
         }
-    }
 
-    override fun onStop() {
-        super.onStop()
-        (activity as? MainActivity)?.let {
-            it.findViewById<BottomNavigationView>(R.id.bottomNav).visibility = View.VISIBLE
-        }
+        return super.onOptionsItemSelected(item)
     }
 
 }

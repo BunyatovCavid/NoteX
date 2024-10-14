@@ -5,18 +5,18 @@ import com.google.firebase.firestore.FieldPath
 import com.example.notex.data.interfaces.CategorieInterface
 import com.example.notex.data.models.CategoryModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class CategorieRepository:CategorieInterface {
+class CategorieRepository @Inject constructor(private val firebaseAuth: FirebaseAuth,
+                                              private val firebaseStrore:FirebaseFirestore
+                                              , private val crashlytics : FirebaseCrashlytics):CategorieInterface {
 
-    var firebaseStrore:FirebaseFirestore
-        get() = FirebaseFirestore.getInstance()
-        set(value){}
-
-    var userId = FirebaseAuth.getInstance().currentUser?.uid
+    var userId = firebaseAuth.currentUser?.uid
 
     override suspend fun getCategories(collectionTitle:String) :QuerySnapshot =
           firebaseStrore.collection("$collectionTitle").whereEqualTo("userId", userId).get().await()
@@ -40,7 +40,7 @@ class CategorieRepository:CategorieInterface {
            }
            documentSnapshot
         } catch (e: Exception) {
-            Log.e("Firestore", "Document goturulen zaman  bir xeta bas verdi", e)
+           crashlytics.recordException(e)
            null
         }
 
@@ -51,7 +51,7 @@ class CategorieRepository:CategorieInterface {
             categoryModel.userId = userId?:""
             firebaseStrore.collection("$collectionTitle").add(categoryModel).await()
         }catch (e:Exception){
-            Log.e("categorieRepository", "Kateqoriya əlavə edərkən xəta baş verdi", e)
+            crashlytics.recordException(e)
         }
     }
 
@@ -82,7 +82,7 @@ class CategorieRepository:CategorieInterface {
                         val docRef = firebaseStrore.collection(data.title).document(document.id)
                         batch.delete(docRef)
                     }
-                }.addOnFailureListener{}.await()
+                }.addOnFailureListener{ exception->crashlytics.recordException(exception)}.await()
 
 
                 batch.commit().await()
@@ -92,7 +92,8 @@ class CategorieRepository:CategorieInterface {
                 callback(false, "Unauthorized: You can't delete this document")
             }
         } catch (e: Exception) {
-            callback(false, e.message)
+            crashlytics.recordException(e)
+            callback(false, "The process failed")
         }
 
     }

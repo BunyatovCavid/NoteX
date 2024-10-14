@@ -4,7 +4,7 @@ import com.example.notex.data.models.LoginEntity
 import com.google.firebase.auth.FirebaseAuth
 
 interface AuthorizationInterface {
-   var firebaseAuth:FirebaseAuth
+
 
     fun logIn(email:String, password:String, callback: (Boolean, String?) -> Unit)
 

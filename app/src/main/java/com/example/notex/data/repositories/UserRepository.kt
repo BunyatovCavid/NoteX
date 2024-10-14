@@ -5,11 +5,17 @@ import android.util.Log
 import com.example.notex.data.interfaces.UserInterface
 import com.example.notex.data.models.UserModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import javax.inject.Inject
 
-class UserRepository: UserInterface {
+class UserRepository @Inject constructor(private val firebaseAuth: FirebaseAuth,
+                                        private val crashlytics : FirebaseCrashlytics): UserInterface {
 
-    val user = FirebaseAuth.getInstance().currentUser
+    val user = firebaseAuth.currentUser
     override fun getUser():UserModel{
         var response = UserModel()
         response.imageUrl = user?.photoUrl.toString()
@@ -19,37 +25,49 @@ class UserRepository: UserInterface {
         return response
     }
 
-
     override fun updateUser(userModel: UserModel, callback: (String) -> Unit?) {
         val profileUpdatesBuilder = UserProfileChangeRequest.Builder()
 
-        if(userModel.name!=null)
+        if (userModel.name != null)
             profileUpdatesBuilder.setDisplayName(userModel.name)
-        if(userModel.imageUrl!=null)
+        if (userModel.imageUrl != null)
             profileUpdatesBuilder.setPhotoUri(Uri.parse(userModel.imageUrl))
 
-        var profileUpdates = profileUpdatesBuilder.build()
+        val profileUpdates = profileUpdatesBuilder.build()
 
         user?.updateProfile(profileUpdates)
             ?.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
                     callback("Success")
                     Log.d("ProfileUpdate", "User profile updated.")
+                } else {
+                    crashlytics.log(task.exception?.message.toString())
+                    callback("The process failed")
+                }
             }
-            ?.addOnFailureListener{task-> callback(task.toString())}
-
-        if (userModel.email!=null) {
-            user?.updateEmail(userModel.email.toString())
-                ?.addOnSuccessListener {callback("Success")}
-                ?.addOnFailureListener {task-> callback(task.toString())}
-
-        }
+            ?.addOnFailureListener { e ->
+                crashlytics.recordException(e)
+                callback("The process failed")
+            }
 
     }
-
     override fun changePassword(password: String,callback: (String)->Unit?) {
-        user?.updatePassword(password)
-            ?.addOnSuccessListener { callback("Success")}
-            ?.addOnFailureListener{task-> callback(task.toString())}
+
+        if (password.length < 6) {
+           callback ("Password length must be at least 6 symbols")
+        }
+        else if (!password.any { it.isDigit() }) {
+            callback ("Password must contain numbers")
+        }
+        else if (!password.any { it.isUpperCase() }) {
+            callback ("Password must contain uppercase letters")
+        }
+        else {
+            user?.updatePassword(password)
+                ?.addOnSuccessListener { callback("Success")}
+                ?.addOnFailureListener{task->  crashlytics.recordException(task)}
+        }
+
     }
 
 }

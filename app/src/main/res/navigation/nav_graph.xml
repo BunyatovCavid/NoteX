@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/setUpProfileFragment"
+    app:startDestination="@id/homeFragment"
     >
     <fragment
         android:id="@+id/welcomingFragment"
@@ -89,8 +89,15 @@
     <fragment
         android:id="@+id/setUpProfileFragment"
         android:name="com.example.notex.ui.fragments.Profile.SetUpProfileFragment"
-        android:label="SetUp Profile"
-        tools:layout="@layout/fragment_set_up_profile" />
+        android:label="Edit Profile"
+        tools:layout="@layout/fragment_set_up_profile" >
+        <action
+            android:id="@+id/action_setUpProfileFragment_to_profileFragment2"
+            app:destination="@id/profileFragment2" />
+        <argument
+            android:name="User"
+            app:argType="com.example.notex.data.models.UserModel"/>
+    </fragment>
     <fragment
         android:id="@+id/onBoardingFragment"
         android:name="com.example.notex.ui.fragments.Login.OnBoardingFragment"
@@ -130,6 +137,9 @@
         <action
             android:id="@+id/action_noteFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_noteFragment_to_noInternetFragment"
+            app:destination="@id/noInternetFragment" />
     </fragment>
     <fragment
         android:id="@+id/newNoteFragment"
@@ -249,5 +259,17 @@
         <action
             android:id="@+id/action_profileFragment2_to_onBoardingFragment"
             app:destination="@id/onBoardingFragment" />
+        <action
+            android:id="@+id/action_profileFragment2_to_setUpProfileFragment"
+            app:destination="@id/setUpProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/noInternetFragment"
+        android:name="com.example.notex.ui.fragments.NoInternetFragment"
+        android:label="Inconnect Internet"
+        tools:layout="@layout/fragment_no_internet" >
+        <action
+            android:id="@+id/action_noInternetFragment_to_noteFragment"
+            app:destination="@id/noteFragment" />
     </fragment>
 </navigation>

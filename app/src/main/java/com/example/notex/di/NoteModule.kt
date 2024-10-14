@@ -12,6 +12,9 @@ import com.example.notex.data.repositories.CategorieRepository
 import com.example.notex.data.repositories.NoteRepository
 import com.example.notex.data.repositories.SpeacialNoteRepository
 import com.example.notex.data.repositories.UserRepository
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,8 +28,8 @@ object NoteModule {
 
     @Provides
     @Singleton
-    fun getAuthRepository(loginDao: LoginDao): AuthorizationInterface {
-        return AuthorizationRepository(loginDao)
+    fun getAuthRepository(loginDao: LoginDao, firebaseAuth: FirebaseAuth, crashlytics :FirebaseCrashlytics): AuthorizationInterface {
+        return AuthorizationRepository(loginDao, firebaseAuth, crashlytics)
     }
 
     @Provides
@@ -38,21 +41,40 @@ object NoteModule {
 
     @Provides
     @Singleton
-    fun getCategoryRepository(): CategorieInterface {
-        return CategorieRepository()
+    fun getCategoryRepository( firebaseAuth: FirebaseAuth, firebaseStrore:FirebaseFirestore, crashlytics :FirebaseCrashlytics): CategorieInterface {
+        return CategorieRepository(firebaseAuth, firebaseStrore, crashlytics)
     }
 
     @Provides
     @Singleton
-    fun getspecialNoteRepository(): SpecialNotesInterface {
-        return SpeacialNoteRepository()
+    fun getspecialNoteRepository( firebaseAuth: FirebaseAuth, firebaseStrore:FirebaseFirestore, crashlytics :FirebaseCrashlytics): SpecialNotesInterface {
+        return SpeacialNoteRepository(firebaseAuth, firebaseStrore, crashlytics)
     }
 
     @Provides
     @Singleton
-    fun getUserRepository(): UserInterface {
-        return UserRepository()
+    fun getUserRepository( firebaseAuth: FirebaseAuth,crashlytics :FirebaseCrashlytics): UserInterface {
+        return UserRepository(firebaseAuth, crashlytics)
     }
+
+    @Provides
+    @Singleton
+    fun getFirebaseCrashlyticsInstance() : FirebaseCrashlytics{
+        return FirebaseCrashlytics.getInstance()
+    }
+
+    @Provides
+    @Singleton
+    fun getFirebaseAuthInstance() : FirebaseAuth{
+        return FirebaseAuth.getInstance()
+    }
+
+   @Provides
+   @Singleton
+   fun getFirebaseFirestoreInstance(): FirebaseFirestore
+   {
+       return  FirebaseFirestore.getInstance()
+   }
 
 
 }

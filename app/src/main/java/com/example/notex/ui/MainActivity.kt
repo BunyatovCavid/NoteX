@@ -44,10 +44,15 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
 
         val appBarConfiguration = AppBarConfiguration(setOf(R.id.loginFragment, R.id.homeFragment, R.id.registerFragment, R.id.welcomingFragment,
-            R.id.forgotPasswordFragment, R.id.setUpProfileFragment, R.id.onBoardingFragment, R.id.noteFragment, R.id.categorieFragment, R.id.newSpeacialNote))
+            R.id.forgotPasswordFragment, R.id.onBoardingFragment, R.id.noteFragment, R.id.categorieFragment, R.id.newSpeacialNote, R.id.profileFragment2))
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         binding.bottomNav.setupWithNavController(navController)
+
+
+        networkReceiver = NetworkReceiver(navController, binding.bottomNav)
+        registerReceiver(networkReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
 
         binding.bottomNav.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -82,19 +87,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        networkReceiver = NetworkReceiver()
+
     }
 
-    override fun onResume() {
-        super.onResume()
-        val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
-        registerReceiver(networkReceiver, filter)
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(networkReceiver) // Receiver'ı unregister et
     }
 
-    override fun onPause() {
-        super.onPause()
-        unregisterReceiver(networkReceiver)
-    }
 
 }
 

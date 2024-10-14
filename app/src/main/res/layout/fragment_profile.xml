@@ -1,25 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.Profile.ProfileFragment"
     android:orientation="vertical"
-    android:gravity="bottom"
-    android:padding="20dp"
-    >
+    android:gravity="center"
+    android:padding="20dp">
 
-    <Button
-        android:id="@+id/signOutButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/btn1"
-        android:padding="15dp"
-        android:textColor="@color/white"
-        android:text="Sign Out"
-        android:textSize="24dp"
-        android:layout_centerHorizontal="true"
+    <androidx.cardview.widget.CardView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:cardCornerRadius="150dp"
+        >
+
+        <ImageView
+            android:id="@+id/userImage"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:src="@tools:sample/avatars"
+            />
+    </androidx.cardview.widget.CardView>
+
+
+    <TextView
+        android:id="@+id/editTextTextName"
+        android:layout_width="343dp"
+        android:layout_height="42dp"
+        android:hint="Name"
+        android:paddingLeft="10dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/inpt1"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/black"
         />
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/editTextTextEmailAddress"
+        android:layout_width="343dp"
+        android:layout_height="42dp"
+        android:ems="10"
+        android:hint="Email"
+        android:paddingLeft="10dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/inpt1"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black"
+        />
+
+    <Button
+        android:id="@+id/editProfilebutton"
+        android:layout_width="343dp"
+        android:layout_height="52dp"
+        android:background="@drawable/btn1"
+        android:text="Edit Profile"
+        android:textColor="@color/white"
+        android:textSize="18dp"
+        android:layout_marginTop="30dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        >
+        <Button
+            android:id="@+id/changePasswordbutton"
+            android:layout_width="223dp"
+            android:layout_height="52dp"
+            android:background="@drawable/btn1"
+            android:text="Change Password"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            />
+
+        <Button
+            android:id="@+id/signOutButton"
+            android:layout_width="113dp"
+            android:layout_height="52dp"
+            android:background="@drawable/btn5"
+            android:padding="15dp"
+            android:textColor="@color/white"
+            android:text="Sign Out"
+            android:textSize="18dp"
+            android:layout_marginLeft="5dp"
+            />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

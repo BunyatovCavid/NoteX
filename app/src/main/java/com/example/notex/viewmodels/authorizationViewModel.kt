@@ -7,12 +7,14 @@ import androidx.lifecycle.viewModelScope
 import com.example.notex.data.models.LoginEntity
 import com.example.notex.data.interfaces.Dao.LoginDao
 import com.example.notex.data.interfaces.AuthorizationInterface
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthorizationViewModel @Inject constructor( private val repository:AuthorizationInterface, private val loginDao: LoginDao) : ViewModel() {
+class AuthorizationViewModel @Inject constructor( private val repository:AuthorizationInterface, private val loginDao: LoginDao,
+                                                  private val crashlytics : FirebaseCrashlytics) : ViewModel() {
 
     private val _loginResult = MutableLiveData<String?>()
     val loginResult: LiveData<String?> get() = _loginResult
@@ -39,7 +41,8 @@ class AuthorizationViewModel @Inject constructor( private val repository:Authori
                      _loginEntity.postValue("Deleted")
                  }
             } catch (e: Exception) {
-                _loginResult.postValue("Çıxma zamanı bir hata baş verdi: ${e.message}")
+                _loginResult.postValue("The process failed")
+                crashlytics.recordException(e)
             }
         }
     }

@@ -12,12 +12,16 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
 import com.example.notex.data.models.CheckLoginData
+import com.example.notex.data.models.UserModel
 import com.example.notex.databinding.FragmentProfileBinding
 import com.example.notex.ui.MainActivity
+import com.example.notex.ui.fragments.Login.ForgotPasswordFragment
 import com.example.notex.viewmodels.AuthorizationViewModel
+import com.example.notex.viewmodels.UserViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,13 +32,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private val binding get() =_binding!!
 
     private val authViewModel :AuthorizationViewModel by viewModels()
-
+    private val userViewModel: UserViewModel by viewModels()
     private lateinit var  nav:replaceFragments
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    var imageUrl:String?=""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +48,33 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        userViewModel.getUser()
+        userViewModel.user.observe(viewLifecycleOwner, {result->
+            imageUrl = result.imageUrl
+            if(imageUrl!=null || imageUrl!=""){
+                Glide.with(this)
+                    .load(imageUrl)
+                    .into(binding.userImage)
+                binding.editTextTextName.setText(result.name)
+                binding.editTextTextEmailAddress.setText(result.email)
+            }
+        })
+
+        binding.editProfilebutton.setOnClickListener{
+            var name = binding.editTextTextName.text.toString()
+            var email = binding.editTextTextEmailAddress.text.toString()
+
+            var bundle = Bundle()
+            bundle.putParcelable("User", UserModel(name, imageUrl, email))
+            nav.replace(this, R.id.action_profileFragment2_to_setUpProfileFragment, bundle)
+        }
+
+        binding.changePasswordbutton.setOnClickListener{
+            val showpopUp = ChangePasswordFragment()
+            fragmentManager?.let { it1 -> showpopUp.show(it1,"Hello") }
+        }
+
 
         binding.signOutButton.setOnClickListener{
             AlertDialog.Builder(activity).apply {

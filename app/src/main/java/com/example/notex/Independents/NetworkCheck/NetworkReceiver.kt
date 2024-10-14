@@ -5,13 +5,28 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.widget.Toast
+import androidx.navigation.NavController
+import com.example.notex.R
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class NetworkReceiver : BroadcastReceiver() {
+class NetworkReceiver(private val navController: NavController,
+                      private val bottomNav: BottomNavigationView
+) : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
         if (isConnected(context)) {
-            Toast.makeText(context, "Connected to the Internet", Toast.LENGTH_SHORT).show()
+            bottomNav.menu.findItem(R.id.noteFragment).isEnabled = true
+            bottomNav.menu.findItem(R.id.homeFragment).isEnabled = true
+            bottomNav.menu.findItem(R.id.categorieFragment).isEnabled = true
+            bottomNav.menu.findItem(R.id.profileFragment2).isEnabled = true
         } else {
-            Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show()
+            bottomNav.menu.findItem(R.id.noteFragment).isEnabled = true
+            bottomNav.menu.findItem(R.id.homeFragment).isEnabled = false
+            bottomNav.menu.findItem(R.id.categorieFragment).isEnabled = false
+            bottomNav.menu.findItem(R.id.profileFragment2).isEnabled = false
+
+            if (navController.currentDestination?.id != R.id.noInternetFragment) {
+                navController.navigate(R.id.noInternetFragment)
+            }
         }
     }
 
@@ -20,11 +35,8 @@ class NetworkReceiver : BroadcastReceiver() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val network = connectivityManager.activeNetwork ?: return false
             val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
-            return when {
-                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-                else -> false
-            }
+            return activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                    activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
         } else {
             @Suppress("DEPRECATION")
             val networkInfo = connectivityManager.activeNetworkInfo ?: return false

@@ -23,8 +23,6 @@ class ForgotPasswordFragment : DialogFragment(R.layout.fragment_forgot_password)
     private val binding get() = _binding!!
 
     private val authViewModel: AuthorizationViewModel by viewModels()
-    private lateinit var replacefrg: replaceFragments
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

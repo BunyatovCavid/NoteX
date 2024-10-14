@@ -15,8 +15,8 @@ class UserViewModel @Inject constructor(private val repository: UserInterface): 
     private val _user = MutableLiveData<UserModel>()
     val user: LiveData<UserModel> get() = _user
 
-    private var _response:MutableLiveData<String>?=null
-    val response:LiveData<String>? get() = _response
+    private var _response:MutableLiveData<String> = MutableLiveData<String>()
+    val response:LiveData<String> get() = _response
 
 
     fun getUser()
@@ -27,15 +27,15 @@ class UserViewModel @Inject constructor(private val repository: UserInterface): 
 
     fun updateUser(userModel: UserModel) {
         repository.updateUser(userModel){result->
-            _response?.postValue(result)
+            _response.postValue(result)
         }
-
     }
 
 
     fun changePassword(password:String)=
-        repository.changePassword(toString()){result->
-            _response?.postValue(result)
+        repository.changePassword(password){result->
+            var i:Int =0
+            _response.postValue(result)
         }
 
 }

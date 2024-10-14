@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.notex.data.interfaces.CategorieInterface
 import com.example.notex.data.models.CategoryModel
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -14,7 +15,7 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 @HiltViewModel
-class CategoryViewModel @Inject constructor(private  val repository: CategorieInterface): ViewModel() {
+class CategoryViewModel @Inject constructor(private  val repository: CategorieInterface,  private val crashlytics : FirebaseCrashlytics): ViewModel() {
 
     private val _categoryResult = MutableLiveData<List<CategoryModel>>()
     val categoryResult: LiveData<List<CategoryModel>> get() = _categoryResult
@@ -41,7 +42,7 @@ class CategoryViewModel @Inject constructor(private  val repository: CategorieIn
                _categoryResult.postValue(datas)
            }catch(e:Exception)
            {
-               Log.e("categoryViewModel", "Kateqoriyaları alarkən xəta baş verdi", e)
+               crashlytics.recordException(e)
            }
         }
     }
@@ -55,7 +56,7 @@ class CategoryViewModel @Inject constructor(private  val repository: CategorieIn
                 _documentResult.postValue(item)
             }catch(e:Exception)
             {
-                Log.e("categoryViewModel", "Kateqoriyaları alarkən xəta baş verdi", e)
+                crashlytics.recordException(e)
             }
         }
     }
@@ -67,7 +68,7 @@ class CategoryViewModel @Inject constructor(private  val repository: CategorieIn
                 repository.getCategories(collectionTitle)
            }catch (e:Exception)
             {
-                Log.e("categoryViewModel", "Kateqoriya əlavə edərkən xəta baş verdi", e)
+                crashlytics.recordException(e)
            }
         }
     }
