@@ -1,6 +1,7 @@
 package com.example.notex.viewmodels
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -66,24 +67,33 @@ class AuthorizationViewModel @Inject constructor( private val repository:Authori
 
     fun logIn(email: String, password: String) {
         viewModelScope.launch {
-            repository.logIn(email, password) { success, message ->
-                if (success) {
-                    viewModelScope.launch {
-                        val user = getUserFromLocalDatabase()
-                        if(user==null)
-                        {
-                            repository.saveUserToLocalDatabase(LoginEntity(0, email, password, true))
-                        }
-                        else
-                        {
-                            setActiveStatus(user.email, true)
-                        }
-                    }
-                    _loginResult.postValue(message)
-                } else {
-                    _loginResult.postValue(message)
-                }
-            }
+           try
+           {
+               repository.logIn(email, password) { success, message ->
+                   if (success) {
+                       viewModelScope.launch {
+                           val user = getUserFromLocalDatabase()
+                           if(user==null)
+                           {
+                               repository.saveUserToLocalDatabase(LoginEntity(0, email, password, true))
+                           }
+                           else
+                           {
+                               setActiveStatus(user.email, true)
+                           }
+                       }
+                       _loginResult.postValue(message)
+                   } else {
+                       _loginResult.postValue(null)
+                   }
+               }
+           }catch (e:Exception)
+           {
+               crashlytics.recordException(e)
+               Log.d("TestCostume", "Login de xeta oldu")
+               _loginResult.postValue("Login de xeta oldu")
+           }
+
         }
     }
 

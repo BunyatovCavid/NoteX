@@ -37,7 +37,7 @@ class AuthorizationRepository @Inject constructor(private val loginDao: LoginDao
                    .addOnFailureListener { exception ->
                        crashlytics.recordException(exception)
                        Log.d("TestCostum", exception.message.toString())
-                       callback(false, "The process failed.")
+                       callback(false, "Enter email and password correctly")
                    }
     }
 

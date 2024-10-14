@@ -70,6 +70,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                         context?.toast(result.toString())
                         if (result == "Welcome") {
                             replacefrg.replace(this, R.id.action_loginFragment_to_homeFragment)
+                            authViewModel.loginResult.removeObservers(viewLifecycleOwner)
+                        } else {
+                            authViewModel.loginResult.removeObservers(viewLifecycleOwner)
                         }
                     })
                 } catch (e: Exception) {
