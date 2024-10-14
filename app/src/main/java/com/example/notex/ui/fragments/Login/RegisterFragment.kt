@@ -8,17 +8,21 @@ import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toolbar
 import androidx.fragment.app.viewModels
+import com.example.notex.Independents.helper.toast
 import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
 import com.example.notex.databinding.FragmentRegisterBinding
 import com.example.notex.ui.MainActivity
 import com.example.notex.viewmodels.AuthorizationViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment(R.layout.fragment_register) {
 
+    private val crashlytics: FirebaseCrashlytics
+        get() = FirebaseCrashlytics.getInstance()
 
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
@@ -53,29 +57,32 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
 
 
 
-        binding.registerRegisterbutton.setOnClickListener(){
-            val email = binding.registeremailinput.text.toString()
-            val password = binding.registerpasswordinput.text.toString()
-            val rePassword = binding.registerRepasswordinput.text.toString()
+        binding.registerRegisterbutton.setOnClickListener {
+            try {
+                val email = binding.registeremailinput.text.toString()
+                val password = binding.registerpasswordinput.text.toString()
+                val rePassword = binding.registerRepasswordinput.text.toString()
 
-            if (email.isNotEmpty() && password.isNotEmpty() && rePassword.isNotEmpty()) {
-                if (password == rePassword) {
-                    authViewModel.signUp(email, password)
-                    authViewModel.signUpResult.observe(viewLifecycleOwner, { result ->
-                        Toast.makeText(context, result, Toast.LENGTH_LONG).show()
-                        if (result == "Successful") {
-                            clearInputs()
-                            replacefrg.replace(this, R.id.action_registerFragment_to_homeFragment)
+                if (email.isNotEmpty() && password.isNotEmpty() && rePassword.isNotEmpty()) {
+                    if (password == rePassword) {
+                        authViewModel.signUp(email, password)
+                        authViewModel.signUpResult.observe(viewLifecycleOwner) { result ->
+                            Toast.makeText(context, result, Toast.LENGTH_LONG).show()
+                            if (result == "Successful") {
+                                clearInputs()
+                                replacefrg.replace(this, R.id.action_registerFragment_to_homeFragment)
+                            }
                         }
-                    })
-             }
-              else
-               Toast.makeText(context, "Password and Re-Password don't equal.", Toast.LENGTH_LONG).show()
-
+                    } else {
+                       context?.toast("Password and Re-Password don't equal.")
+                    }
+                } else {
+                    context?.toast("You can't send empty field")
+                }
+            } catch (e: Exception) {
+                crashlytics.recordException(e)
+                context?.toast("An error occurred: ${e.message}")
             }
-            else
-                Toast.makeText(context, "You can't send empty field", Toast.LENGTH_LONG).show()
-
         }
 
     }
@@ -93,9 +100,6 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             it.findViewById<BottomNavigationView>(R.id.bottomNav).visibility = View.VISIBLE
         }
     }
-
-
-
 
 
     override fun onDestroyView() {

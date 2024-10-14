@@ -22,10 +22,14 @@ import com.example.notex.data.models.SpecialNoteModel
 import com.example.notex.databinding.FragmentHomeBinding
 import com.example.notex.viewmodels.CategoryViewModel
 import com.example.notex.viewmodels.SpecialNoteViewModel
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
+
+    private val crashlytics: FirebaseCrashlytics
+        get() = FirebaseCrashlytics.getInstance()
 
     private var _binding:FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -59,25 +63,30 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         categoryViewModel.getCategories("Categories")
 
         categoryViewModel.categoryResult.observe(viewLifecycleOwner, {result->
-            categories.clear()
-            options.clear()
+            try {
+                categories.clear()
+                options.clear()
 
-            options.add("Please Select Category")
+                options.add("Please Select Category")
 
-            result.forEach { item ->
-                categories.add(Category(item.id, item.title))
+                result.forEach { item ->
+                    categories.add(Category(item.id, item.title))
+                }
+
+                categories.forEach { item ->
+                    options.add(item.title)
+                }
+
+                options.add("WithoutCategory")
+
+                val adapter = ArrayAdapter(requireContext(), R.layout.use_spinner_item, options)
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                binding.searchCategory.adapter = adapter
+
+            } catch (e: Exception) {
+                crashlytics.recordException(e)
+                context?.toast("Error loading categories: ${e.message}")
             }
-
-            categories.forEach { item ->
-                options.add(item.title)
-            }
-
-            options.add("WithoutCategory")
-
-            val adapter = ArrayAdapter(requireContext(), R.layout.use_spinner_item, options)
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.searchCategory.adapter = adapter
-
         })
 
         var previousSelectedCategory: String? = null
@@ -88,8 +97,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
                 if (selectedCategory != "Please Select Category" && selectedCategory != previousSelectedCategory) {
                     previousSelectedCategory = selectedCategory
-                    specialNoteViewModel.getSpecialNotes(selectedCategory)
-                    setUpRecyclerView()
+                    try {
+                        specialNoteViewModel.getSpecialNotes(selectedCategory)
+                        setUpRecyclerView()
+                    } catch (e: Exception) {
+                        crashlytics.recordException(e)
+                        context?.toast("Error fetching special notes: ${e.message}")
+                    }
                 }
             }
 
@@ -122,9 +136,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         binding.fabAddNote.setOnClickListener {
             categoryViewModel.categoryResult.observe(viewLifecycleOwner, { result ->
-                var bundle = Bundle()
-                bundle.putParcelableArrayList("categories", ArrayList(result))
-                nav.replace(this, R.id.action_homeFragment_to_useCategoryFragment, bundle)
+                try {
+                    var bundle = Bundle()
+                    bundle.putParcelableArrayList("categories", ArrayList(result))
+                    nav.replace(this, R.id.action_homeFragment_to_useCategoryFragment, bundle)
+                } catch (e: Exception) {
+                    crashlytics.recordException(e)
+                    context?.toast("Error opening add note: ${e.message}")
+                }
             })
 
         }
@@ -144,8 +163,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         activity?.let {
             specialNoteViewModel.specialNoteResult.observe(viewLifecycleOwner, {specialNote->
-                specialNoteAdapter.differ.submitList(specialNote)
-                updateUI(specialNote)
+                try {
+                    specialNoteAdapter.differ.submitList(specialNote)
+                    updateUI(specialNote)
+                } catch (e: Exception) {
+                    context?.toast("Error updating UI: ${e.message}")
+                }
             })
         }
     }

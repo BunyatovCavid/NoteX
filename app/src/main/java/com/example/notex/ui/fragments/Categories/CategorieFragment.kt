@@ -27,6 +27,7 @@ import com.example.notex.databinding.FragmentNoteBinding
 import com.example.notex.ui.MainActivity
 import com.example.notex.viewmodels.CategoryViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -35,6 +36,10 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CategorieFragment : Fragment(R.layout.fragment_categorie) {
+
+    private val crashlytics:FirebaseCrashlytics
+        get() = FirebaseCrashlytics.getInstance()
+
 
     private var _binding:FragmentCategorieBinding?= null
     private val binding get() = _binding!!
@@ -86,11 +91,16 @@ class CategorieFragment : Fragment(R.layout.fragment_categorie) {
         }
 
         activity?.let {
-            categoryViewModel.getCategories("Categories")
-            categoryViewModel.categoryResult.observe(viewLifecycleOwner, {result->
-                categoryAdapter.differ.submitList(result)
-                updateUI(result)
-            })
+            try {
+                categoryViewModel.getCategories("Categories")
+                categoryViewModel.categoryResult.observe(viewLifecycleOwner, {result->
+                    categoryAdapter.differ.submitList(result)
+                    updateUI(result)
+                })
+            }catch (e:Exception)
+            {
+                crashlytics.recordException(e)
+            }
         }
 
 

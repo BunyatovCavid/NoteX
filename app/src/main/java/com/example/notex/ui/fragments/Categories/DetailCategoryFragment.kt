@@ -27,11 +27,15 @@ import com.example.notex.databinding.FragmentDetailCategoryBinding
 import com.example.notex.ui.MainActivity
 import com.example.notex.viewmodels.CategoryViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class DetailCategoryFragment : Fragment(R.layout.fragment_detail_category) {
+
+    private val crashlytics:FirebaseCrashlytics
+        get() = FirebaseCrashlytics.getInstance()
 
     private var _binding:FragmentDetailCategoryBinding? = null
     private val binding get()= _binding!!
@@ -74,7 +78,7 @@ class DetailCategoryFragment : Fragment(R.layout.fragment_detail_category) {
          nav = replaceFragments()
 
         binding.categoryTitlenew.setText(currentCategory.title)
-        if(currentCategory.description !=null)
+        if(currentCategory.description !=null || !currentCategory.description.isNullOrBlank() || currentCategory.description!="")
         {
             binding.categoryDescriptionnew.setText(currentCategory.description)
         }
@@ -98,12 +102,17 @@ class DetailCategoryFragment : Fragment(R.layout.fragment_detail_category) {
             setTitle("Delete Note")
             setMessage("Deleting the category will also remove all Special Notes associated with it.")
             setPositiveButton("DELETE") { _, _ ->
-                categoryViewModel.deleteCategory("Categories", currentCategory)
+                try {
+                    categoryViewModel.deleteCategory("Categories", currentCategory)
 
-                categoryViewModel.deleteResult.observe(viewLifecycleOwner, { result ->
+                    categoryViewModel.deleteResult.observe(viewLifecycleOwner, { result ->
                         nav.replace(this@DetailCategoryFragment, R.id.action_detailCategoryFragment_to_categorieFragment)
                         context.toast(result)
-                })
+                    })
+                } catch (e: Exception) {
+                    crashlytics.recordException(e)
+                    context.toast("An error occurred while deleting the category")
+                }
             }
             setNegativeButton("CANCEL", null)
         }.create().show()

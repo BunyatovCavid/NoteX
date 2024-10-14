@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import com.example.notex.Independents.CostumeDataType
+import com.example.notex.Independents.helper.toast
 import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
 import com.example.notex.data.models.CategoryModel
@@ -23,19 +24,21 @@ import com.example.notex.data.models.specialField
 import com.example.notex.databinding.FragmentNewSpeacialNoteBinding
 import com.example.notex.viewmodels.CategoryViewModel
 import com.example.notex.viewmodels.SpecialNoteViewModel
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class NewSpeacialNote : Fragment(R.layout.fragment_new_speacial_note) {
 
+    private val crashlytics: FirebaseCrashlytics
+        get() = FirebaseCrashlytics.getInstance()
+
     private var _binding:FragmentNewSpeacialNoteBinding?=null
     private val binding get()= _binding!!
 
     private val specialNoteViewModel: SpecialNoteViewModel by viewModels()
-    private val categoryViewModel: CategoryViewModel by viewModels()
 
     private var data:CategoryModel?=null
-
 
     private lateinit var nav:replaceFragments
 
@@ -67,101 +70,67 @@ class NewSpeacialNote : Fragment(R.layout.fragment_new_speacial_note) {
 
     private  fun updateView()
     {
-        if(data?.field1!=null) {
-            binding.specialnoteField1.visibility = View.VISIBLE
-            binding.specialnoteField1.setHint(data?.field1?.title)
-        }else
-            binding.specialnoteField1.visibility = View.GONE
+        try {
+            val fields = listOf(
+                data?.field1 to binding.specialnoteField1,
+                data?.field2 to binding.specialnoteField2,
+                data?.field3 to binding.specialnoteField3,
+                data?.field4 to binding.specialnoteField4,
+                data?.field5 to binding.specialnoteField5,
+                data?.field6 to binding.specialnoteField6,
+                data?.field7 to binding.specialnoteField7
+            )
 
-        if(data?.field2 !=null) {
-            binding.specialnoteField2.visibility = View.VISIBLE
-            binding.specialnoteField2.setHint(data?.field2?.title)
-        }else
-            binding.specialnoteField2.visibility = View.GONE
+            fields.forEach { (field, editText) ->
+                if (field != null) {
+                    editText.visibility = View.VISIBLE
+                    editText.setHint(field.title)
+                } else {
+                    editText.visibility = View.GONE
+                }
+            }
 
-        if(data?.field3 !=null){
-            binding.specialnoteField3.visibility = View.VISIBLE
-            binding.specialnoteField3.setHint(data?.field3?.title)
-        }else
-            binding.specialnoteField3.visibility = View.GONE
+            updateEditText()
 
-        if(data?.field4 !=null) {
-            binding.specialnoteField4.visibility = View.VISIBLE
-            binding.specialnoteField4.setHint(data?.field4?.title)
+        } catch (e: Exception) {
+            crashlytics.recordException(e)
+            context?.toast("Error updating view: ${e.message}")
         }
-        else
-            binding.specialnoteField4.visibility = View.GONE
-
-        if(data?.field5 !=null)
-        {
-            binding.specialnoteField5.visibility = View.VISIBLE
-            binding.specialnoteField5.setHint(data?.field5?.title)
-        }
-        else
-            binding.specialnoteField5.visibility = View.GONE
-
-        if(data?.field6 !=null) {
-            binding.specialnoteField6.visibility = View.VISIBLE
-            binding.specialnoteField6.setHint(data?.field6?.title)
-        }
-        else
-            binding.specialnoteField6.visibility = View.GONE
-
-        if(data?.field7 !=null) {
-            binding.specialnoteField7.visibility = View.VISIBLE
-            binding.specialnoteField7.setHint(data?.field7?.title)
-        }
-        else
-            binding.specialnoteField7.visibility = View.GONE
-
-
-        updateEditText()
     }
 
 
-    private fun updateEditText()
-    {
-        if(data?.field1?.datatype.toString() == CostumeDataType.Number.toString()||data?.field1?.datatype.toString() == CostumeDataType.Amount.toString())
-            binding.specialnoteField1.inputType = InputType.TYPE_CLASS_NUMBER
-        else
-            binding.specialnoteField1.inputType = InputType.TYPE_CLASS_TEXT
+    private fun updateEditText() {
+        try {
+            val fields = listOf(
+                data?.field1 to binding.specialnoteField1,
+                data?.field2 to binding.specialnoteField2,
+                data?.field3 to binding.specialnoteField3,
+                data?.field4 to binding.specialnoteField4,
+                data?.field5 to binding.specialnoteField5,
+                data?.field6 to binding.specialnoteField6,
+                data?.field7 to binding.specialnoteField7
+            )
 
-        if(data?.field2?.datatype.toString()== CostumeDataType.Number.toString()||data?.field2?.datatype.toString() == CostumeDataType.Amount.toString())
-            binding.specialnoteField2.inputType = InputType.TYPE_CLASS_NUMBER
-        else
-            binding.specialnoteField2.inputType = InputType.TYPE_CLASS_TEXT
-
-
-        if(data?.field3?.datatype.toString() == CostumeDataType.Number.toString()||data?.field3?.datatype.toString() == CostumeDataType.Amount.toString())
-            binding.specialnoteField3.inputType = InputType.TYPE_CLASS_NUMBER
-        else
-            binding.specialnoteField3.inputType = InputType.TYPE_CLASS_TEXT
-
-
-        if(data?.field4?.datatype.toString() == CostumeDataType.Number.toString()||data?.field4?.datatype.toString() == CostumeDataType.Amount.toString())
-            binding.specialnoteField4.inputType = InputType.TYPE_CLASS_NUMBER
-        else
-            binding.specialnoteField4.inputType = InputType.TYPE_CLASS_TEXT
-
-
-        if(data?.field5?.datatype.toString() == CostumeDataType.Number.toString()||data?.field5?.datatype.toString() == CostumeDataType.Amount.toString())
-            binding.specialnoteField5.inputType = InputType.TYPE_CLASS_NUMBER
-        else
-            binding.specialnoteField5.inputType = InputType.TYPE_CLASS_TEXT
-
-
-        if(data?.field6?.datatype.toString() == CostumeDataType.Number.toString()||data?.field6?.datatype.toString() == CostumeDataType.Amount.toString())
-            binding.specialnoteField6.inputType = InputType.TYPE_CLASS_NUMBER
-        else
-            binding.specialnoteField6.inputType = InputType.TYPE_CLASS_TEXT
-
-
-        if(data?.field7?.datatype.toString() == CostumeDataType.Number.toString()||data?.field7?.datatype.toString() == CostumeDataType.Amount.toString())
-            binding.specialnoteField7.inputType = InputType.TYPE_CLASS_NUMBER
-        else
-            binding.specialnoteField7.inputType = InputType.TYPE_CLASS_TEXT
-
+            fields.forEach { (field, editText) ->
+                when (field?.datatype) {
+                    CostumeDataType.Number.toString() -> {
+                        editText.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_SIGNED
+                    }
+                    CostumeDataType.Amount.toString() -> {
+                        editText.inputType = InputType.TYPE_CLASS_NUMBER or
+                                InputType.TYPE_NUMBER_FLAG_DECIMAL or InputType.TYPE_NUMBER_FLAG_SIGNED
+                    }
+                    else -> {
+                        editText.inputType = InputType.TYPE_CLASS_TEXT
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            crashlytics.recordException(e)
+            context?.toast("Error updating edit text: ${e.message}")
+        }
     }
+
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -184,57 +153,58 @@ class NewSpeacialNote : Fragment(R.layout.fragment_new_speacial_note) {
     }
 
     private fun saveNote() {
-        var title = binding.specialnoteTitle
-        var field1 = binding.specialnoteField1
-        var field2 = binding.specialnoteField2
-        var field3 = binding.specialnoteField3
-        var field4 = binding.specialnoteField4
-        var field5 = binding.specialnoteField5
-        var field6 = binding.specialnoteField6
-        var field7 = binding.specialnoteField7
+        try {
+            val title = binding.specialnoteTitle
+            val fields = listOf(
+                binding.specialnoteField1 to data?.field1,
+                binding.specialnoteField2 to data?.field2,
+                binding.specialnoteField3 to data?.field3,
+                binding.specialnoteField4 to data?.field4,
+                binding.specialnoteField5 to data?.field5,
+                binding.specialnoteField6 to data?.field6,
+                binding.specialnoteField7 to data?.field7
+            )
 
-        var specialNote = SpecialNoteModel()
-
-        if(data!=null) {
-            if (title.text.isNotBlank()) {
-                specialNote.title = title.text.toString()
-                specialNote.categoryTitle = data!!.title
-
-
-                if (field1.visibility == View.VISIBLE)
-                    specialNote.specialField1 =
-                        data?.field1?.let { specialField(field1.text.toString(), it.datatype) }
-                if (field2.visibility == View.VISIBLE)
-                    specialNote.specialField2 =
-                        data?.field2?.let { specialField(field2.text.toString(), it.datatype) }
-                if (field3.visibility == View.VISIBLE)
-                    specialNote.specialField3 =
-                        data?.field3?.let { specialField(field3.text.toString(), it.datatype) }
-                if (field4.visibility == View.VISIBLE)
-                    specialNote.specialField4 =
-                        data?.field4?.let { specialField(field4.text.toString(), it.datatype) }
-                if (field5.visibility == View.VISIBLE)
-                    specialNote.specialField5 =
-                        data?.field5?.let { specialField(field5.text.toString(), it.datatype) }
-                if (field6.visibility == View.VISIBLE)
-                    specialNote.specialField6 =
-                        data?.field6?.let { specialField(field6.text.toString(), it.datatype) }
-                if (field7.visibility == View.VISIBLE)
-                    specialNote.specialField7 =
-                        data?.field7?.let { specialField(field7.text.toString(), it.datatype) }
-
-
-                specialNoteViewModel.addspecialNote(data!!.title, specialNote)
+            if (data == null) {
+                context?.toast("Category is null")
                 nav.replace(this, R.id.action_newSpeacialNote_to_homeFragment)
-            } else
-                Toast.makeText(context, "You must write Title", Toast.LENGTH_SHORT).show()
-        }
-        else
-        {
+                return
+            }
+
+            if (title.text.isBlank()) {
+                context?.toast("You must write Title")
+                return
+            }
+
+            val specialNote = SpecialNoteModel().apply {
+                this.title = title.text.toString()
+                this.categoryTitle = data!!.title
+            }
+
+            fields.forEachIndexed { index, (editText, field) ->
+                if (editText.visibility == View.VISIBLE && field != null) {
+                    val fieldValue = specialField(editText.text.toString(), field.datatype)
+                    when (index) {
+                        0 -> specialNote.specialField1 = fieldValue
+                        1 -> specialNote.specialField2 = fieldValue
+                        2 -> specialNote.specialField3 = fieldValue
+                        3 -> specialNote.specialField4 = fieldValue
+                        4 -> specialNote.specialField5 = fieldValue
+                        5 -> specialNote.specialField6 = fieldValue
+                        6 -> specialNote.specialField7 = fieldValue
+                    }
+                }
+            }
+
+            specialNoteViewModel.addspecialNote(data!!.title, specialNote)
             nav.replace(this, R.id.action_newSpeacialNote_to_homeFragment)
-            Toast.makeText(context, "Category is null", Toast.LENGTH_LONG).show()
+
+        } catch (e: Exception) {
+            crashlytics.recordException(e)
+            context?.toast("Error saving note: ${e.message}")
         }
     }
+
 
 
 }

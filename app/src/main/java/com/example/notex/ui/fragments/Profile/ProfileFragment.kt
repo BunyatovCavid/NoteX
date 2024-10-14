@@ -13,6 +13,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.example.notex.Independents.helper.toast
 import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
 import com.example.notex.data.models.CheckLoginData
@@ -23,10 +24,15 @@ import com.example.notex.ui.fragments.Login.ForgotPasswordFragment
 import com.example.notex.viewmodels.AuthorizationViewModel
 import com.example.notex.viewmodels.UserViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
+
+    private val crashlytics: FirebaseCrashlytics
+        get() = FirebaseCrashlytics.getInstance()
+
 
     private var _binding :FragmentProfileBinding? = null
     private val binding get() =_binding!!
@@ -49,17 +55,34 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        userViewModel.getUser()
-        userViewModel.user.observe(viewLifecycleOwner, {result->
-            imageUrl = result.imageUrl
-            if(imageUrl!=null || imageUrl!=""){
-                Glide.with(this)
-                    .load(imageUrl)
-                    .into(binding.userImage)
-                binding.editTextTextName.setText(result.name)
-                binding.editTextTextEmailAddress.setText(result.email)
+        try {
+            userViewModel.getUser()
+            userViewModel.user.observe(viewLifecycleOwner) { result ->
+                try {
+                    imageUrl = result.imageUrl
+
+                    if (!imageUrl.isNullOrEmpty()) {
+                        try {
+                            Glide.with(this)
+                                .load(imageUrl)
+                                .into(binding.userImage)
+                        } catch (e: Exception) {
+                            crashlytics.recordException(e)
+                            context?.toast("Failed to load image")
+                        }
+                    }
+
+                    binding.editTextTextName.setText(result.name)
+                    binding.editTextTextEmailAddress.setText(result.email)
+                } catch (e: Exception) {
+                    crashlytics.recordException(e)
+                    context?.toast("Failed to load user data")
+                }
             }
-        })
+        } catch (e: Exception) {
+            crashlytics.recordException(e)
+            context?.toast("Failed to load user data")
+        }
 
         binding.editProfilebutton.setOnClickListener{
             var name = binding.editTextTextName.text.toString()
@@ -76,29 +99,37 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
 
 
-        binding.signOutButton.setOnClickListener{
-            AlertDialog.Builder(activity).apply {
-                setTitle("SingOut Note")
+        binding.signOutButton.setOnClickListener {
+            AlertDialog.Builder(requireContext()).apply {
+                setTitle("Sign Out")
                 setMessage("Are you sure you want to log out?")
-                setPositiveButton("SignOut") { _, _ ->
-                    authViewModel.singOut()
-
-                    authViewModel.loginEntity.observe(viewLifecycleOwner, {result->
-                        if(result =="Deleted") {
-                            val checkLoginData = CheckLoginData(true)
-                            findNavController().navigate(
-                                R.id.action_profileFragment2_to_onBoardingFragment,
-                                Bundle().apply {
-                                    putParcelable("checkLoginData", checkLoginData)
-                                })
-                        }
-                    })
+                setPositiveButton("Sign Out") { _, _ ->
+                    try {
+                        authViewModel.singOut()
+                    } catch (e: Exception) {
+                        crashlytics.recordException(e)
+                        context?.toast("Failed to sign out")
+                    }
                 }
                 setNegativeButton("CANCEL", null)
             }.create().show()
+        }
 
+
+        authViewModel.loginEntity.observe(viewLifecycleOwner) { result ->
+            if (result == "Deleted") {
+                val checkLoginData = CheckLoginData(true)
+                findNavController().navigate(
+                    R.id.action_profileFragment2_to_onBoardingFragment,
+                    Bundle().apply {
+                        putParcelable("checkLoginData", checkLoginData)
+                    }
+                )
+            }
         }
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -20,6 +20,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.notex.Independents.CostumeDataType
+import com.example.notex.Independents.helper.toast
 import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
 import com.example.notex.data.models.Note
@@ -31,11 +32,16 @@ import com.example.notex.ui.MainActivity
 import com.example.notex.ui.fragments.Notes.UpdateNoteFragmentArgs
 import com.example.notex.viewmodels.SpecialNoteViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SpecialNoteDetailFragment : Fragment(R.layout.fragment_special_note_detail) {
     private lateinit var nav: replaceFragments
+
+    private val crashlytics: FirebaseCrashlytics
+        get() = FirebaseCrashlytics.getInstance()
+
 
     private val args: SpecialNoteDetailFragmentArgs by navArgs()
     private lateinit var currentNote: SpecialNoteModel
@@ -117,10 +123,15 @@ class SpecialNoteDetailFragment : Fragment(R.layout.fragment_special_note_detail
 
 
     private fun setInputTypeForField(field: EditText, dataType: String?) {
-        field.inputType = if (dataType == CostumeDataType.Number.toString() || dataType == CostumeDataType.Amount.toString()) {
-            InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_SIGNED or InputType.TYPE_NUMBER_FLAG_DECIMAL
-        } else {
-            InputType.TYPE_CLASS_TEXT
+        if(CostumeDataType.Number.toString() == dataType) {
+            field.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_SIGNED
+        }
+        else if(CostumeDataType.Amount.toString() == dataType) {
+            field.inputType = InputType.TYPE_CLASS_NUMBER or
+                    InputType.TYPE_NUMBER_FLAG_DECIMAL or InputType.TYPE_NUMBER_FLAG_SIGNED
+        }
+        else {
+            field.inputType = InputType.TYPE_CLASS_TEXT
         }
     }
 
@@ -136,34 +147,40 @@ class SpecialNoteDetailFragment : Fragment(R.layout.fragment_special_note_detail
 
 
     private fun updateNote():SpecialNoteModel
-    {  val specialNoteModel = SpecialNoteModel(currentNote.id, "", currentNote.categoryTitle)
+    {
+        val specialNoteModel = SpecialNoteModel(currentNote.id, "", currentNote.categoryTitle)
 
-        if (binding.specialnoteTitle.visibility == View.VISIBLE) {
-            specialNoteModel.title = binding.specialnoteTitle.text.toString()
-        }
+        try {
+            if (binding.specialnoteTitle.visibility == View.VISIBLE) {
+                specialNoteModel.title = binding.specialnoteTitle.text.toString()
+            }
 
-        val fields = listOf(
-            binding.specialnoteField1 to currentNote.specialField1,
-            binding.specialnoteField2 to currentNote.specialField2,
-            binding.specialnoteField3 to currentNote.specialField3,
-            binding.specialnoteField4 to currentNote.specialField4,
-            binding.specialnoteField5 to currentNote.specialField5,
-            binding.specialnoteField6 to currentNote.specialField6,
-            binding.specialnoteField7 to currentNote.specialField7
-        )
+            val fields = listOf(
+                binding.specialnoteField1 to currentNote.specialField1,
+                binding.specialnoteField2 to currentNote.specialField2,
+                binding.specialnoteField3 to currentNote.specialField3,
+                binding.specialnoteField4 to currentNote.specialField4,
+                binding.specialnoteField5 to currentNote.specialField5,
+                binding.specialnoteField6 to currentNote.specialField6,
+                binding.specialnoteField7 to currentNote.specialField7
+            )
 
-        fields.forEachIndexed { index, (editText, specialField) ->
-            if (editText.visibility == View.VISIBLE) {
-                when (index) {
-                    0 -> specialNoteModel.specialField1 = specialField?.let { specialField(editText.text.toString(), it.datatype) }
-                    1 -> specialNoteModel.specialField2 = specialField?.let { specialField(editText.text.toString(), it.datatype) }
-                    2 -> specialNoteModel.specialField3 = specialField?.let { specialField(editText.text.toString(), it.datatype) }
-                    3 -> specialNoteModel.specialField4 = specialField?.let { specialField(editText.text.toString(), it.datatype) }
-                    4 -> specialNoteModel.specialField5 = specialField?.let { specialField(editText.text.toString(), it.datatype) }
-                    5 -> specialNoteModel.specialField6 = specialField?.let { specialField(editText.text.toString(), it.datatype) }
-                    6 -> specialNoteModel.specialField7 = specialField?.let { specialField(editText.text.toString(), it.datatype) }
+            fields.forEachIndexed { index, (editText, specialField) ->
+                if (editText.visibility == View.VISIBLE) {
+                    when (index) {
+                        0 -> specialNoteModel.specialField1 = specialField?.let { specialField(editText.text.toString(), it.datatype) }
+                        1 -> specialNoteModel.specialField2 = specialField?.let { specialField(editText.text.toString(), it.datatype) }
+                        2 -> specialNoteModel.specialField3 = specialField?.let { specialField(editText.text.toString(), it.datatype) }
+                        3 -> specialNoteModel.specialField4 = specialField?.let { specialField(editText.text.toString(), it.datatype) }
+                        4 -> specialNoteModel.specialField5 = specialField?.let { specialField(editText.text.toString(), it.datatype) }
+                        5 -> specialNoteModel.specialField6 = specialField?.let { specialField(editText.text.toString(), it.datatype) }
+                        6 -> specialNoteModel.specialField7 = specialField?.let { specialField(editText.text.toString(), it.datatype) }
+                    }
                 }
             }
+        } catch (e: Exception) {
+            crashlytics.recordException(e)
+            context?.toast("Error updating note: ${e.message}")
         }
 
         return specialNoteModel
@@ -231,6 +248,9 @@ class SpecialNoteDetailFragment : Fragment(R.layout.fragment_special_note_detail
         if (binding.specialnoteField7.visibility == View.VISIBLE) {
             setEditTextProperties(binding.specialnoteField7)
         }
+
+
+
     }
 
     private fun setEditTextProperties(editText: EditText, isEnabled: Boolean) {
@@ -273,11 +293,17 @@ class SpecialNoteDetailFragment : Fragment(R.layout.fragment_special_note_detail
             setTitle("Delete Note")
             setMessage("Are you sure you want to permanently delete this note?")
             setPositiveButton("DELETE") { _, _ ->
-                specialViewModel.deleteSpecialNote(currentNote)
-                view?.findNavController()?.navigate(R.id.action_specialNoteDetailFragment_to_homeFragment,
-                    null,
-                    NavOptions.Builder().setPopUpTo(R.id.noteFragment, true).build()
-                )
+                try {
+                    specialViewModel.deleteSpecialNote(currentNote)
+                    view?.findNavController()?.navigate(
+                        R.id.action_specialNoteDetailFragment_to_homeFragment,
+                        null,
+                        NavOptions.Builder().setPopUpTo(R.id.noteFragment, true).build()
+                    )
+                } catch (e: Exception) {
+                    crashlytics.recordException(e)
+                    context?.toast("Error deleting note: ${e.message}")
+                }
             }
             setNegativeButton("CANCEL", null)
         }.create().show()

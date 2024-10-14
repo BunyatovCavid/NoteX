@@ -11,6 +11,8 @@ import android.widget.Toolbar
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.notex.Independents.helper.toast
 import com.example.notex.Independents.replaceFragments
@@ -20,17 +22,17 @@ import com.example.notex.ui.MainActivity
 import com.example.notex.ui.fragments.Notes.UpdateNoteFragmentArgs
 import com.example.notex.viewmodels.AuthorizationViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class OnBoardingFragment : Fragment() {
 
+    private val crashlytics: FirebaseCrashlytics
+        get() = FirebaseCrashlytics.getInstance()
+
     private val authViewModel: AuthorizationViewModel by viewModels()
-    private lateinit var replacefrg: replaceFragments
-
-
-    private val args: OnBoardingFragmentArgs by navArgs()
 
     private var backPressedOnce = false
 
@@ -68,46 +70,42 @@ class OnBoardingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        try {
+            var check: String = "noLogin"
+            var loginCheck = arguments?.getParcelable<CheckLoginData>("checkLoginData")
 
-        replacefrg = replaceFragments()
-        var check:String = "noLogin"
-        var loginCheck = arguments?.getParcelable<CheckLoginData>("checkLoginData")
-
-        if(loginCheck==null) {
-            viewLifecycleOwner.lifecycleScope.launch {
-                authViewModel.checkSavedUser()
-                authViewModel.loginResult.observe(viewLifecycleOwner) { result ->
-                    if (result == "Welcome") {
-                        check = result
-                        loginCheck=null
-                        replacefrg.replace(
-                            this@OnBoardingFragment,
-                            R.id.action_onBoardingFragment_to_homeFragment
-                        )
+            if (loginCheck == null) {
+                viewLifecycleOwner.lifecycleScope.launch {
+                    authViewModel.checkSavedUser()
+                    authViewModel.loginResult.observe(viewLifecycleOwner) { result ->
+                        if (result == "Welcome") {
+                            check = result
+                            loginCheck = null
+                            activity?.findNavController(R.id.nav_host_fragment)
+                                ?.navigate(R.id.action_onBoardingFragment_to_homeFragment)
+                        }
                     }
                 }
-            }
 
-            Handler(Looper.getMainLooper()).postDelayed({
-                if (check == "noLogin") {
-                    replacefrg.replace(
-                        this@OnBoardingFragment,
-                        R.id.action_onBoardingFragment_to_welcomingFragment
-                    )
-                }
-            }, 3000)
-        }
-        else{
-            Handler(Looper.getMainLooper()).postDelayed({
-                if (check == "noLogin") {
-                    replacefrg.replace(
-                        this@OnBoardingFragment,
-                        R.id.action_onBoardingFragment_to_welcomingFragment
-                    )
-                }
-            }, 3000)
+                Handler(Looper.getMainLooper()).postDelayed({
+                    if (check == "noLogin") {
+                        activity?.findNavController(R.id.nav_host_fragment)
+                            ?.navigate(R.id.action_onBoardingFragment_to_welcomingFragment)
+                    }
+                }, 3000)
+            } else {
+                Handler(Looper.getMainLooper()).postDelayed({
+                    if (check == "noLogin") {
+                        activity?.findNavController(R.id.nav_host_fragment)
+                            ?.navigate(R.id.action_onBoardingFragment_to_welcomingFragment)
+                    }
+                }, 3000)
+            }
+        } catch (e: Exception) {
+            crashlytics.recordException(e)
         }
     }
+
 
     override fun onResume() {
         super.onResume()

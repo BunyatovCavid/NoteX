@@ -13,10 +13,15 @@ import com.example.notex.R
 import com.example.notex.databinding.FragmentWelcomingBinding
 import com.example.notex.ui.MainActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class WelcomingFragment : Fragment(R.layout.fragment_welcoming) {
+
+    private val crashlytics:FirebaseCrashlytics
+        get() = FirebaseCrashlytics.getInstance()
+
 
     private var _binding: FragmentWelcomingBinding? = null
     private val binding get() = _binding!!
@@ -56,12 +61,22 @@ class WelcomingFragment : Fragment(R.layout.fragment_welcoming) {
         replacefrg = replaceFragments()
 
 
-        binding.welcomingLoginButton.setOnClickListener{
-            replacefrg.replace(this,R.id.action_welcomingFragment_to_loginFragment)
+        binding.welcomingLoginButton.setOnClickListener {
+            try {
+                replacefrg.replace(this, R.id.action_welcomingFragment_to_loginFragment)
+            } catch (e: Exception) {
+                crashlytics.recordException(e)
+                context?.toast("An error occurred while navigating: ${e.message}")
+            }
         }
 
-        binding.welcomingRegisterButton.setOnClickListener{
-            replacefrg.replace(this, R.id.action_welcomingFragment_to_registerFragment)
+        binding.welcomingRegisterButton.setOnClickListener {
+            try {
+                replacefrg.replace(this, R.id.action_welcomingFragment_to_registerFragment)
+            } catch (e: Exception) {
+                FirebaseCrashlytics.getInstance().recordException(e)
+                context?.toast("An error occurred while navigating: ${e.message}")
+            }
         }
     }
 

@@ -28,8 +28,8 @@ object NoteModule {
 
     @Provides
     @Singleton
-    fun getAuthRepository(loginDao: LoginDao, firebaseAuth: FirebaseAuth, crashlytics :FirebaseCrashlytics): AuthorizationInterface {
-        return AuthorizationRepository(loginDao, firebaseAuth, crashlytics)
+    fun getAuthRepository(loginDao: LoginDao): AuthorizationInterface {
+        return AuthorizationRepository(loginDao)
     }
 
     @Provides
@@ -41,40 +41,22 @@ object NoteModule {
 
     @Provides
     @Singleton
-    fun getCategoryRepository( firebaseAuth: FirebaseAuth, firebaseStrore:FirebaseFirestore, crashlytics :FirebaseCrashlytics): CategorieInterface {
-        return CategorieRepository(firebaseAuth, firebaseStrore, crashlytics)
+    fun getCategoryRepository(): CategorieInterface {
+        return CategorieRepository()
     }
 
     @Provides
     @Singleton
-    fun getspecialNoteRepository( firebaseAuth: FirebaseAuth, firebaseStrore:FirebaseFirestore, crashlytics :FirebaseCrashlytics): SpecialNotesInterface {
-        return SpeacialNoteRepository(firebaseAuth, firebaseStrore, crashlytics)
+    fun getspecialNoteRepository(): SpecialNotesInterface {
+        return SpeacialNoteRepository()
     }
 
     @Provides
     @Singleton
-    fun getUserRepository( firebaseAuth: FirebaseAuth,crashlytics :FirebaseCrashlytics): UserInterface {
-        return UserRepository(firebaseAuth, crashlytics)
+    fun getUserRepository(): UserInterface {
+        return UserRepository()
     }
 
-    @Provides
-    @Singleton
-    fun getFirebaseCrashlyticsInstance() : FirebaseCrashlytics{
-        return FirebaseCrashlytics.getInstance()
-    }
-
-    @Provides
-    @Singleton
-    fun getFirebaseAuthInstance() : FirebaseAuth{
-        return FirebaseAuth.getInstance()
-    }
-
-   @Provides
-   @Singleton
-   fun getFirebaseFirestoreInstance(): FirebaseFirestore
-   {
-       return  FirebaseFirestore.getInstance()
-   }
 
 
 }

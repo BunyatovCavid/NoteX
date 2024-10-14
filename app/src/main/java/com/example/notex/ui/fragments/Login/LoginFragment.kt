@@ -9,16 +9,21 @@ import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toolbar
 import androidx.fragment.app.viewModels
+import com.example.notex.Independents.helper.toast
 import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
 import com.example.notex.databinding.FragmentLoginBinding
 import com.example.notex.ui.MainActivity
 import com.example.notex.viewmodels.AuthorizationViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class LoginFragment : Fragment(R.layout.fragment_login) {
+
+    private val crashlytics: FirebaseCrashlytics
+        get() = FirebaseCrashlytics.getInstance()
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
@@ -30,7 +35,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
+
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         val view = binding.root
         return view
@@ -51,7 +56,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         binding.loginbackbutton.setOnClickListener(){
             clearInputs()
             replacefrg.replace(this, R.id.action_loginFragment_to_welcomingFragment)
-          //  getView()?.let { it1 -> Navigation.findNavController(it1).navigate(R.layout.fragment_welcoming) }
         }
 
 
@@ -62,19 +66,21 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             val password = binding.loginpasswordinput.text.toString()
 
             if (email.isNotEmpty() && password.isNotEmpty()) {
-                authViewModel.logIn(email, password)
+                try {
+                    authViewModel.logIn(email, password)
 
-                authViewModel.loginResult.observe(viewLifecycleOwner, { result ->
-                    Toast.makeText(context, result, Toast.LENGTH_LONG).show()
-
-                    if (result == "Welcome") {
-                        replacefrg.replace(this, R.id.action_loginFragment_to_homeFragment)
-                    }
-                })
-
-
+                    authViewModel.loginResult.observe(viewLifecycleOwner, { result ->
+                        context?.toast(result.toString())
+                        if (result == "Welcome") {
+                            replacefrg.replace(this, R.id.action_loginFragment_to_homeFragment)
+                        }
+                    })
+                } catch (e: Exception) {
+                    crashlytics.recordException(e)
+                    context?.toast("An error occurred while logging in. Please try again.")
+                }
             } else {
-                Toast.makeText(context, "You can't send empty field", Toast.LENGTH_LONG).show()
+             context?.toast("You can't send empty fields")
             }
         }
 

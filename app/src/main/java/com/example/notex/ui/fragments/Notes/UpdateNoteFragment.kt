@@ -23,10 +23,17 @@ import com.example.notex.databinding.FragmentUpdateNoteBinding
 import com.example.notex.ui.MainActivity
 import com.example.notex.viewmodels.NoteViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
+
+
+    private val crashlytics: FirebaseCrashlytics
+        get() = FirebaseCrashlytics.getInstance()
+
+
 
     private var _binding: FragmentUpdateNoteBinding? = null
     private val binding get() = _binding!!
@@ -73,9 +80,14 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
             {
                  val note = Note(currentNote.id, title, body)
 
-                noteViewModel.updateNote(note)
-
-                 nav.replace(this, R.id.action_updateNoteFragment_to_noteFragment)
+                try {
+                    noteViewModel.updateNote(note)
+                    context?.toast("Note updated successfully")
+                    nav.replace(this, R.id.action_updateNoteFragment_to_noteFragment)
+                } catch (e: Exception) {
+                    crashlytics.recordException(e)
+                    context?.toast("Error updating note: ${e.message}")
+                }
             }else {
                 activity?.toast("Please enter title name!")
             }
@@ -87,11 +99,17 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
             setTitle("Delete Note")
             setMessage("Are you sure you want to permanently delete this note?")
             setPositiveButton("DELETE") { _, _ ->
-                noteViewModel.deleteNote(currentNote)
-                view?.findNavController()?.navigate(R.id.action_updateNoteFragment_to_noteFragment,
-                    null,
-                    NavOptions.Builder().setPopUpTo(R.id.noteFragment, true).build()
-                )
+                try {
+                    noteViewModel.deleteNote(currentNote)
+                    view?.findNavController()?.navigate(R.id.action_updateNoteFragment_to_noteFragment,
+                        null,
+                        NavOptions.Builder().setPopUpTo(R.id.noteFragment, true).build()
+                    )
+                   context.toast("Note deleted successfully")
+                } catch (e: Exception) {
+                    crashlytics.recordException(e)
+                    context.toast("Error deleting note: ${e.message}")
+                }
             }
             setNegativeButton("CANCEL", null)
         }.create().show()

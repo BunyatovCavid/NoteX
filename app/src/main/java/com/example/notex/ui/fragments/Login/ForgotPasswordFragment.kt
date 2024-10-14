@@ -13,11 +13,14 @@ import com.example.notex.databinding.FragmentForgotPasswordBinding
 import com.example.notex.ui.MainActivity
 import com.example.notex.viewmodels.AuthorizationViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ForgotPasswordFragment : DialogFragment(R.layout.fragment_forgot_password) {
 
+    private val crashlytics: FirebaseCrashlytics
+        get() = FirebaseCrashlytics.getInstance()
 
     private var _binding: FragmentForgotPasswordBinding? = null
     private val binding get() = _binding!!
@@ -28,7 +31,6 @@ class ForgotPasswordFragment : DialogFragment(R.layout.fragment_forgot_password)
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         _binding = FragmentForgotPasswordBinding.inflate(inflater, container, false)
         val view = binding.root
         return view
@@ -42,12 +44,18 @@ class ForgotPasswordFragment : DialogFragment(R.layout.fragment_forgot_password)
             {
                 val email =binding.forgotemailinput.text.toString()
 
-                authViewModel.resetPassword(email)
-                binding.forgotemailinput.text.clear()
-                dismiss()
-                authViewModel.resetPasswordResult.observe(viewLifecycleOwner, { result ->
-                    Toast.makeText(context, result, Toast.LENGTH_LONG).show()
-            })
+                try {
+                    authViewModel.resetPassword(email)
+                    binding.forgotemailinput.text.clear()
+                    dismiss()
+
+                    authViewModel.resetPasswordResult.observe(viewLifecycleOwner, { result ->
+                        Toast.makeText(context, result, Toast.LENGTH_LONG).show()
+                    })
+                } catch (e: Exception) {
+                    crashlytics.recordException(e)
+                    Toast.makeText(context, "An error occurred while resetting the password.", Toast.LENGTH_LONG).show()
+                }
             }
             else
             {

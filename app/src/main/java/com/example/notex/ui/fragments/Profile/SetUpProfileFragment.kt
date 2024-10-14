@@ -24,11 +24,15 @@ import com.example.notex.ui.MainActivity
 import com.example.notex.viewmodels.UserViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SetUpProfileFragment : Fragment(R.layout.fragment_set_up_profile) {
+
+    private val crashlytics: FirebaseCrashlytics
+        get() = FirebaseCrashlytics.getInstance()
 
     private var _binding:FragmentSetUpProfileBinding? =null
     private val binding get() = _binding!!
@@ -54,73 +58,87 @@ class SetUpProfileFragment : Fragment(R.layout.fragment_set_up_profile) {
     @SuppressLint("SuspiciousIndentation")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val datas = arguments?.getParcelable<UserModel>("User")
+        try {
+            val datas = arguments?.getParcelable<UserModel>("User")
             Glide.with(this)
                 .load(datas?.imageUrl)
                 .into(binding.userImage)
             binding.editTextTextName.setText(datas?.name)
 
-        binding.userImage.setOnClickListener {
-            val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            startActivityForResult(gallery, 100)
-        }
-
-
-        binding.savebutton.setOnClickListener{
-            Glide.with(this)
-                .load(userImageUrl)
-                .into(binding.userImage)
-
-            var name =binding.editTextTextName.text
-            var image =binding.userImage.drawable
-
-
-
-            if(name.isNotBlank()&&
-                image!=null) {
-                var userModel = UserModel()
-                userModel.name =name.toString()
-                userModel.imageUrl = userImageUrl
-
-                userViewModel.updateUser(userModel)
-                userViewModel.response?.observe(viewLifecycleOwner, {result->
-                    if(result=="Success"){
-                        context?.toast(result)
-                        nav.replace(this, R.id.action_setUpProfileFragment_to_profileFragment2)
-                }
-                    else
-                        context?.toast(result)
-                })
-            } else {
-                context?.toast("Please fill all area")
+            binding.userImage.setOnClickListener {
+                val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                startActivityForResult(gallery, 100)
             }
-        }
 
+            binding.savebutton.setOnClickListener {
+                try {
+                    Glide.with(this)
+                        .load(userImageUrl)
+                        .into(binding.userImage)
+
+                    val name = binding.editTextTextName.text
+                    val image = binding.userImage.drawable
+
+                    if (name.isNotBlank() && image != null) {
+                        val userModel = UserModel().apply {
+                            this.name = name.toString()
+                            this.imageUrl = userImageUrl
+                        }
+
+                        userViewModel.updateUser(userModel)
+                        userViewModel.response?.observe(viewLifecycleOwner, { result ->
+                            if (result == "Success") {
+                                context?.toast(result)
+                                nav.replace(this, R.id.action_setUpProfileFragment_to_profileFragment2)
+                            } else {
+                                context?.toast(result)
+                            }
+                        })
+                    } else {
+                        context?.toast("Please fill all areas")
+                    }
+                } catch (e: Exception) {
+                    crashlytics.recordException(e)
+                    context?.toast("Error saving user data: ${e.message}")
+                }
+            }
+
+        } catch (e: Exception) {
+            crashlytics.recordException(e)
+            context?.toast("Error setting up profile: ${e.message}")
+        }
     }
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK && requestCode == 100) {
-           var imageUri = data?.data
-            binding.userImage.setImageURI(imageUri)
+        try {
+            if (resultCode == RESULT_OK && requestCode == 100) {
+                val imageUri = data?.data
+                binding.userImage.setImageURI(imageUri)
 
-            val storageReference = FirebaseStorage.getInstance().getReference("profile_images/${FirebaseAuth.getInstance().currentUser?.uid}.jpg")
+                val storageReference = FirebaseStorage.getInstance()
+                    .getReference("profile_images/${FirebaseAuth.getInstance().currentUser?.uid}.jpg")
 
-            imageUri?.let {
-                storageReference.putFile(it).addOnSuccessListener {
-                    storageReference.downloadUrl.addOnSuccessListener { uri ->
-                        val imageUrl = uri.toString()
-                        userImageUrl = imageUrl
-                    }.addOnFailureListener {
-                        context?.toast("Şəkil yüklənmədi: ${it.message}")
-                    }
-                }.addOnFailureListener {
-                    context?.toast("Yükləmə uğursuz oldu: ${it.message}")
+                imageUri?.let {
+                    storageReference.putFile(it)
+                        .addOnSuccessListener {
+                            storageReference.downloadUrl.addOnSuccessListener { uri ->
+                                userImageUrl = uri.toString()
+                            }.addOnFailureListener { e ->
+                                context?.toast("Image URL retrieval failed: ${e.message}")
+                                crashlytics.recordException(e)
+                            }
+                        }.addOnFailureListener { e ->
+                            context?.toast("Image upload failed: ${e.message}")
+                            crashlytics.recordException(e)
+                        }
                 }
             }
+        } catch (e: Exception) {
+            crashlytics.recordException(e)
+            context?.toast("Error selecting image: ${e.message}")
         }
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

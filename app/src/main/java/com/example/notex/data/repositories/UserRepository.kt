@@ -12,8 +12,14 @@ import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import javax.inject.Inject
 
-class UserRepository @Inject constructor(private val firebaseAuth: FirebaseAuth,
-                                        private val crashlytics : FirebaseCrashlytics): UserInterface {
+class UserRepository: UserInterface {
+
+
+    private val firebaseAuth: FirebaseAuth
+        get() = FirebaseAuth.getInstance()
+
+    private  val crashlytics: FirebaseCrashlytics
+        get() = FirebaseCrashlytics.getInstance()
 
     val user = firebaseAuth.currentUser
     override fun getUser():UserModel{

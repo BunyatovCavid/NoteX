@@ -25,6 +25,7 @@ import com.example.notex.databinding.FragmentRegisterBinding
 import com.example.notex.ui.MainActivity
 import com.example.notex.viewmodels.NoteViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.properties.Delegates
@@ -32,14 +33,16 @@ import kotlin.properties.Delegates
 @AndroidEntryPoint
 class NoteFragment : Fragment(R.layout.fragment_note), SearchView.OnQueryTextListener {
 
+    private val crashlytics: FirebaseCrashlytics
+        get() = FirebaseCrashlytics.getInstance()
+
+
     private var _binding: FragmentNoteBinding? = null
     private val binding get() = _binding!!
     private lateinit var nav: replaceFragments
 
     private val noteViewModel: NoteViewModel by viewModels()
     private lateinit var noteAdapter: NoteAdapter
-
-    private var backPressedOnce = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,10 +97,15 @@ class NoteFragment : Fragment(R.layout.fragment_note), SearchView.OnQueryTextLis
         }
 
         activity?.let {
-       noteViewModel.getAllNote().observe(viewLifecycleOwner, {note->
-                noteAdapter.differ.submitList(note)
-                updateUI(note)
-            })
+            try {
+                noteViewModel.getAllNote().observe(viewLifecycleOwner, { note ->
+                    noteAdapter.differ.submitList(note)
+                    updateUI(note)
+                })
+            } catch (e: Exception) {
+                crashlytics.recordException(e)
+                context?.toast("Failed to load notes: ${e.message}")
+            }
         }
     }
 
@@ -145,9 +153,14 @@ class NoteFragment : Fragment(R.layout.fragment_note), SearchView.OnQueryTextLis
 
     private fun searchNotes(query: String?){
         val searchQuery="%$query%"
-        noteViewModel.searchNote(searchQuery).observe(this@NoteFragment,{list->
-            noteAdapter.differ.submitList(list)
-        })
+        try {
+            noteViewModel.searchNote(searchQuery).observe(this@NoteFragment, { list ->
+                noteAdapter.differ.submitList(list)
+            })
+        } catch (e: Exception) {
+            crashlytics.recordException(e)
+            context?.toast("Failed to search notes: ${e.message}")
+        }
     }
 
 }

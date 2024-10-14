@@ -30,11 +30,15 @@ import com.example.notex.databinding.FragmentNewCategoryBinding
 import com.example.notex.ui.MainActivity
 import com.example.notex.viewmodels.CategoryViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class NewCategoryFragment : Fragment(R.layout.fragment_new_category) {
+
+    private val crashlytics: FirebaseCrashlytics
+        get() = FirebaseCrashlytics.getInstance()
 
     private var _binding:FragmentNewCategoryBinding?= null
     private val binding get() =_binding!!
@@ -191,25 +195,27 @@ class NewCategoryFragment : Fragment(R.layout.fragment_new_category) {
     private fun addCategory(){
         var title:String=binding.categoryTitlenew.text.toString()
         var categoryModel = CategoryModel()
+        try {
+            if (!title.all { it == '.' || it.isWhitespace() }) {
+                categoryModel.title = title
+                if (binding.categoryDescriptionnew.text.isNotBlank())
+                    categoryModel.description = binding.categoryDescriptionnew.text.toString()
 
-        if (!title.all { it == '.' || it.isWhitespace() }) {
-            categoryModel.title = title.toString()
-            if(binding.categoryDescriptionnew.text.isNotBlank())
-                categoryModel.description = binding.categoryDescriptionnew.text.toString()
+                categoryModel.field1 = setField(binding.categoryCheck1Title, binding.spinnerCheck1)
+                categoryModel.field2 = setField(binding.categoryCheck2Title, binding.spinnerCheck2)
+                categoryModel.field3 = setField(binding.categoryCheck3Title, binding.spinnerCheck3)
+                categoryModel.field4 = setField(binding.categoryCheck4Title, binding.spinnerCheck4)
+                categoryModel.field5 = setField(binding.categoryCheck5Title, binding.spinnerCheck5)
+                categoryModel.field6 = setField(binding.categoryCheck6Title, binding.spinnerCheck6)
+                categoryModel.field7 = setField(binding.categoryCheck7Title, binding.spinnerCheck7)
 
-            categoryModel.field1 = setField(binding.categoryCheck1Title, binding.spinnerCheck1)
-            categoryModel.field2 = setField(binding.categoryCheck2Title, binding.spinnerCheck2)
-            categoryModel.field3 = setField(binding.categoryCheck3Title, binding.spinnerCheck3)
-            categoryModel.field4 = setField(binding.categoryCheck4Title, binding.spinnerCheck4)
-            categoryModel.field5 = setField(binding.categoryCheck5Title, binding.spinnerCheck5)
-            categoryModel.field6 = setField(binding.categoryCheck6Title, binding.spinnerCheck6)
-            categoryModel.field7 = setField(binding.categoryCheck7Title, binding.spinnerCheck7)
-
-            categoryViewModel.addCategory("Categories", categoryModel)
-        }
-        else
-        {
-            context?.toast("The category name cannot consist only of dots and spaces.")
+                categoryViewModel.addCategory("Categories", categoryModel)
+            } else {
+                context?.toast("The category name cannot consist only of dots and spaces.")
+            }
+        } catch (e: Exception) {
+            crashlytics.recordException(e)
+            Toast.makeText(context, "An error occurred while adding the category.", Toast.LENGTH_SHORT).show()
         }
     }
 

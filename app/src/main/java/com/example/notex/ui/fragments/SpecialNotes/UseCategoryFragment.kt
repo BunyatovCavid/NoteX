@@ -20,10 +20,14 @@ import com.example.notex.data.models.specialField
 import com.example.notex.databinding.FragmentUseCategoryBinding
 import com.example.notex.viewmodels.CategoryViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class UseCategoryFragment : Fragment(R.layout.fragment_use_category) {
+
+    private val crashlytics: FirebaseCrashlytics
+        get() = FirebaseCrashlytics.getInstance()
 
     private var _binding:FragmentUseCategoryBinding? = null
     private val binding get() = _binding!!
@@ -56,16 +60,21 @@ class UseCategoryFragment : Fragment(R.layout.fragment_use_category) {
             backupDatas.add(item)
         }
         options = mutableListOf<String>()
-
         options.add("Please Select Category")
-        datas?.forEach{item->
-             options.add(item.title)
+
+        try {
+            datas?.forEach { item ->
+                backupDatas.add(item)
+                options.add(item.title)
+            }
+
+            val adapter = ArrayAdapter(requireContext(), R.layout.use_spinner_item, options)
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.spinnerCheck.adapter = adapter
+        } catch (e: Exception) {
+            crashlytics.recordException(e)
+            context?.toast("Error loading categories: ${e.message}")
         }
-
-        val adapter = ArrayAdapter(requireContext(), R.layout.use_spinner_item, options)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinnerCheck.adapter = adapter
-
         return binding.root
     }
 
@@ -80,17 +89,20 @@ class UseCategoryFragment : Fragment(R.layout.fragment_use_category) {
 
             if(selectedItemPosition !=0)
             {
-                if(selectedItemPosition!=0) {
-                    categoryViewModel.getCategoryByDocument(
-                        "Categories",
-                        backupDatas.get(selectedItemPosition - 1) ?: CategoryModel()
-                    )
-                }
-                categoryViewModel.documentResult.observe(viewLifecycleOwner, {result->
+                try {
+                categoryViewModel.getCategoryByDocument(
+                    "Categories",
+                    backupDatas.get(selectedItemPosition - 1) ?: CategoryModel()
+                )
+                categoryViewModel.documentResult.observe(viewLifecycleOwner, { result ->
                     var bundle = Bundle()
-                    bundle.putParcelable("category",result)
-                    nav.replace(this , R.id.action_useCategoryFragment_to_newSpeacialNote,bundle)
+                    bundle.putParcelable("category", result)
+                    nav.replace(this, R.id.action_useCategoryFragment_to_newSpeacialNote, bundle)
                 })
+            } catch (e: Exception) {
+                    crashlytics.recordException(e)
+                context?.toast("Error retrieving category: ${e.message}")
+            }
 
             }
             else
@@ -101,21 +113,26 @@ class UseCategoryFragment : Fragment(R.layout.fragment_use_category) {
 
 
         binding.withoutButton.setOnClickListener{
-            var result = CategoryModel("WithoutCategory", "WithoutCategory",
-                specialField("", datatype = CostumeDataType.Sentence.toString()),
-                specialField("", datatype = CostumeDataType.Sentence.toString()),
-                specialField("", datatype = CostumeDataType.Sentence.toString()),
-                specialField("", datatype = CostumeDataType.Sentence.toString()),
-                specialField("", datatype = CostumeDataType.Sentence.toString()),
-                specialField("", datatype = CostumeDataType.Sentence.toString()),
-                specialField("", datatype = CostumeDataType.Sentence.toString()),
-                userId.toString()
-            )
+            try {
+                var result = CategoryModel(
+                    "WithoutCategory", "WithoutCategory",
+                    specialField("", datatype = CostumeDataType.Sentence.toString()),
+                    specialField("", datatype = CostumeDataType.Sentence.toString()),
+                    specialField("", datatype = CostumeDataType.Sentence.toString()),
+                    specialField("", datatype = CostumeDataType.Sentence.toString()),
+                    specialField("", datatype = CostumeDataType.Sentence.toString()),
+                    specialField("", datatype = CostumeDataType.Sentence.toString()),
+                    specialField("", datatype = CostumeDataType.Sentence.toString()),
+                    userId.toString()
+                )
 
-            var bundle = Bundle()
-            bundle.putParcelable("category",result)
-            nav.replace(this , R.id.action_useCategoryFragment_to_newSpeacialNote,bundle)
-
+                var bundle = Bundle()
+                bundle.putParcelable("category", result)
+                nav.replace(this, R.id.action_useCategoryFragment_to_newSpeacialNote, bundle)
+            } catch (e: Exception) {
+               crashlytics.recordException(e)
+                context?.toast("Error creating without category: ${e.message}")
+            }
         }
     }
 

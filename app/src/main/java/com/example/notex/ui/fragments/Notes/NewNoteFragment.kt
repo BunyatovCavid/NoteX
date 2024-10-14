@@ -22,10 +22,15 @@ import com.example.notex.viewmodels.AuthorizationViewModel
 import com.example.notex.viewmodels.NoteViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class NewNoteFragment : Fragment(R.layout.fragment_new_note) {
+
+    private val crashlytics: FirebaseCrashlytics
+        get() = FirebaseCrashlytics.getInstance()
+
 
     private var _binding: FragmentNewNoteBinding? = null
     private val binding get() = _binding!!
@@ -70,17 +75,22 @@ class NewNoteFragment : Fragment(R.layout.fragment_new_note) {
         if (noteTitle.isNotEmpty()) {
             val note = Note(0, noteTitle, noteBody)
 
-            nav = replaceFragments()
-
-            noteViewModel.addNote(note)
-            Snackbar.make(
-                view, "Note saved successfully",
-                Snackbar.LENGTH_SHORT
-            ).show()
-            nav.replace(this, R.id.action_newNoteFragment_to_noteFragment)
-
+            try {
+                noteViewModel.addNote(note)
+                Snackbar.make(
+                    view, "Note saved successfully",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                nav.replace(this, R.id.action_newNoteFragment_to_noteFragment)
+            } catch (e: Exception) {
+                crashlytics.recordException(e)
+                Snackbar.make(
+                    view, "Failed to save note: ${e.message}",
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
         } else {
-            activity?.toast("Please enter note title")
+            context?.toast("Please enter note title")
         }
     }
 
