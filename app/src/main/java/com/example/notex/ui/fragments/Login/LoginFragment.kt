@@ -1,6 +1,7 @@
 package com.example.notex.ui.fragments.Login
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -62,13 +63,14 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             val email = binding.loginemailinput.text.toString()
             val password = binding.loginpasswordinput.text.toString()
 
-            if (email.isNotEmpty() && password.isNotEmpty()) {
+            if (email.isNotEmpty() && password.isNotEmpty() && password.length>=6) {
                 try {
                     authViewModel.logIn(email, password)
 
                     authViewModel.loginResult.observe(viewLifecycleOwner, { result ->
                         context?.toast(result.toString())
                         if (result == "Welcome") {
+                            saveLoginState(true)
                             replacefrg.replace(this, R.id.action_loginFragment_to_homeFragment)
                             authViewModel.loginResult.removeObservers(viewLifecycleOwner)
                         } else {
@@ -89,6 +91,13 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             clearInputs()
             replacefrg.replace(this, R.id.action_loginFragment_to_registerFragment2)
         }
+    }
+
+    private fun saveLoginState(isLoggedIn: Boolean) {
+        val sharedPref = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        val editor = sharedPref.edit()
+        editor.putBoolean("isLoggedIn", isLoggedIn)
+        editor.apply()
     }
 
     override fun onResume() {

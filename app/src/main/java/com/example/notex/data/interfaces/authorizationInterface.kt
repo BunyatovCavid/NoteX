@@ -1,5 +1,6 @@
 package com.example.notex.data.interfaces
 
+import android.content.Context
 import com.example.notex.data.models.LoginEntity
 import com.google.firebase.auth.FirebaseAuth
 
@@ -10,7 +11,7 @@ interface AuthorizationInterface {
 
     fun singUp(email:String, password:String, callback: (Boolean, String?) -> Unit)
 
-    fun singOut()
+    fun singOut(context: Context)
 
     fun resetPassword(email: String, onResult: (Boolean, String?) -> Unit)
 

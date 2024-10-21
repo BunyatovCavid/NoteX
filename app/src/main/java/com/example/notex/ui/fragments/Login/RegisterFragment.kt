@@ -1,5 +1,6 @@
 package com.example.notex.ui.fragments.Login
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -70,7 +71,8 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                             Toast.makeText(context, result, Toast.LENGTH_LONG).show()
                             if (result == "Successful") {
                                 clearInputs()
-                                replacefrg.replace(this, R.id.action_registerFragment_to_loginFragment2)
+                                saveLoginState(true)
+                                replacefrg.replace(this, R.id.action_registerFragment_to_homeFragment)
                             }
                         }
                     } else {
@@ -85,6 +87,13 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             }
         }
 
+    }
+
+    private fun saveLoginState(isLoggedIn: Boolean) {
+        val sharedPref = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        val editor = sharedPref.edit()
+        editor.putBoolean("isLoggedIn", isLoggedIn)
+        editor.apply()
     }
 
     override fun onResume() {

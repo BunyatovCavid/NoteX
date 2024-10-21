@@ -2,6 +2,7 @@ package com.example.notex.ui
 
 import NetworkReceiver
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Bundle
@@ -44,10 +45,16 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
 
         val appBarConfiguration = AppBarConfiguration(setOf(R.id.loginFragment, R.id.homeFragment, R.id.registerFragment, R.id.welcomingFragment,
-            R.id.forgotPasswordFragment, R.id.onBoardingFragment, R.id.noteFragment, R.id.categorieFragment, R.id.newSpeacialNote, R.id.profileFragment2, R.id.noInternetFragment))
+            R.id.forgotPasswordFragment, R.id.noteFragment, R.id.categorieFragment, R.id.newSpeacialNote, R.id.profileFragment2, R.id.noInternetFragment))
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         binding.bottomNav.setupWithNavController(navController)
+
+        if (isUserLoggedIn()) {
+            navController.navigate(R.id.homeFragment) // İstifadəçi artıq login olubsa, ana səhifəyə yönləndir
+        } else {
+            navController.navigate(R.id.welcomingFragment) // Login olmamış istifadəçilər login səhifəsinə yönləndirilsin
+        }
 
 
         networkReceiver = NetworkReceiver(navController, binding.bottomNav)
@@ -78,7 +85,7 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.loginFragment, R.id.welcomingFragment, R.id.registerFragment, R.id.onBoardingFragment, R.id.forgotPasswordFragment -> {
+                R.id.loginFragment, R.id.welcomingFragment, R.id.registerFragment, R.id.forgotPasswordFragment -> {
                     binding.toolbar.visibility = View.GONE
                 }
                 else -> {
@@ -93,6 +100,12 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(networkReceiver) // Receiver'ı unregister et
+    }
+
+    // İstifadəçinin login olub-olmadığını yoxlayan funksiya
+    private fun isUserLoggedIn(): Boolean {
+        val sharedPref = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        return sharedPref.getBoolean("isLoggedIn", false)
     }
 
 

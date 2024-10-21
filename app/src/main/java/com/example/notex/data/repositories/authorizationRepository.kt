@@ -14,6 +14,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import android.content.Context
 
 class AuthorizationRepository @Inject constructor(private val loginDao: LoginDao) :AuthorizationInterface {
 
@@ -28,10 +29,6 @@ class AuthorizationRepository @Inject constructor(private val loginDao: LoginDao
                    .addOnCompleteListener { task ->
                        if (task.isSuccessful) {
                            callback(true, "Welcome")
-                       } else {
-                           task.exception?.let { crashlytics.recordException(it) }
-                           Log.d("TestCostum", task.exception?.message.toString())
-                           callback(false, "Enter email and password correctly")
                        }
                    }
                    .addOnFailureListener { exception ->
@@ -45,7 +42,6 @@ class AuthorizationRepository @Inject constructor(private val loginDao: LoginDao
               firebaseAuth.createUserWithEmailAndPassword(email,password)
                   .addOnCompleteListener { task ->
                       if (task.isSuccessful) {
-                          Log.d("AuthSuccess", "Yeni istifadəçi yaradıldı: ${firebaseAuth.currentUser?.email}")
                           callback(true, "Successful")
                       } else {
                           val errorMessage = when (task.exception) {
@@ -64,8 +60,13 @@ class AuthorizationRepository @Inject constructor(private val loginDao: LoginDao
                   }
     }
 
-    override fun singOut() {
+    override fun singOut(context: Context) {
         firebaseAuth.signOut()
+
+        val sharedPref = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        val editor = sharedPref.edit()
+        editor.putBoolean("isLoggedIn", false) // Login vəziyyətini false olaraq təyin et
+        editor.apply()
     }
 
     override fun resetPassword(email: String, onResult: (Boolean, String?) -> Unit) {

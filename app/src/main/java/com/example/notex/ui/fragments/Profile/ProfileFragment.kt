@@ -105,7 +105,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 setMessage("Are you sure you want to log out?")
                 setPositiveButton("Sign Out") { _, _ ->
                     try {
-                        authViewModel.singOut()
+                        authViewModel.singOut(context)
+                        findNavController().navigate(R.id.welcomingFragment)
                     } catch (e: Exception) {
                         crashlytics.recordException(e)
                         context?.toast("Failed to sign out")
@@ -115,18 +116,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             }.create().show()
         }
 
-
-        authViewModel.loginEntity.observe(viewLifecycleOwner) { result ->
-            if (result == "Updated") {
-                val checkLoginData = CheckLoginData(true)
-                findNavController().navigate(
-                    R.id.action_profileFragment2_to_onBoardingFragment,
-                    Bundle().apply {
-                        putParcelable("checkLoginData", checkLoginData)
-                    }
-                )
-            }
-        }
     }
 
 
