@@ -25,6 +25,12 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NoteModule {
 
+    @Provides
+    @Singleton
+    fun getspecialNoteRepository(): SpecialNotesInterface {
+        return SpeacialNoteRepository()
+    }
+
 
     @Provides
     @Singleton
@@ -45,11 +51,6 @@ object NoteModule {
         return CategorieRepository()
     }
 
-    @Provides
-    @Singleton
-    fun getspecialNoteRepository(): SpecialNotesInterface {
-        return SpeacialNoteRepository()
-    }
 
     @Provides
     @Singleton

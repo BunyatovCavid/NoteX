@@ -24,7 +24,10 @@ class NetworkReceiver(private val navController: NavController,
             bottomNav.menu.findItem(R.id.categorieFragment).isEnabled = false
             bottomNav.menu.findItem(R.id.profileFragment2).isEnabled = false
 
-            if (navController.currentDestination?.id != R.id.noInternetFragment) {
+            var current = navController.currentDestination
+
+            if (current?.id != R.id.noInternetFragment || current.id != R.id.noteFragment ||current.id != R.id.updateNoteFragment ||
+                current.id != R.id.newNoteFragment ) {
                 navController.navigate(R.id.noInternetFragment)
             }
         }
