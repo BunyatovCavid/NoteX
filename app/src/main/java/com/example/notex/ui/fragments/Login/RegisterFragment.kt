@@ -12,12 +12,17 @@ import androidx.fragment.app.viewModels
 import com.example.notex.Independents.helper.toast
 import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
+import com.example.notex.data.models.UserModel
+import com.example.notex.data.repositories.AuthorizationRepository
+import com.example.notex.data.repositories.UserRepository
 import com.example.notex.databinding.FragmentRegisterBinding
 import com.example.notex.ui.MainActivity
 import com.example.notex.viewmodels.AuthorizationViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment(R.layout.fragment_register) {
@@ -72,6 +77,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                             if (result == "Successful") {
                                 clearInputs()
                                 saveLoginState(true)
+                                authViewModel.updateProfile()
                                 replacefrg.replace(this, R.id.action_registerFragment_to_homeFragment)
                             }
                         }
@@ -88,6 +94,8 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         }
 
     }
+
+
 
     private fun saveLoginState(isLoggedIn: Boolean) {
         val sharedPref = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)

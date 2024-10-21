@@ -74,10 +74,17 @@ class AuthorizationViewModel @Inject constructor( private val repository:Authori
         }
     }
 
+
+
+    private suspend fun getUserFromLocalDatabase(): LoginEntity? {
+        return loginDao.getLoginData()
+    }
+
+
     fun signUp(email: String, password: String) {
         viewModelScope.launch {
             repository.singUp(email, password) { success, message ->
-              _signUpResult.postValue(message)
+                _signUpResult.postValue(message)
             }
         }
     }
@@ -88,6 +95,32 @@ class AuthorizationViewModel @Inject constructor( private val repository:Authori
             repository.resetPassword(email){ success, message->
                 _resetPasswordResult.postValue(message)
             }
+        }
+    }
+
+    fun updateProfile(){
+        val defaultUser = UserModel(
+            name = "New User"
+        )
+
+        val storageRef = FirebaseStorage.getInstance().reference
+        val defaultImageRef =
+            storageRef.child("default_images/default_profile_image.jpg")
+        defaultImageRef.downloadUrl.addOnSuccessListener { uri ->
+            val defaultImageUrl = uri.toString()
+            defaultUser.imageUrl = defaultImageUrl
+
+            userRepository.updateUser(defaultUser) { updateResult ->
+                if (updateResult == "Success") {
+                    _signUpResult.postValue("Success")
+                } else {
+                    _signUpResult.postValue("Failed")
+                }
+            }
+
+
+        }.addOnFailureListener { exception ->
+            crashlytics.recordException(exception)
         }
     }
 
