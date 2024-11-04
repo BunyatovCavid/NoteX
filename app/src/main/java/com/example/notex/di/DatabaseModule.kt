@@ -3,7 +3,6 @@ package com.example.notex.di
 import android.content.Context
 import androidx.room.Room
 import com.example.notex.data.repositories.Database.AppDatabase
-import com.example.notex.data.interfaces.Dao.LoginDao
 import com.example.notex.data.interfaces.Dao.NoteDao
 import dagger.Module
 import dagger.Provides
@@ -25,11 +24,6 @@ object DatabaseModule {
             AppDatabase::class.java,
             AppDatabase.Name,
         ).build()
-    }
-
-    @Provides
-    fun provideLoginDao(db: AppDatabase): LoginDao {
-        return db.loginDao()
     }
 
     @Provides

@@ -71,6 +71,7 @@
             android:inputType="textEmailAddress"
             android:padding="5dp"
             android:background="@drawable/inpt1"
+            android:singleLine="true"
             />
 
 
@@ -92,7 +93,8 @@
                 android:drawableLeft="@drawable/baseline_lock_outline_24"
                 android:padding="5dp"
                 android:background="@drawable/inpt1"
-                android:inputType="textPassword"/>
+                android:inputType="textPassword"
+                android:singleLine="true"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView

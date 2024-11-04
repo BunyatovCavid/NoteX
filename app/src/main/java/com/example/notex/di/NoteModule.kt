@@ -1,6 +1,5 @@
 package com.example.notex.di
 
-import com.example.notex.data.interfaces.Dao.LoginDao
 import com.example.notex.data.interfaces.Dao.NoteDao
 import com.example.notex.data.interfaces.AuthorizationInterface
 import com.example.notex.data.interfaces.CategorieInterface
@@ -34,8 +33,8 @@ object NoteModule {
 
     @Provides
     @Singleton
-    fun getAuthRepository(loginDao: LoginDao): AuthorizationInterface {
-        return AuthorizationRepository(loginDao)
+    fun getAuthRepository(): AuthorizationInterface {
+        return AuthorizationRepository()
     }
 
     @Provides

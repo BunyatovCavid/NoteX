@@ -3,7 +3,6 @@ package com.example.notex.data.repositories
 import android.util.Log
 import android.widget.Toast
 import com.example.notex.data.models.LoginEntity
-import com.example.notex.data.interfaces.Dao.LoginDao
 import com.example.notex.data.interfaces.AuthorizationInterface
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -16,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import android.content.Context
 
-class AuthorizationRepository @Inject constructor(private val loginDao: LoginDao) :AuthorizationInterface {
+class AuthorizationRepository :AuthorizationInterface {
 
     private val firebaseAuth: FirebaseAuth
         get() = FirebaseAuth.getInstance()
@@ -85,12 +84,5 @@ class AuthorizationRepository @Inject constructor(private val loginDao: LoginDao
                 onResult(false, "Didn't know the link was sent. Check email accuracy")
             }
     }
-
-    override suspend fun saveUserToLocalDatabase(loginEntity: LoginEntity) {
-        CoroutineScope(Dispatchers.IO).launch {
-            loginDao.insertLoginData(loginEntity)
-        }
-    }
-
 
 }

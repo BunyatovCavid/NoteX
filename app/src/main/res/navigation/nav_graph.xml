@@ -190,7 +190,11 @@
             app:destination="@id/homeFragment" />
         <action
             android:id="@+id/action_newSpeacialNote_to_useCategoryFragment"
-            app:destination="@id/useCategoryFragment" />
+            app:destination="@id/useCategoryFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_left"/>
         <argument
             android:name="specialnote"
             app:argType="com.example.notex.data.models.SpecialNoteModel"/>
@@ -203,7 +207,11 @@
         tools:layout="@layout/fragment_use_category" >
         <action
             android:id="@+id/action_useCategoryFragment_to_newSpeacialNote"
-            app:destination="@id/newSpeacialNote" />
+            app:destination="@id/newSpeacialNote"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_left"/>
         <action
             android:id="@+id/action_useCategoryFragment_to_homeFragment"
             app:destination="@id/homeFragment" />

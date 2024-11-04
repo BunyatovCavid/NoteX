@@ -15,6 +15,5 @@ interface AuthorizationInterface {
 
     fun resetPassword(email: String, onResult: (Boolean, String?) -> Unit)
 
-    suspend fun saveUserToLocalDatabase(loginEntity: LoginEntity)
 
 }

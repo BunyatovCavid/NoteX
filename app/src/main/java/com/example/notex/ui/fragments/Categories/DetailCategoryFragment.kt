@@ -38,7 +38,7 @@ class DetailCategoryFragment : Fragment(R.layout.fragment_detail_category) {
         get() = FirebaseCrashlytics.getInstance()
 
     private var _binding:FragmentDetailCategoryBinding? = null
-    private val binding get()= _binding!!
+    private val binding get()= _binding
     private val args : DetailCategoryFragmentArgs by navArgs()
     private lateinit var currentCategory: CategoryModel
 
@@ -58,7 +58,7 @@ class DetailCategoryFragment : Fragment(R.layout.fragment_detail_category) {
     ): View? {
 
         _binding = FragmentDetailCategoryBinding.inflate(inflater, container, false)
-        return binding.root
+        return binding?.root
     }
 
     private fun setViewField(textViewTitle: TextView, textViewSpinner:TextView, data:specialField?, layout:LinearLayout)
@@ -77,22 +77,21 @@ class DetailCategoryFragment : Fragment(R.layout.fragment_detail_category) {
          currentCategory = args.category
          nav = replaceFragments()
 
-        binding.categoryTitlenew.setText(currentCategory.title)
-        if(currentCategory.description !=null || !currentCategory.description.isNullOrBlank() || currentCategory.description!="")
+        binding?.categoryTitlenew?.setText(currentCategory.title)
+        if(currentCategory.description!="None")
         {
-            binding.categoryDescriptionnew.setText(currentCategory.description)
+            binding?.categoryDescriptionnew?.setText(currentCategory.description)
         }
         else
-            binding.categoryDescriptionnew.visibility = View.GONE
+            binding?.categoryDescriptionnew?.visibility = View.GONE
 
-
-        setViewField(binding.categoryCheck1Title, binding.textCheck1, currentCategory.field1, binding.categoryCheck1 )
-        setViewField(binding.categoryCheck2Title, binding.textCheck2, currentCategory.field2, binding.categoryCheck2 )
-        setViewField(binding.categoryCheck3Title, binding.textCheck3, currentCategory.field3, binding.categoryCheck3 )
-        setViewField(binding.categoryCheck4Title, binding.textCheck4, currentCategory.field4, binding.categoryCheck4 )
-        setViewField(binding.categoryCheck5Title, binding.textCheck5, currentCategory.field5, binding.categoryCheck5 )
-        setViewField(binding.categoryCheck6Title, binding.textCheck6, currentCategory.field6, binding.categoryCheck6 )
-        setViewField(binding.categoryCheck7Title, binding.textCheck7, currentCategory.field7, binding.categoryCheck7 )
+        binding?.let { setViewField(it.categoryCheck1Title, it.textCheck1, currentCategory.field1, it.categoryCheck1 ) }
+        binding?.let { setViewField(it.categoryCheck2Title, it.textCheck2, currentCategory.field2, it.categoryCheck2 ) }
+        binding?.let { setViewField(it.categoryCheck3Title, it.textCheck3, currentCategory.field3, it.categoryCheck3 ) }
+        binding?.let { setViewField(it.categoryCheck4Title, it.textCheck4, currentCategory.field4, it.categoryCheck4 ) }
+        binding?.let { setViewField(it.categoryCheck5Title, it.textCheck5, currentCategory.field5, it.categoryCheck5 ) }
+        binding?.let { setViewField(it.categoryCheck6Title, it.textCheck6, currentCategory.field6, it.categoryCheck6 ) }
+        binding?.let { setViewField(it.categoryCheck7Title, it.textCheck7, currentCategory.field7, it.categoryCheck7 ) }
 
     }
 
@@ -107,11 +106,11 @@ class DetailCategoryFragment : Fragment(R.layout.fragment_detail_category) {
 
                     categoryViewModel.deleteResult.observe(viewLifecycleOwner, { result ->
                         nav.replace(this@DetailCategoryFragment, R.id.action_detailCategoryFragment_to_categorieFragment)
-                        context.toast(result)
+                        activity?.toast(result)
                     })
                 } catch (e: Exception) {
                     crashlytics.recordException(e)
-                    context.toast("An error occurred while deleting the category")
+                    activity?.toast("An error occurred while deleting the category")
                 }
             }
             setNegativeButton("CANCEL", null)
@@ -137,17 +136,21 @@ class DetailCategoryFragment : Fragment(R.layout.fragment_detail_category) {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-        _binding = null
-        binding.categoryCheck1.visibility =View.VISIBLE
-        binding.categoryCheck2.visibility =View.VISIBLE
-        binding.categoryCheck3.visibility =View.VISIBLE
-        binding.categoryCheck4.visibility =View.VISIBLE
-        binding.categoryCheck5.visibility =View.VISIBLE
-        binding.categoryCheck6.visibility =View.VISIBLE
-        binding.categoryCheck7.visibility =View.VISIBLE
-        binding.categoryDescriptionnew.visibility =View.VISIBLE
+        binding?.categoryCheck1?.visibility =View.VISIBLE
+        binding?.categoryCheck4?.visibility =View.VISIBLE
+        binding?.categoryCheck3?.visibility =View.VISIBLE
+        binding?.categoryCheck2?.visibility =View.VISIBLE
+        binding?.categoryCheck5?.visibility =View.VISIBLE
+        binding?.categoryCheck6?.visibility =View.VISIBLE
+        binding?.categoryCheck7?.visibility =View.VISIBLE
+        binding?.categoryDescriptionnew?.visibility =View.VISIBLE
     }
 
 

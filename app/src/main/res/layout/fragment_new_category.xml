@@ -17,6 +17,7 @@
             android:padding="5dp"
             android:hint="Category Title"
             android:background="@drawable/inpt1"
+            android:singleLine="true"
             />
 
         <EditText
@@ -28,6 +29,7 @@
             android:hint="Category Description"
             android:layout_below="@id/categoryTitlenew"
             android:background="@drawable/inpt1"
+            android:singleLine="true"
             />
 
         <LinearLayout
@@ -50,7 +52,8 @@
             android:layout_height="40dp"
             android:hint="Field Title"
             android:padding="5dp"
-            android:background="@drawable/inpt1"/>
+            android:background="@drawable/inpt1"
+            android:singleLine="true"/>
 
             <Spinner
                 android:id="@+id/spinnerCheck1"
@@ -86,7 +89,8 @@
                 android:layout_height="40dp"
                 android:hint="Field Title"
                 android:padding="5dp"
-                android:background="@drawable/inpt1"/>
+                android:background="@drawable/inpt1"
+                android:singleLine="true"/>
 
             <Spinner
                 android:id="@+id/spinnerCheck2"
@@ -121,7 +125,8 @@
                 android:layout_height="40dp"
                 android:hint="Field Title"
                 android:padding="5dp"
-                android:background="@drawable/inpt1"/>
+                android:background="@drawable/inpt1"
+                android:singleLine="true"/>
 
             <Spinner
                 android:id="@+id/spinnerCheck3"
@@ -155,7 +160,8 @@
                 android:layout_height="40dp"
                 android:hint="Field Title"
                 android:padding="5dp"
-                android:background="@drawable/inpt1"/>
+                android:background="@drawable/inpt1"
+                android:singleLine="true"/>
 
             <Spinner
                 android:id="@+id/spinnerCheck4"
@@ -190,7 +196,8 @@
                 android:layout_height="40dp"
                 android:hint="Field Title"
                 android:padding="5dp"
-                android:background="@drawable/inpt1"/>
+                android:background="@drawable/inpt1"
+                android:singleLine="true"/>
 
             <Spinner
                 android:id="@+id/spinnerCheck5"
@@ -225,7 +232,8 @@
                 android:layout_height="40dp"
                 android:hint="Field Title"
                 android:padding="5dp"
-                android:background="@drawable/inpt1"/>
+                android:background="@drawable/inpt1"
+                android:singleLine="true"/>
 
             <Spinner
                 android:id="@+id/spinnerCheck6"
@@ -260,7 +268,8 @@
                 android:layout_height="40dp"
                 android:hint="Field Title"
                 android:padding="5dp"
-                android:background="@drawable/inpt1"/>
+                android:background="@drawable/inpt1"
+                android:singleLine="true"/>
 
             <Spinner
                 android:id="@+id/spinnerCheck7"

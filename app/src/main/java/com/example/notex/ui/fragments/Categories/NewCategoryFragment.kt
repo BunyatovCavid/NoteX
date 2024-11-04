@@ -200,6 +200,8 @@ class NewCategoryFragment : Fragment(R.layout.fragment_new_category) {
                 categoryModel.title = title
                 if (binding.categoryDescriptionnew.text.isNotBlank())
                     categoryModel.description = binding.categoryDescriptionnew.text.toString()
+                else
+                    categoryModel.description = "None"
 
                 categoryModel.field1 = setField(binding.categoryCheck1Title, binding.spinnerCheck1)
                 categoryModel.field2 = setField(binding.categoryCheck2Title, binding.spinnerCheck2)

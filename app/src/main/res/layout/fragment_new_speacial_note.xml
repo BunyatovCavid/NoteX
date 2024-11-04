@@ -15,7 +15,8 @@
         android:textColor="@color/black"
         android:padding="10dp"
         android:textSize="20dp"
-        android:background="@drawable/inpt1"/>
+        android:background="@drawable/inpt1"
+        android:singleLine="true"/>
 
     <EditText
         android:id="@+id/specialnoteField1"
@@ -26,7 +27,8 @@
         android:textColor="@color/black"
         android:padding="10dp"
         android:textSize="20dp"
-        android:background="@drawable/inpt1"/>
+        android:background="@drawable/inpt1"
+        android:singleLine="true"/>
 
     <EditText
         android:id="@+id/specialnoteField2"
@@ -37,7 +39,8 @@
         android:textColor="@color/black"
         android:padding="10dp"
         android:textSize="20dp"
-        android:background="@drawable/inpt1"/>
+        android:background="@drawable/inpt1"
+        android:singleLine="true"/>
 
     <EditText
         android:id="@+id/specialnoteField3"
@@ -48,7 +51,8 @@
         android:textColor="@color/black"
         android:padding="10dp"
         android:textSize="20dp"
-        android:background="@drawable/inpt1"/>
+        android:background="@drawable/inpt1"
+        android:singleLine="true"/>
 
     <EditText
         android:id="@+id/specialnoteField4"
@@ -59,7 +63,8 @@
         android:textColor="@color/black"
         android:padding="10dp"
         android:textSize="20dp"
-        android:background="@drawable/inpt1"/>
+        android:background="@drawable/inpt1"
+        android:singleLine="true"/>
 
     <EditText
         android:id="@+id/specialnoteField5"
@@ -70,7 +75,8 @@
         android:textColor="@color/black"
         android:padding="10dp"
         android:textSize="20dp"
-        android:background="@drawable/inpt1"/>
+        android:background="@drawable/inpt1"
+        android:singleLine="true"/>
 
     <EditText
         android:id="@+id/specialnoteField6"
@@ -81,7 +87,8 @@
         android:textColor="@color/black"
         android:padding="10dp"
         android:textSize="20dp"
-        android:background="@drawable/inpt1"/>
+        android:background="@drawable/inpt1"
+        android:singleLine="true"/>
 
     <EditText
         android:id="@+id/specialnoteField7"
@@ -92,7 +99,8 @@
         android:textColor="@color/black"
         android:padding="10dp"
         android:textSize="20dp"
-        android:background="@drawable/inpt1"/>
+        android:background="@drawable/inpt1"
+        android:singleLine="true"/>
 
 
 </LinearLayout>

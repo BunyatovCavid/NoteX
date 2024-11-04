@@ -44,6 +44,8 @@ class NoteFragment : Fragment(R.layout.fragment_note), SearchView.OnQueryTextLis
     private val noteViewModel: NoteViewModel by viewModels()
     private lateinit var noteAdapter: NoteAdapter
 
+    private var backPressedOnce = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -75,7 +77,15 @@ class NoteFragment : Fragment(R.layout.fragment_note), SearchView.OnQueryTextLis
                    var item = it.findViewById<BottomNavigationView>(R.id.bottomNav)
                    if( item.menu.findItem(R.id.homeFragment).isEnabled==false)
                     {
-                        nav.replace(this@NoteFragment, R.id.action_noteFragment_to_noInternetFragment)
+                        if (backPressedOnce) {
+                            requireActivity().finish()
+                        } else {
+                            backPressedOnce = true
+                            context?.toast("Press back again to exit")
+                            view?.postDelayed({
+                                backPressedOnce = false
+                            }, 2000)
+                        }
                     }else
                    {
                        nav.replace(this@NoteFragment, R.id.action_noteFragment_to_homeFragment)

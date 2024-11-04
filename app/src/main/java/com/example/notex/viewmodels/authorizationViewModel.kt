@@ -8,7 +8,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.notex.data.models.LoginEntity
-import com.example.notex.data.interfaces.Dao.LoginDao
 import com.example.notex.data.interfaces.AuthorizationInterface
 import com.example.notex.data.interfaces.UserInterface
 import com.example.notex.data.models.UserModel
@@ -22,8 +21,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthorizationViewModel @Inject constructor( private val repository:AuthorizationInterface, private val userRepository: UserInterface,
-                                                  private val loginDao: LoginDao, ) : ViewModel() {
+class AuthorizationViewModel @Inject constructor( private val repository:AuthorizationInterface, private val userRepository: UserInterface) : ViewModel() {
 
     private val crashlytics : FirebaseCrashlytics
         get() = FirebaseCrashlytics.getInstance()
@@ -72,12 +70,6 @@ class AuthorizationViewModel @Inject constructor( private val repository:Authori
            }
 
         }
-    }
-
-
-
-    private suspend fun getUserFromLocalDatabase(): LoginEntity? {
-        return loginDao.getLoginData()
     }
 
 
