@@ -1,9 +1,6 @@
 package com.example.notex.data.interfaces
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.notex.data.models.CategoryModel
-import com.example.notex.data.models.Note
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 
