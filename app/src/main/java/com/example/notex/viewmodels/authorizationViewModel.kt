@@ -2,21 +2,16 @@ package com.example.notex.viewmodels
 
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.notex.data.models.LoginEntity
 import com.example.notex.data.interfaces.AuthorizationInterface
 import com.example.notex.data.interfaces.UserInterface
 import com.example.notex.data.models.UserModel
-import com.example.notex.data.repositories.UserRepository
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -65,7 +60,7 @@ class AuthorizationViewModel @Inject constructor( private val repository:Authori
            }catch (e:Exception)
            {
                crashlytics.recordException(e)
-               Log.d("TestCostume", "Login de xeta oldu")
+               Log.d("CostumeExceptionHandle", e.message.toString())
                _loginResult.postValue("Login de xeta oldu")
            }
 
@@ -109,10 +104,9 @@ class AuthorizationViewModel @Inject constructor( private val repository:Authori
                     _signUpResult.postValue("Failed")
                 }
             }
-
-
-        }.addOnFailureListener { exception ->
-            crashlytics.recordException(exception)
+        }.addOnFailureListener { e ->
+            crashlytics.recordException(e)
+            Log.d("CostumeExceptionHandle", e.message.toString())
         }
     }
 

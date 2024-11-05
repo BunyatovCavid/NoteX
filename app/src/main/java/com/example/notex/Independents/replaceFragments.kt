@@ -1,13 +1,8 @@
 package com.example.notex.Independents
 
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
-import com.example.notex.R
-
 
 class replaceFragments {
 

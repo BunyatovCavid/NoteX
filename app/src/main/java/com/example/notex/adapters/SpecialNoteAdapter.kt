@@ -7,14 +7,9 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.notex.data.models.CategoryModel
-import com.example.notex.data.models.Note
 import com.example.notex.data.models.SpecialNoteModel
 import com.example.notex.databinding.SpecialNoteAdapterLayoutBinding
-import com.example.notex.ui.fragments.Notes.NoteFragmentDirections
 import com.example.notex.ui.fragments.SpecialNotes.HomeFragmentDirections
-import com.example.notex.ui.fragments.SpecialNotes.SpecialNoteDetailFragment
-import com.example.notex.ui.fragments.SpecialNotes.SpecialNoteDetailFragmentDirections
 import java.util.Random
 
 class SpecialNoteAdapter: RecyclerView.Adapter<SpecialNoteAdapter.SpecialNoteViewHolder>(){

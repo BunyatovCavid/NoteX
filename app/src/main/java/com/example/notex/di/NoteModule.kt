@@ -11,9 +11,6 @@ import com.example.notex.data.repositories.CategorieRepository
 import com.example.notex.data.repositories.NoteRepository
 import com.example.notex.data.repositories.SpeacialNoteRepository
 import com.example.notex.data.repositories.UserRepository
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

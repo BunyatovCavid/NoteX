@@ -44,6 +44,7 @@ class SpecialNoteViewModel @Inject constructor(private  val repository: SpecialN
             }catch(e:Exception)
             {
                 crashlytics.recordException(e)
+                Log.d("CostumeExceptionHandle", e.message.toString())
             }
         }
     }
@@ -56,6 +57,7 @@ class SpecialNoteViewModel @Inject constructor(private  val repository: SpecialN
             }catch (e:Exception)
             {
                 crashlytics.recordException(e)
+                Log.d("CostumeExceptionHandle", e.message.toString())
             }
         }
     }

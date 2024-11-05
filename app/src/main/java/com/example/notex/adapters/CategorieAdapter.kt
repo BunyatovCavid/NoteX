@@ -1,24 +1,14 @@
 package com.example.notex.adapters
 
-import android.net.Uri
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.notex.R
-import com.example.notex.adapters.NoteAdapter.NoteViewHolder
 import com.example.notex.data.models.CategoryModel
-import com.example.notex.data.models.Note
 import com.example.notex.databinding.CategorieLayoutAdapterBinding
-import com.example.notex.databinding.NoteLayoutAdapterBinding
 import com.example.notex.ui.fragments.Categories.CategorieFragmentDirections
-import com.example.notex.ui.fragments.Notes.NoteFragmentDirections
-import com.example.notex.ui.fragments.SpecialNotes.UseCategoryFragment
 
 class CategorieAdapter():RecyclerView.Adapter<CategorieAdapter.CategorieViewHolder>() {
 

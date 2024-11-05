@@ -1,18 +1,12 @@
 package com.example.notex.data.repositories
 
 import android.util.Log
-import android.widget.Toast
-import com.example.notex.data.models.LoginEntity
 import com.example.notex.data.interfaces.AuthorizationInterface
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 import android.content.Context
 
 class AuthorizationRepository :AuthorizationInterface {
@@ -30,9 +24,9 @@ class AuthorizationRepository :AuthorizationInterface {
                            callback(true, "Welcome")
                        }
                    }
-                   .addOnFailureListener { exception ->
-                       crashlytics.recordException(exception)
-                       Log.d("TestCostum", exception.message.toString())
+                   .addOnFailureListener { e ->
+                       crashlytics.recordException(e)
+                       Log.d("CostumeExceptionHandle", e.message.toString())
                        callback(false, "Enter email and password correctly")
                    }
     }
@@ -53,8 +47,9 @@ class AuthorizationRepository :AuthorizationInterface {
                           callback(false, errorMessage)
                       }
                   }
-                  .addOnFailureListener { exception ->
-                      crashlytics.recordException(exception)
+                  .addOnFailureListener { e ->
+                      crashlytics.recordException(e)
+                      Log.d("CostumeExceptionHandle", e.message.toString())
                       callback(false, "Could not register")
                   }
     }
@@ -79,8 +74,9 @@ class AuthorizationRepository :AuthorizationInterface {
                     onResult(false, "Didn't know the link was sent. Check email accuracy")
                 }
             }
-            .addOnFailureListener { exception ->
-                crashlytics.recordException(exception)
+            .addOnFailureListener { e ->
+                crashlytics.recordException(e)
+                Log.d("CostumeExceptionHandle", e.message.toString())
                 onResult(false, "Didn't know the link was sent. Check email accuracy")
             }
     }

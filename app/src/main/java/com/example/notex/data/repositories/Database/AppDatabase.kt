@@ -2,7 +2,6 @@ package com.example.notex.data.repositories.Database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.example.notex.data.models.LoginEntity
 import com.example.notex.data.interfaces.Dao.NoteDao
 import com.example.notex.data.models.Note
 

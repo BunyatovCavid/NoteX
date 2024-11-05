@@ -1,8 +1,6 @@
 package com.example.notex
 
 import android.app.Application
-import androidx.room.Room
-import com.example.notex.data.repositories.Database.AppDatabase
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.HiltAndroidApp
 

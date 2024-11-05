@@ -5,12 +5,8 @@ import android.util.Log
 import com.example.notex.data.interfaces.UserInterface
 import com.example.notex.data.models.UserModel
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import javax.inject.Inject
 
 class UserRepository: UserInterface {
 

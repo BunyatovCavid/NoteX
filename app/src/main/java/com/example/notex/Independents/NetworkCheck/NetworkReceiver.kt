@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import android.widget.Toast
 import androidx.navigation.NavController
 import com.example.notex.R
 import com.google.android.material.bottomnavigation.BottomNavigationView

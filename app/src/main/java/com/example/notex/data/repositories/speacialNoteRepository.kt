@@ -5,13 +5,11 @@ import com.example.notex.data.interfaces.SpecialNotesInterface
 import com.example.notex.data.models.SpecialNoteModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.tasks.await
-import javax.inject.Inject
 
 class SpeacialNoteRepository : SpecialNotesInterface {
 
@@ -45,10 +43,12 @@ class SpeacialNoteRepository : SpecialNotesInterface {
             firebaseStore.collection("$categoryTitle").add(speacialNoteModel).await()
         } catch (e: Exception) {
             crashlytics.recordException(e)
+            Log.d("CostumeExceptionHandle", e.message.toString())
         }
     }
 
     override suspend fun updateSpecialNote(specialNoteModel: SpecialNoteModel) {
+     try{
         var querySnapshot =
             firebaseStore.collection(specialNoteModel.categoryTitle).whereEqualTo("userId", userId)
                 .whereEqualTo(
@@ -79,6 +79,12 @@ class SpeacialNoteRepository : SpecialNotesInterface {
                 }
         } else {
             Log.d("Firestore", "Note tapılmadı.")
+        }
+    }
+        catch(e:Exception)
+        {
+            crashlytics.recordException(e)
+            Log.d("CostumeExceptionHandle", e.message.toString())
         }
 
     }
@@ -112,6 +118,7 @@ class SpeacialNoteRepository : SpecialNotesInterface {
         } catch (e: Exception) {
             crashlytics.recordException(e)
             callback(false,"Failed")
+            Log.d("CostumeExceptionHandle", e.message.toString())
         }
     }
 }

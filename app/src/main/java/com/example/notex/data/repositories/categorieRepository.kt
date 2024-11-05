@@ -10,7 +10,6 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.tasks.await
-import javax.inject.Inject
 
 class CategorieRepository:CategorieInterface {
 
@@ -49,6 +48,7 @@ class CategorieRepository:CategorieInterface {
            documentSnapshot
         } catch (e: Exception) {
            crashlytics.recordException(e)
+           Log.d("CostumeExceptionHandle", e.message.toString())
            null
         }
 
@@ -60,6 +60,7 @@ class CategorieRepository:CategorieInterface {
             firebaseStrore.collection("$collectionTitle").add(categoryModel).await()
         }catch (e:Exception){
             crashlytics.recordException(e)
+            Log.d("CostumeExceptionHandle", e.message.toString())
         }
     }
 
@@ -102,6 +103,7 @@ class CategorieRepository:CategorieInterface {
         } catch (e: Exception) {
             crashlytics.recordException(e)
             callback(false, "The category could not be deleted")
+            Log.d("CostumeExceptionHandle", e.message.toString())
         }
 
     }
