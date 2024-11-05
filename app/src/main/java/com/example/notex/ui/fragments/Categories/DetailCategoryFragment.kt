@@ -11,22 +11,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavOptions
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.notex.Independents.helper.toast
 import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
-import com.example.notex.adapters.CategorieAdapter
 import com.example.notex.data.models.CategoryModel
 import com.example.notex.data.models.specialField
 import com.example.notex.databinding.FragmentDetailCategoryBinding
-import com.example.notex.ui.MainActivity
 import com.example.notex.viewmodels.CategoryViewModel
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -136,13 +130,9 @@ class DetailCategoryFragment : Fragment(R.layout.fragment_detail_category) {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     override fun onDestroy() {
         super.onDestroy()
+        _binding=null
         binding?.categoryCheck1?.visibility =View.VISIBLE
         binding?.categoryCheck4?.visibility =View.VISIBLE
         binding?.categoryCheck3?.visibility =View.VISIBLE

@@ -9,19 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
-import androidx.core.view.marginBottom
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notex.Independents.helper.toast
 import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
 import com.example.notex.adapters.NoteAdapter
 import com.example.notex.data.models.Note
-import com.example.notex.databinding.FragmentHomeBinding
-import com.example.notex.databinding.FragmentLoginBinding
 import com.example.notex.databinding.FragmentNoteBinding
-import com.example.notex.databinding.FragmentRegisterBinding
 import com.example.notex.ui.MainActivity
 import com.example.notex.viewmodels.NoteViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -38,7 +33,7 @@ class NoteFragment : Fragment(R.layout.fragment_note), SearchView.OnQueryTextLis
 
 
     private var _binding: FragmentNoteBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
     private lateinit var nav: replaceFragments
 
     private val noteViewModel: NoteViewModel by viewModels()
@@ -57,7 +52,7 @@ class NoteFragment : Fragment(R.layout.fragment_note), SearchView.OnQueryTextLis
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentNoteBinding.inflate(inflater, container, false)
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -67,7 +62,7 @@ class NoteFragment : Fragment(R.layout.fragment_note), SearchView.OnQueryTextLis
 
         setUpRecyclerView()
 
-        binding.fabAddNote.setOnClickListener{mView->
+        binding?.fabAddNote?.setOnClickListener{mView->
             nav.replace(this, R.id.action_noteFragment_to_newNoteFragment)
         }
 
@@ -96,15 +91,19 @@ class NoteFragment : Fragment(R.layout.fragment_note), SearchView.OnQueryTextLis
         })
     }
 
-    private fun setUpRecyclerView(){
+    private fun setUpRecyclerView() {
         noteAdapter = NoteAdapter()
 
-        binding.recycleView.apply {
-            layoutManager = StaggeredGridLayoutManager(2,
-                StaggeredGridLayoutManager.VERTICAL)
+        binding?.let {
+        it.recycleView.apply {
+            layoutManager = StaggeredGridLayoutManager(
+                2,
+                StaggeredGridLayoutManager.VERTICAL
+            )
             setHasFixedSize(true)
             adapter = noteAdapter
         }
+    }
 
         activity?.let {
             try {
@@ -121,11 +120,11 @@ class NoteFragment : Fragment(R.layout.fragment_note), SearchView.OnQueryTextLis
 
     private fun updateUI(note: List<Note>) {
         if (note.isNotEmpty()) {
-            binding.cardView.visibility = View.GONE
-            binding.recycleView.visibility = View.VISIBLE
+            binding?.cardView?.visibility = View.GONE
+            binding?.recycleView?.visibility = View.VISIBLE
         } else {
-            binding.cardView.visibility = View.VISIBLE
-            binding.recycleView.visibility = View.GONE
+            binding?.cardView?.visibility = View.VISIBLE
+            binding?.recycleView?.visibility = View.GONE
         }
     }
 

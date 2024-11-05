@@ -1,7 +1,6 @@
 package com.example.notex.ui.fragments.SpecialNotes
 
 import android.app.AlertDialog
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.InputType
 import androidx.fragment.app.Fragment
@@ -13,8 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.runtime.currentCompositionErrors
-import androidx.compose.ui.util.fastCbrt
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
@@ -23,13 +20,10 @@ import com.example.notex.Independents.CostumeDataType
 import com.example.notex.Independents.helper.toast
 import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
-import com.example.notex.data.models.Note
 import com.example.notex.data.models.SpecialNoteModel
 import com.example.notex.data.models.specialField
 import com.example.notex.databinding.FragmentSpecialNoteDetailBinding
-import com.example.notex.databinding.FragmentUpdateNoteBinding
 import com.example.notex.ui.MainActivity
-import com.example.notex.ui.fragments.Notes.UpdateNoteFragmentArgs
 import com.example.notex.viewmodels.SpecialNoteViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -48,7 +42,7 @@ class SpecialNoteDetailFragment : Fragment(R.layout.fragment_special_note_detail
     private val specialViewModel:SpecialNoteViewModel by viewModels()
 
     private var _binding: FragmentSpecialNoteDetailBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +56,7 @@ class SpecialNoteDetailFragment : Fragment(R.layout.fragment_special_note_detail
     ): View? {
         _binding = FragmentSpecialNoteDetailBinding.inflate(inflater, container, false)
 
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -73,11 +67,11 @@ class SpecialNoteDetailFragment : Fragment(R.layout.fragment_special_note_detail
 
         nav = replaceFragments()
 
-        binding.fabUpdate.setOnClickListener{
-            if(binding.specialnoteTitle.isClickable == false) {
+        binding?.fabUpdate?.setOnClickListener{
+            if(binding?.specialnoteTitle?.isClickable == false) {
                 configureEditTexts()
-                binding.totalAmount.visibility = View.INVISIBLE
-                binding.fabUpdate.setImageResource(R.drawable.baseline_done_24)
+                binding?.totalAmount?.visibility = View.INVISIBLE
+                binding?.fabUpdate?.setImageResource(R.drawable.baseline_done_24)
             }
             else
             {
@@ -89,8 +83,8 @@ class SpecialNoteDetailFragment : Fragment(R.layout.fragment_special_note_detail
                 })
 
                 disableEditTexts()
-                binding.totalAmount.visibility =View.VISIBLE
-                binding.fabUpdate.setImageResource(R.drawable.baseline_edit_note_24)
+                binding?.totalAmount?.visibility =View.VISIBLE
+                binding?.fabUpdate?.setImageResource(R.drawable.baseline_edit_note_24)
             }
 
         }
@@ -106,18 +100,19 @@ class SpecialNoteDetailFragment : Fragment(R.layout.fragment_special_note_detail
     }
 
     private fun updateView(data: SpecialNoteModel) {
-        binding.specialnoteTitle.setText(data.title)
+        binding?.let {
+            it.specialnoteTitle.setText(data.title)
+            setFieldVisibilityAndText(it.specialnoteField1, data.specialField1)
+            setFieldVisibilityAndText(it.specialnoteField2, data.specialField2)
+            setFieldVisibilityAndText(it.specialnoteField3, data.specialField3)
+            setFieldVisibilityAndText(it.specialnoteField4, data.specialField4)
+            setFieldVisibilityAndText(it.specialnoteField5, data.specialField5)
+            setFieldVisibilityAndText(it.specialnoteField6, data.specialField6)
+            setFieldVisibilityAndText(it.specialnoteField7, data.specialField7)
 
-        setFieldVisibilityAndText(binding.specialnoteField1, data.specialField1)
-        setFieldVisibilityAndText(binding.specialnoteField2, data.specialField2)
-        setFieldVisibilityAndText(binding.specialnoteField3, data.specialField3)
-        setFieldVisibilityAndText(binding.specialnoteField4, data.specialField4)
-        setFieldVisibilityAndText(binding.specialnoteField5, data.specialField5)
-        setFieldVisibilityAndText(binding.specialnoteField6, data.specialField6)
-        setFieldVisibilityAndText(binding.specialnoteField7, data.specialField7)
-
-        calculateTotalAmount()
-        setInputTypes()
+            calculateTotalAmount()
+            setInputTypes()
+        }
     }
 
 
@@ -136,13 +131,15 @@ class SpecialNoteDetailFragment : Fragment(R.layout.fragment_special_note_detail
     }
 
     private fun setInputTypes() {
-        setInputTypeForField(binding.specialnoteField1, currentNote.specialField1?.datatype)
-        setInputTypeForField(binding.specialnoteField2, currentNote.specialField2?.datatype)
-        setInputTypeForField(binding.specialnoteField3, currentNote.specialField3?.datatype)
-        setInputTypeForField(binding.specialnoteField4, currentNote.specialField4?.datatype)
-        setInputTypeForField(binding.specialnoteField5, currentNote.specialField5?.datatype)
-        setInputTypeForField(binding.specialnoteField6, currentNote.specialField6?.datatype)
-        setInputTypeForField(binding.specialnoteField7, currentNote.specialField7?.datatype)
+        binding?.let {
+            setInputTypeForField(it.specialnoteField1, currentNote.specialField1?.datatype)
+            setInputTypeForField(it.specialnoteField2, currentNote.specialField2?.datatype)
+            setInputTypeForField(it.specialnoteField3, currentNote.specialField3?.datatype)
+            setInputTypeForField(it.specialnoteField4, currentNote.specialField4?.datatype)
+            setInputTypeForField(it.specialnoteField5, currentNote.specialField5?.datatype)
+            setInputTypeForField(it.specialnoteField6, currentNote.specialField6?.datatype)
+            setInputTypeForField(it.specialnoteField7, currentNote.specialField7?.datatype)
+        }
     }
 
 
@@ -151,33 +148,78 @@ class SpecialNoteDetailFragment : Fragment(R.layout.fragment_special_note_detail
         val specialNoteModel = SpecialNoteModel(currentNote.id, "", currentNote.categoryTitle)
 
         try {
-            if (binding.specialnoteTitle.visibility == View.VISIBLE) {
-                specialNoteModel.title = binding.specialnoteTitle.text.toString()
+            if (binding?.specialnoteTitle?.visibility == View.VISIBLE) {
+                specialNoteModel.title = binding?.specialnoteTitle?.text.toString()
             }
 
-            val fields = listOf(
-                binding.specialnoteField1 to currentNote.specialField1,
-                binding.specialnoteField2 to currentNote.specialField2,
-                binding.specialnoteField3 to currentNote.specialField3,
-                binding.specialnoteField4 to currentNote.specialField4,
-                binding.specialnoteField5 to currentNote.specialField5,
-                binding.specialnoteField6 to currentNote.specialField6,
-                binding.specialnoteField7 to currentNote.specialField7
-            )
 
-            fields.forEachIndexed { index, (editText, specialField) ->
-                if (editText.visibility == View.VISIBLE) {
-                    when (index) {
-                        0 -> specialNoteModel.specialField1 = specialField?.let { specialField(editText.text.toString(), it.datatype) }
-                        1 -> specialNoteModel.specialField2 = specialField?.let { specialField(editText.text.toString(), it.datatype) }
-                        2 -> specialNoteModel.specialField3 = specialField?.let { specialField(editText.text.toString(), it.datatype) }
-                        3 -> specialNoteModel.specialField4 = specialField?.let { specialField(editText.text.toString(), it.datatype) }
-                        4 -> specialNoteModel.specialField5 = specialField?.let { specialField(editText.text.toString(), it.datatype) }
-                        5 -> specialNoteModel.specialField6 = specialField?.let { specialField(editText.text.toString(), it.datatype) }
-                        6 -> specialNoteModel.specialField7 = specialField?.let { specialField(editText.text.toString(), it.datatype) }
+                binding?.let {
+                    val fields = listOf(
+                        it.specialnoteField1 to currentNote.specialField1,
+                        it.specialnoteField2 to currentNote.specialField2,
+                        it.specialnoteField3 to currentNote.specialField3,
+                        it.specialnoteField4 to currentNote.specialField4,
+                        it.specialnoteField5 to currentNote.specialField5,
+                        it.specialnoteField6 to currentNote.specialField6,
+                        it.specialnoteField7 to currentNote.specialField7
+                    )
+
+
+                    fields.forEachIndexed { index, (editText, specialField) ->
+                        if (editText.visibility == View.VISIBLE) {
+                            when (index) {
+                                0 -> specialNoteModel.specialField1 = specialField?.let {
+                                    specialField(
+                                        editText.text.toString(),
+                                        it.datatype
+                                    )
+                                }
+
+                                1 -> specialNoteModel.specialField2 = specialField?.let {
+                                    specialField(
+                                        editText.text.toString(),
+                                        it.datatype
+                                    )
+                                }
+
+                                2 -> specialNoteModel.specialField3 = specialField?.let {
+                                    specialField(
+                                        editText.text.toString(),
+                                        it.datatype
+                                    )
+                                }
+
+                                3 -> specialNoteModel.specialField4 = specialField?.let {
+                                    specialField(
+                                        editText.text.toString(),
+                                        it.datatype
+                                    )
+                                }
+
+                                4 -> specialNoteModel.specialField5 = specialField?.let {
+                                    specialField(
+                                        editText.text.toString(),
+                                        it.datatype
+                                    )
+                                }
+
+                                5 -> specialNoteModel.specialField6 = specialField?.let {
+                                    specialField(
+                                        editText.text.toString(),
+                                        it.datatype
+                                    )
+                                }
+
+                                6 -> specialNoteModel.specialField7 = specialField?.let {
+                                    specialField(
+                                        editText.text.toString(),
+                                        it.datatype
+                                    )
+                                }
+                            }
+                        }
                     }
                 }
-            }
         } catch (e: Exception) {
             crashlytics.recordException(e)
             context?.toast("Error updating note: ${e.message}")
@@ -204,15 +246,15 @@ class SpecialNoteDetailFragment : Fragment(R.layout.fragment_special_note_detail
             }
 
             if (specialField?.datatype == CostumeDataType.Amount.toString()) {
-                totalAmount += binding.root.findViewById<EditText>(resources.getIdentifier("specialnoteField$i", "id", context?.packageName)).text.toString().toDoubleOrNull() ?: 0.0
+                totalAmount += binding?.root?.findViewById<EditText>(resources.getIdentifier("specialnoteField$i", "id", context?.packageName))?.text.toString().toDoubleOrNull() ?: 0.0
             }
 
             if (specialField?.datatype == CostumeDataType.Number.toString()) {
-                multiplier *= binding.root.findViewById<EditText>(resources.getIdentifier("specialnoteField$i", "id", context?.packageName)).text.toString().toDoubleOrNull() ?: 1.0
+                multiplier *= binding?.root?.findViewById<EditText>(resources.getIdentifier("specialnoteField$i", "id", context?.packageName))?.text.toString().toDoubleOrNull() ?: 1.0
             }
         }
 
-        binding.totalAmount.text = (totalAmount * multiplier).toString()
+        binding?.totalAmount?.text = (totalAmount * multiplier).toString()
     }
 
     private fun setEditTextProperties(editText: EditText) {
@@ -224,33 +266,32 @@ class SpecialNoteDetailFragment : Fragment(R.layout.fragment_special_note_detail
     }
 
     private fun configureEditTexts() {
-        if (binding.specialnoteTitle.visibility == View.VISIBLE) {
-            setEditTextProperties(binding.specialnoteTitle)
+        binding?.let {
+            if (it.specialnoteTitle.visibility == View.VISIBLE) {
+                setEditTextProperties(it.specialnoteTitle)
+            }
+            if (it.specialnoteField1.visibility == View.VISIBLE) {
+                setEditTextProperties(it.specialnoteField1)
+            }
+            if (it.specialnoteField2.visibility == View.VISIBLE) {
+                setEditTextProperties(it.specialnoteField2)
+            }
+            if (it.specialnoteField3.visibility == View.VISIBLE) {
+                setEditTextProperties(it.specialnoteField3)
+            }
+            if (it.specialnoteField4.visibility == View.VISIBLE) {
+                setEditTextProperties(it.specialnoteField4)
+            }
+            if (it.specialnoteField5.visibility == View.VISIBLE) {
+                setEditTextProperties(it.specialnoteField5)
+            }
+            if (it.specialnoteField6.visibility == View.VISIBLE) {
+                setEditTextProperties(it.specialnoteField6)
+            }
+            if (it.specialnoteField7.visibility == View.VISIBLE) {
+                setEditTextProperties(it.specialnoteField7)
+            }
         }
-        if (binding.specialnoteField1.visibility == View.VISIBLE) {
-            setEditTextProperties(binding.specialnoteField1)
-        }
-        if (binding.specialnoteField2.visibility == View.VISIBLE) {
-            setEditTextProperties(binding.specialnoteField2)
-        }
-        if (binding.specialnoteField3.visibility == View.VISIBLE) {
-            setEditTextProperties(binding.specialnoteField3)
-        }
-        if (binding.specialnoteField4.visibility == View.VISIBLE) {
-            setEditTextProperties(binding.specialnoteField4)
-        }
-        if (binding.specialnoteField5.visibility == View.VISIBLE) {
-            setEditTextProperties(binding.specialnoteField5)
-        }
-        if (binding.specialnoteField6.visibility == View.VISIBLE) {
-            setEditTextProperties(binding.specialnoteField6)
-        }
-        if (binding.specialnoteField7.visibility == View.VISIBLE) {
-            setEditTextProperties(binding.specialnoteField7)
-        }
-
-
-
     }
 
     private fun setEditTextProperties(editText: EditText, isEnabled: Boolean) {
@@ -262,29 +303,31 @@ class SpecialNoteDetailFragment : Fragment(R.layout.fragment_special_note_detail
     }
 
     private fun disableEditTexts() {
-        if (binding.specialnoteTitle.visibility == View.VISIBLE) {
-            setEditTextProperties(binding.specialnoteTitle, false)
-        }
-        if (binding.specialnoteField1.visibility == View.VISIBLE) {
-            setEditTextProperties(binding.specialnoteField1, false)
-        }
-        if (binding.specialnoteField2.visibility == View.VISIBLE) {
-            setEditTextProperties(binding.specialnoteField2, false)
-        }
-        if (binding.specialnoteField3.visibility == View.VISIBLE) {
-            setEditTextProperties(binding.specialnoteField3, false)
-        }
-        if (binding.specialnoteField4.visibility == View.VISIBLE) {
-            setEditTextProperties(binding.specialnoteField4, false)
-        }
-        if (binding.specialnoteField5.visibility == View.VISIBLE) {
-            setEditTextProperties(binding.specialnoteField5, false)
-        }
-        if (binding.specialnoteField6.visibility == View.VISIBLE) {
-            setEditTextProperties(binding.specialnoteField6, false)
-        }
-        if (binding.specialnoteField7.visibility == View.VISIBLE) {
-            setEditTextProperties(binding.specialnoteField7, false)
+        binding?.let {
+            if (it.specialnoteTitle.visibility == View.VISIBLE) {
+                setEditTextProperties(it.specialnoteTitle, false)
+            }
+            if (it.specialnoteField1.visibility == View.VISIBLE) {
+                setEditTextProperties(it.specialnoteField1, false)
+            }
+            if (it.specialnoteField2.visibility == View.VISIBLE) {
+                setEditTextProperties(it.specialnoteField2, false)
+            }
+            if (it.specialnoteField3.visibility == View.VISIBLE) {
+                setEditTextProperties(it.specialnoteField3, false)
+            }
+            if (it.specialnoteField4.visibility == View.VISIBLE) {
+                setEditTextProperties(it.specialnoteField4, false)
+            }
+            if (it.specialnoteField5.visibility == View.VISIBLE) {
+                setEditTextProperties(it.specialnoteField5, false)
+            }
+            if (it.specialnoteField6.visibility == View.VISIBLE) {
+                setEditTextProperties(it.specialnoteField6, false)
+            }
+            if (it.specialnoteField7.visibility == View.VISIBLE) {
+                setEditTextProperties(it.specialnoteField7, false)
+            }
         }
     }
 
@@ -344,8 +387,8 @@ class SpecialNoteDetailFragment : Fragment(R.layout.fragment_special_note_detail
     }
 
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 

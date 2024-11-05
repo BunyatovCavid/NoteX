@@ -1,15 +1,14 @@
 package com.example.notex.ui.fragments.SpecialNotes
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.example.notex.Independents.CostumeDataType
 import com.example.notex.Independents.helper.toast
@@ -30,7 +29,7 @@ class UseCategoryFragment : Fragment(R.layout.fragment_use_category) {
         get() = FirebaseCrashlytics.getInstance()
 
     private var _binding:FragmentUseCategoryBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
     private lateinit var nav:replaceFragments
 
     private lateinit var options:MutableList<String>
@@ -70,49 +69,55 @@ class UseCategoryFragment : Fragment(R.layout.fragment_use_category) {
 
             val adapter = ArrayAdapter(requireContext(), R.layout.use_spinner_item, options)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.spinnerCheck.adapter = adapter
+            binding?.spinnerCheck?.adapter = adapter
         } catch (e: Exception) {
             crashlytics.recordException(e)
             context?.toast("Error loading categories: ${e.message}")
+            Log.d("CostumeExceptionHandle", e.message.toString())
         }
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val spinner = binding.spinnerCheck
+        val spinner = binding?.spinnerCheck
         nav = replaceFragments()
 
-        binding.useButton.setOnClickListener{
-            val selectedItemPosition = spinner.selectedItemPosition
+        binding?.useButton?.setOnClickListener{
+            spinner?.let {
+                val selectedItemPosition = spinner.selectedItemPosition
 
-            if(selectedItemPosition !=0)
-            {
-                try {
-                categoryViewModel.getCategoryByDocument(
-                    "Categories",
-                    backupDatas.get(selectedItemPosition - 1) ?: CategoryModel()
-                )
-                categoryViewModel.documentResult.observe(viewLifecycleOwner, { result ->
-                    var bundle = Bundle()
-                    bundle.putParcelable("category", result)
-                    nav.replace(this, R.id.action_useCategoryFragment_to_newSpeacialNote, bundle)
-                })
-            } catch (e: Exception) {
-                    crashlytics.recordException(e)
-                context?.toast("Error retrieving category: ${e.message}")
-            }
+                if (selectedItemPosition != 0) {
+                    try {
+                        categoryViewModel.getCategoryByDocument(
+                            "Categories",
+                            backupDatas.get(selectedItemPosition - 1) ?: CategoryModel()
+                        )
+                        categoryViewModel.documentResult.observe(viewLifecycleOwner, { result ->
+                            var bundle = Bundle()
+                            bundle.putParcelable("category", result)
+                            nav.replace(
+                                this,
+                                R.id.action_useCategoryFragment_to_newSpeacialNote,
+                                bundle
+                            )
+                        })
 
-            }
-            else
-            {
-                context?.toast("You must select a category")
+                    } catch (e: Exception) {
+                        crashlytics.recordException(e)
+                        context?.toast("Error retrieving category: ${e.message}")
+                        Log.d("CostumeExceptionHandle", e.message.toString())
+                    }
+
+                } else {
+                    context?.toast("You must select a category")
+                }
             }
         }
 
 
-        binding.withoutButton.setOnClickListener{
+        binding?.withoutButton?.setOnClickListener{
             try {
                 var result = CategoryModel(
                     "WithoutCategory", "WithoutCategory",
@@ -132,6 +137,7 @@ class UseCategoryFragment : Fragment(R.layout.fragment_use_category) {
             } catch (e: Exception) {
                crashlytics.recordException(e)
                 context?.toast("Error creating without category: ${e.message}")
+                Log.d("CostumeExceptionHandle", e.message.toString())
             }
         }
     }

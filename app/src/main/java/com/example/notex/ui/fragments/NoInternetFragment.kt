@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
-import com.example.notex.ui.MainActivity
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class NoInternetFragment : Fragment() {

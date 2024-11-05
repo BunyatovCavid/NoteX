@@ -8,7 +8,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import com.example.notex.Independents.helper.toast
@@ -16,11 +15,7 @@ import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
 import com.example.notex.data.models.Note
 import com.example.notex.databinding.FragmentNewNoteBinding
-import com.example.notex.databinding.FragmentNoteBinding
-import com.example.notex.ui.MainActivity
-import com.example.notex.viewmodels.AuthorizationViewModel
 import com.example.notex.viewmodels.NoteViewModel
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,7 +28,7 @@ class NewNoteFragment : Fragment(R.layout.fragment_new_note) {
 
 
     private var _binding: FragmentNewNoteBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
     private lateinit var nav: replaceFragments
 
     private val noteViewModel: NoteViewModel by viewModels()
@@ -49,9 +44,7 @@ class NewNoteFragment : Fragment(R.layout.fragment_new_note) {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-
-
+    ): View? {
         nav = replaceFragments()
 
         _binding = FragmentNewNoteBinding.inflate(
@@ -60,7 +53,7 @@ class NewNoteFragment : Fragment(R.layout.fragment_new_note) {
             false
         )
 
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -69,8 +62,8 @@ class NewNoteFragment : Fragment(R.layout.fragment_new_note) {
     }
 
     private fun saveNote(view: View) {
-        val noteTitle = binding.etNoteTitle.text.toString().trim()
-        val noteBody = binding.etNoteBody.text.toString().trim()
+        val noteTitle = binding?.etNoteTitle?.text.toString().trim()
+        val noteBody = binding?.etNoteBody?.text.toString().trim()
 
         if (noteTitle.isNotEmpty()) {
             val note = Note(0, noteTitle, noteBody)

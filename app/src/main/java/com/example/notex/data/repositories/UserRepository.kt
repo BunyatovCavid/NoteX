@@ -54,6 +54,7 @@ class UserRepository: UserInterface {
             ?.addOnFailureListener { e ->
                 crashlytics.recordException(e)
                 callback("The process failed")
+                Log.d("CostumeExceptionHandle", e.message.toString())
             }
 
     }

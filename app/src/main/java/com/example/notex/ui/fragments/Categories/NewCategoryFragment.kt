@@ -1,6 +1,5 @@
 package com.example.notex.ui.fragments.Categories
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,11 +12,9 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
 import androidx.fragment.app.viewModels
 import com.example.notex.Independents.CostumeDataType
 import com.example.notex.Independents.helper.toast
@@ -27,9 +24,7 @@ import com.example.notex.data.models.CategoryModel
 import com.example.notex.data.models.ManagedCategoryModel
 import com.example.notex.data.models.specialField
 import com.example.notex.databinding.FragmentNewCategoryBinding
-import com.example.notex.ui.MainActivity
 import com.example.notex.viewmodels.CategoryViewModel
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,7 +36,7 @@ class NewCategoryFragment : Fragment(R.layout.fragment_new_category) {
         get() = FirebaseCrashlytics.getInstance()
 
     private var _binding:FragmentNewCategoryBinding?= null
-    private val binding get() =_binding!!
+    private val binding get() =_binding
 
     private val categoryViewModel:CategoryViewModel by viewModels()
     private lateinit var managedCategory:MutableList<ManagedCategoryModel>
@@ -71,13 +66,13 @@ class NewCategoryFragment : Fragment(R.layout.fragment_new_category) {
 
         val adapter = ArrayAdapter(requireContext(), R.layout.spinnet_item, options)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinnerCheck1.adapter = adapter
-        binding.spinnerCheck2.adapter = adapter
-        binding.spinnerCheck3.adapter = adapter
-        binding.spinnerCheck4.adapter = adapter
-        binding.spinnerCheck5.adapter = adapter
-        binding.spinnerCheck6.adapter = adapter
-        binding.spinnerCheck7.adapter = adapter
+        binding?.spinnerCheck1?.adapter = adapter
+        binding?.spinnerCheck2?.adapter = adapter
+        binding?.spinnerCheck3?.adapter = adapter
+        binding?.spinnerCheck4?.adapter = adapter
+        binding?.spinnerCheck5?.adapter = adapter
+        binding?.spinnerCheck6?.adapter = adapter
+        binding?.spinnerCheck7?.adapter = adapter
 
 
         managedCategory = mutableListOf<ManagedCategoryModel>(ManagedCategoryModel(1, true),
@@ -89,37 +84,40 @@ class NewCategoryFragment : Fragment(R.layout.fragment_new_category) {
             ManagedCategoryModel(7, false),
         )
 
-        binding.addButton.setOnClickListener{
+        binding?.addButton?.setOnClickListener{
             managedFieldAreas()
         }
 
-        binding.deleteButton1.setOnClickListener{
-            setOnClick(binding.deleteButton1, binding.categoryCheck1, 1, R.drawable.btn4)
+        binding?.deleteButton1?.setOnClickListener{
+           binding?.let { setOnClick(it.deleteButton1, it.categoryCheck1, 1, R.drawable.btn4)}
         }
 
-        binding.deleteButton2.setOnClickListener{
-            setOnClick(binding.deleteButton2, binding.categoryCheck2, 2, R.drawable.btn4)
+        binding?.deleteButton2?.setOnClickListener{
+            binding?.let { setOnClick(it.deleteButton2, it.categoryCheck2, 2, R.drawable.btn4)}
         }
 
-        binding.deleteButton3.setOnClickListener{
-            setOnClick(binding.deleteButton3, binding.categoryCheck3, 3, R.drawable.btn4)
+        binding?.deleteButton3?.setOnClickListener{
+            binding?.let { setOnClick(it.deleteButton3, it.categoryCheck3, 3, R.drawable.btn4)}
         }
 
-        binding.deleteButton4.setOnClickListener{
-            setOnClick(binding.deleteButton4, binding.categoryCheck4, 4, R.drawable.btn4)
+        binding?.deleteButton4?.setOnClickListener{
+            binding?.let { setOnClick(it.deleteButton4, it.categoryCheck4, 4, R.drawable.btn4)}
         }
 
-        binding.deleteButton5.setOnClickListener{
-            setOnClick(binding.deleteButton5, binding.categoryCheck5, 5, R.drawable.btn4)
+        binding?.deleteButton5?.setOnClickListener{
+            binding?.let { setOnClick(it.deleteButton5, it.categoryCheck5, 5, R.drawable.btn4)}
         }
 
-        binding.deleteButton6.setOnClickListener{
-            setOnClick(binding.deleteButton6, binding.categoryCheck6, 6, R.drawable.btn4)
+        binding?.deleteButton6?.setOnClickListener{
+            binding?.let { setOnClick(it.deleteButton6, it.categoryCheck6, 6, R.drawable.btn4)}
         }
-        binding.deleteButton7.setOnClickListener{
-            setOnClick(binding.deleteButton7, binding.categoryCheck7, 7, R.drawable.btn4)
+
+        binding?.deleteButton7?.setOnClickListener{
+            binding?.let { setOnClick(it.deleteButton7, it.categoryCheck7, 7, R.drawable.btn4)}
         }
+
     }
+
 
     private fun setOnClick(button: Button, linearLayout: LinearLayout, id:Int, drawable: Int){
             linearLayout.visibility = View.GONE
@@ -142,19 +140,19 @@ class NewCategoryFragment : Fragment(R.layout.fragment_new_category) {
         val allActive = managedCategory.all { it.IsActiveBoolean }
 
         if (allActive) {
-            binding.addButton.setBackgroundResource(R.drawable.btn3)
+            binding?.addButton?.setBackgroundResource(R.drawable.btn3)
         }
     }
 
     private fun getFieldLayoutViewById(id: Int): View? {
         return when (id) {
-            1 -> binding.categoryCheck1
-            2 -> binding.categoryCheck2
-            3 -> binding.categoryCheck3
-            4 -> binding.categoryCheck4
-            5 -> binding.categoryCheck5
-            6 -> binding.categoryCheck6
-            7 -> binding.categoryCheck7
+            1 -> binding?.categoryCheck1
+            2 -> binding?.categoryCheck2
+            3 -> binding?.categoryCheck3
+            4 -> binding?.categoryCheck4
+            5 -> binding?.categoryCheck5
+            6 -> binding?.categoryCheck6
+            7 -> binding?.categoryCheck7
             else -> null
         }
     }
@@ -193,23 +191,23 @@ class NewCategoryFragment : Fragment(R.layout.fragment_new_category) {
     }
 
     private fun addCategory(){
-        var title:String=binding.categoryTitlenew.text.toString()
+        var title:String=binding?.categoryTitlenew?.text.toString()
         var categoryModel = CategoryModel()
         try {
             if (!title.all { it == '.' || it.isWhitespace() }) {
                 categoryModel.title = title
-                if (binding.categoryDescriptionnew.text.isNotBlank())
-                    categoryModel.description = binding.categoryDescriptionnew.text.toString()
+                if (binding?.categoryDescriptionnew?.text.toString().isNotBlank())
+                    categoryModel.description = binding?.categoryDescriptionnew?.text.toString()
                 else
                     categoryModel.description = "None"
 
-                categoryModel.field1 = setField(binding.categoryCheck1Title, binding.spinnerCheck1)
-                categoryModel.field2 = setField(binding.categoryCheck2Title, binding.spinnerCheck2)
-                categoryModel.field3 = setField(binding.categoryCheck3Title, binding.spinnerCheck3)
-                categoryModel.field4 = setField(binding.categoryCheck4Title, binding.spinnerCheck4)
-                categoryModel.field5 = setField(binding.categoryCheck5Title, binding.spinnerCheck5)
-                categoryModel.field6 = setField(binding.categoryCheck6Title, binding.spinnerCheck6)
-                categoryModel.field7 = setField(binding.categoryCheck7Title, binding.spinnerCheck7)
+                categoryModel.field1 = binding?.let {setField(it.categoryCheck1Title, it.spinnerCheck1)}
+                categoryModel.field2 = binding?.let {setField(it.categoryCheck2Title, it.spinnerCheck2)}
+                categoryModel.field3 = binding?.let {setField(it.categoryCheck3Title, it.spinnerCheck3)}
+                categoryModel.field4 = binding?.let {setField(it.categoryCheck4Title, it.spinnerCheck4)}
+                categoryModel.field5 = binding?.let {setField(it.categoryCheck5Title, it.spinnerCheck5)}
+                categoryModel.field6 = binding?.let {setField(it.categoryCheck6Title, it.spinnerCheck6)}
+                categoryModel.field7 = binding?.let {setField(it.categoryCheck7Title, it.spinnerCheck7)}
 
                 categoryViewModel.addCategory("Categories", categoryModel)
             } else {

@@ -7,17 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import com.example.notex.R
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notex.Independents.helper.toast
 import com.example.notex.Independents.replaceFragments
-import com.example.notex.adapters.NoteAdapter
 import com.example.notex.adapters.SpecialNoteAdapter
 import com.example.notex.data.models.Category
-import com.example.notex.data.models.Note
 import com.example.notex.data.models.SpecialNoteModel
 import com.example.notex.databinding.FragmentHomeBinding
 import com.example.notex.viewmodels.CategoryViewModel
@@ -32,7 +29,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         get() = FirebaseCrashlytics.getInstance()
 
     private var _binding:FragmentHomeBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
 
     private val categoryViewModel:CategoryViewModel by viewModels()
     private val specialNoteViewModel:SpecialNoteViewModel by viewModels()
@@ -55,10 +52,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        nav = replaceFragments()
 
         var categories = mutableListOf<Category>()
         var options = mutableListOf<String>()
-
 
         categoryViewModel.getCategories("Categories")
 
@@ -81,7 +78,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
                 val adapter = ArrayAdapter(requireContext(), R.layout.use_spinner_item, options)
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                binding.searchCategory.adapter = adapter
+                binding?.searchCategory?.adapter = adapter
 
             } catch (e: Exception) {
                 crashlytics.recordException(e)
@@ -91,7 +88,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         var previousSelectedCategory: String? = null
 
-        binding.searchCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding?.searchCategory?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 val selectedCategory = options[position]
 
@@ -126,15 +123,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
         })
 
-        nav = replaceFragments()
-
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.fabAddNote.setOnClickListener {
+        binding?.fabAddNote?.setOnClickListener {
             categoryViewModel.categoryResult.observe(viewLifecycleOwner, { result ->
                 try {
                     var bundle = Bundle()
@@ -154,11 +149,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun setUpRecyclerView(){
         specialNoteAdapter = SpecialNoteAdapter()
 
-        binding.recycleView.apply {
-            layoutManager = StaggeredGridLayoutManager(2,
-                StaggeredGridLayoutManager.VERTICAL)
-            setHasFixedSize(true)
-            adapter = specialNoteAdapter
+        binding?.let {
+            it.recycleView.apply {
+                layoutManager = StaggeredGridLayoutManager(
+                    2,
+                    StaggeredGridLayoutManager.VERTICAL
+                )
+                setHasFixedSize(true)
+                adapter = specialNoteAdapter
+            }
         }
 
         activity?.let {
@@ -175,11 +174,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun updateUI(note: List<SpecialNoteModel>) {
         if (note.isNotEmpty()) {
-            binding.cardView.visibility = View.GONE
-            binding.recycleView.visibility = View.VISIBLE
+            binding?.cardView?.visibility = View.GONE
+            binding?.recycleView?.visibility = View.VISIBLE
         } else {
-            binding.cardView.visibility = View.VISIBLE
-            binding.recycleView.visibility = View.GONE
+            binding?.cardView?.visibility = View.VISIBLE
+            binding?.recycleView?.visibility = View.GONE
         }
     }
 

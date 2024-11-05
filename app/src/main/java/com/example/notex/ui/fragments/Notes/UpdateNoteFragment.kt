@@ -9,7 +9,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
@@ -20,9 +19,7 @@ import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
 import com.example.notex.data.models.Note
 import com.example.notex.databinding.FragmentUpdateNoteBinding
-import com.example.notex.ui.MainActivity
 import com.example.notex.viewmodels.NoteViewModel
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,7 +33,7 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
 
 
     private var _binding: FragmentUpdateNoteBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
     private lateinit var nav: replaceFragments
 
     private val args: UpdateNoteFragmentArgs by navArgs()
@@ -58,7 +55,7 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
             container,
             false
         )
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -68,13 +65,13 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
 
         currentNote = args.note!!
 
-        binding.etNoteTitleUpdate.setText(currentNote.noteTitle)
-        binding.etNoteBodyUpdate.setText(currentNote.noteBody)
+        binding?.etNoteTitleUpdate?.setText(currentNote.noteTitle)
+        binding?.etNoteBodyUpdate?.setText(currentNote.noteBody)
 
-        binding.fabDone.setOnClickListener{
+        binding?.fabDone?.setOnClickListener{
 
-            val title = binding.etNoteTitleUpdate.text.toString().trim()
-            val body = binding.etNoteBodyUpdate.text.toString().trim()
+            val title = binding?.etNoteTitleUpdate?.text.toString().trim()
+            val body = binding?.etNoteBodyUpdate?.text.toString().trim()
 
             if(title.isNotEmpty())
             {

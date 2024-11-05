@@ -9,20 +9,16 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import com.example.notex.Independents.CostumeDataType
 import com.example.notex.Independents.helper.toast
 import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
 import com.example.notex.data.models.CategoryModel
-import com.example.notex.data.models.ManagedCategoryModel
 import com.example.notex.data.models.SpecialNoteModel
 import com.example.notex.data.models.specialField
 import com.example.notex.databinding.FragmentNewSpeacialNoteBinding
-import com.example.notex.viewmodels.CategoryViewModel
 import com.example.notex.viewmodels.SpecialNoteViewModel
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,7 +30,7 @@ class NewSpeacialNote : Fragment(R.layout.fragment_new_speacial_note) {
         get() = FirebaseCrashlytics.getInstance()
 
     private var _binding:FragmentNewSpeacialNoteBinding?=null
-    private val binding get()= _binding!!
+    private val binding get()= _binding
 
     private val specialNoteViewModel: SpecialNoteViewModel by viewModels()
 
@@ -72,21 +68,21 @@ class NewSpeacialNote : Fragment(R.layout.fragment_new_speacial_note) {
     {
         try {
             val fields = listOf(
-                data?.field1 to binding.specialnoteField1,
-                data?.field2 to binding.specialnoteField2,
-                data?.field3 to binding.specialnoteField3,
-                data?.field4 to binding.specialnoteField4,
-                data?.field5 to binding.specialnoteField5,
-                data?.field6 to binding.specialnoteField6,
-                data?.field7 to binding.specialnoteField7
+                data?.field1 to binding?.specialnoteField1,
+                data?.field2 to binding?.specialnoteField2,
+                data?.field3 to binding?.specialnoteField3,
+                data?.field4 to binding?.specialnoteField4,
+                data?.field5 to binding?.specialnoteField5,
+                data?.field6 to binding?.specialnoteField6,
+                data?.field7 to binding?.specialnoteField7
             )
 
             fields.forEach { (field, editText) ->
                 if (field != null) {
-                    editText.visibility = View.VISIBLE
-                    editText.setHint(field.title)
+                    editText?.visibility = View.VISIBLE
+                    editText?.setHint(field.title)
                 } else {
-                    editText.visibility = View.GONE
+                    editText?.visibility = View.GONE
                 }
             }
 
@@ -102,26 +98,26 @@ class NewSpeacialNote : Fragment(R.layout.fragment_new_speacial_note) {
     private fun updateEditText() {
         try {
             val fields = listOf(
-                data?.field1 to binding.specialnoteField1,
-                data?.field2 to binding.specialnoteField2,
-                data?.field3 to binding.specialnoteField3,
-                data?.field4 to binding.specialnoteField4,
-                data?.field5 to binding.specialnoteField5,
-                data?.field6 to binding.specialnoteField6,
-                data?.field7 to binding.specialnoteField7
+                data?.field1 to binding?.specialnoteField1,
+                data?.field2 to binding?.specialnoteField2,
+                data?.field3 to binding?.specialnoteField3,
+                data?.field4 to binding?.specialnoteField4,
+                data?.field5 to binding?.specialnoteField5,
+                data?.field6 to binding?.specialnoteField6,
+                data?.field7 to binding?.specialnoteField7
             )
 
             fields.forEach { (field, editText) ->
                 when (field?.datatype) {
                     CostumeDataType.Number.toString() -> {
-                        editText.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_SIGNED
+                        editText?.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_SIGNED
                     }
                     CostumeDataType.Amount.toString() -> {
-                        editText.inputType = InputType.TYPE_CLASS_NUMBER or
+                        editText?.inputType = InputType.TYPE_CLASS_NUMBER or
                                 InputType.TYPE_NUMBER_FLAG_DECIMAL or InputType.TYPE_NUMBER_FLAG_SIGNED
                     }
                     else -> {
-                        editText.inputType = InputType.TYPE_CLASS_TEXT
+                        editText?.inputType = InputType.TYPE_CLASS_TEXT
                     }
                 }
             }
@@ -154,15 +150,15 @@ class NewSpeacialNote : Fragment(R.layout.fragment_new_speacial_note) {
 
     private fun saveNote() {
         try {
-            val title = binding.specialnoteTitle
+            val title = binding?.specialnoteTitle
             val fields = listOf(
-                binding.specialnoteField1 to data?.field1,
-                binding.specialnoteField2 to data?.field2,
-                binding.specialnoteField3 to data?.field3,
-                binding.specialnoteField4 to data?.field4,
-                binding.specialnoteField5 to data?.field5,
-                binding.specialnoteField6 to data?.field6,
-                binding.specialnoteField7 to data?.field7
+                binding?.specialnoteField1 to data?.field1,
+                binding?.specialnoteField2 to data?.field2,
+                binding?.specialnoteField3 to data?.field3,
+                binding?.specialnoteField4 to data?.field4,
+                binding?.specialnoteField5 to data?.field5,
+                binding?.specialnoteField6 to data?.field6,
+                binding?.specialnoteField7 to data?.field7
             )
 
             if (data == null) {
@@ -171,19 +167,19 @@ class NewSpeacialNote : Fragment(R.layout.fragment_new_speacial_note) {
                 return
             }
 
-            if (title.text.isBlank()) {
+            if (title?.text.toString().isBlank()) {
                 context?.toast("You must write Title")
                 return
             }
 
             val specialNote = SpecialNoteModel().apply {
-                this.title = title.text.toString()
+                this.title = title?.text.toString()
                 this.categoryTitle = data!!.title
             }
 
             fields.forEachIndexed { index, (editText, field) ->
-                if (editText.visibility == View.VISIBLE && field != null) {
-                    val fieldValue = specialField(editText.text.toString(), field.datatype)
+                if (editText?.visibility == View.VISIBLE && field != null) {
+                    val fieldValue = specialField(editText?.text.toString(), field.datatype)
                     when (index) {
                         0 -> specialNote.specialField1 = fieldValue
                         1 -> specialNote.specialField2 = fieldValue

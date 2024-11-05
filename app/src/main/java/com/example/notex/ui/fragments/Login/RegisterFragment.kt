@@ -7,22 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import android.widget.Toolbar
 import androidx.fragment.app.viewModels
 import com.example.notex.Independents.helper.toast
 import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
-import com.example.notex.data.models.UserModel
-import com.example.notex.data.repositories.AuthorizationRepository
-import com.example.notex.data.repositories.UserRepository
 import com.example.notex.databinding.FragmentRegisterBinding
 import com.example.notex.ui.MainActivity
 import com.example.notex.viewmodels.AuthorizationViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment(R.layout.fragment_register) {
@@ -31,7 +25,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         get() = FirebaseCrashlytics.getInstance()
 
     private var _binding: FragmentRegisterBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
 
     private val authViewModel: AuthorizationViewModel by viewModels()
     private lateinit var replacefrg: replaceFragments
@@ -43,7 +37,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
-        val view = binding.root
+        val view = binding?.root
         return view
     }
 
@@ -52,22 +46,22 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
 
         replacefrg = replaceFragments()
 
-        binding.registerbackbutton.setOnClickListener(){
+        binding?.registerbackbutton?.setOnClickListener(){
             clearInputs()
             replacefrg.replace(this, R.id.action_registerFragment_to_welcomingFragment)
         }
 
-        binding.registerLoginaccounttext.setOnClickListener{
+        binding?.registerLoginaccounttext?.setOnClickListener{
             replacefrg.replace(this, R.id.action_registerFragment_to_loginFragment2)
         }
 
 
 
-        binding.registerRegisterbutton.setOnClickListener {
+        binding?.registerRegisterbutton?.setOnClickListener {
             try {
-                val email = binding.registeremailinput.text.toString()
-                val password = binding.registerpasswordinput.text.toString()
-                val rePassword = binding.registerRepasswordinput.text.toString()
+                val email = binding?.registeremailinput?.text.toString()
+                val password = binding?.registerpasswordinput?.text.toString()
+                val rePassword = binding?.registerRepasswordinput?.text.toString()
 
                 if (email.isNotEmpty() && password.isNotEmpty() && rePassword.isNotEmpty()) {
                     if (password == rePassword) {
@@ -125,9 +119,9 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     }
 
     private fun clearInputs(){
-        binding.registeremailinput.text.clear()
-        binding.registerpasswordinput.text?.clear()
-        binding.registerRepasswordinput.text?.clear()
+        binding?.registeremailinput?.text?.clear()
+        binding?.registerpasswordinput?.text?.clear()
+        binding?.registerRepasswordinput?.text?.clear()
     }
 
     override fun onDestroy() {

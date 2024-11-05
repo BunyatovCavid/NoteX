@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import com.example.notex.Independents.replaceFragments
 import com.example.notex.R
 import com.example.notex.databinding.FragmentForgotPasswordBinding
 import com.example.notex.ui.MainActivity
@@ -23,7 +22,7 @@ class ForgotPasswordFragment : DialogFragment(R.layout.fragment_forgot_password)
         get() = FirebaseCrashlytics.getInstance()
 
     private var _binding: FragmentForgotPasswordBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
 
     private val authViewModel: AuthorizationViewModel by viewModels()
 
@@ -32,34 +31,37 @@ class ForgotPasswordFragment : DialogFragment(R.layout.fragment_forgot_password)
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentForgotPasswordBinding.inflate(inflater, container, false)
-        val view = binding.root
+        val view = binding?.root
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.forgotsendbutton.setOnClickListener{
-            if (!binding.forgotemailinput.text.isNullOrEmpty())
-            {
-                val email =binding.forgotemailinput.text.toString()
+        binding?.forgotsendbutton?.setOnClickListener{
+            binding?.let {
+                if (!it.forgotemailinput.text.isNullOrEmpty()) {
+                    val email = it.forgotemailinput.text.toString()
 
-                try {
-                    authViewModel.resetPassword(email)
-                    binding.forgotemailinput.text.clear()
-                    dismiss()
+                    try {
+                        authViewModel.resetPassword(email)
+                        it.forgotemailinput.text.clear()
+                        dismiss()
 
-                    authViewModel.resetPasswordResult.observe(viewLifecycleOwner, { result ->
-                        Toast.makeText(context, result, Toast.LENGTH_LONG).show()
-                    })
-                } catch (e: Exception) {
-                    crashlytics.recordException(e)
-                    Toast.makeText(context, "An error occurred while resetting the password.", Toast.LENGTH_LONG).show()
+                        authViewModel.resetPasswordResult.observe(viewLifecycleOwner, { result ->
+                            Toast.makeText(context, result, Toast.LENGTH_LONG).show()
+                        })
+                    } catch (e: Exception) {
+                        crashlytics.recordException(e)
+                        Toast.makeText(
+                            context,
+                            "An error occurred while resetting the password.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                } else {
+                    Toast.makeText(context, "Please write Email.", Toast.LENGTH_LONG).show()
                 }
-            }
-            else
-            {
-                Toast.makeText(context, "Please write Email.", Toast.LENGTH_LONG).show()
             }
         }
 

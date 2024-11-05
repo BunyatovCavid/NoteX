@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toolbar
 import androidx.activity.OnBackPressedCallback
 import com.example.notex.Independents.helper.toast
 import com.example.notex.Independents.replaceFragments
@@ -24,7 +23,7 @@ class WelcomingFragment : Fragment(R.layout.fragment_welcoming) {
 
 
     private var _binding: FragmentWelcomingBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
 
     private lateinit var replacefrg: replaceFragments
 
@@ -36,7 +35,7 @@ class WelcomingFragment : Fragment(R.layout.fragment_welcoming) {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentWelcomingBinding.inflate(inflater, container, false)
-        val view = binding.root
+        val view = binding?.root
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -61,7 +60,7 @@ class WelcomingFragment : Fragment(R.layout.fragment_welcoming) {
         replacefrg = replaceFragments()
 
 
-        binding.welcomingLoginButton.setOnClickListener {
+        binding?.welcomingLoginButton?.setOnClickListener {
             try {
                 replacefrg.replace(this, R.id.action_welcomingFragment_to_loginFragment)
             } catch (e: Exception) {
@@ -70,7 +69,7 @@ class WelcomingFragment : Fragment(R.layout.fragment_welcoming) {
             }
         }
 
-        binding.welcomingRegisterButton.setOnClickListener {
+        binding?.welcomingRegisterButton?.setOnClickListener {
             try {
                 replacefrg.replace(this, R.id.action_welcomingFragment_to_registerFragment)
             } catch (e: Exception) {

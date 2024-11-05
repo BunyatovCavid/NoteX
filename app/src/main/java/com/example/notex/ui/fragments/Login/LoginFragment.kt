@@ -7,8 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import android.widget.Toolbar
 import androidx.fragment.app.viewModels
 import com.example.notex.Independents.helper.toast
 import com.example.notex.Independents.replaceFragments
@@ -27,7 +25,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         get() = FirebaseCrashlytics.getInstance()
 
     private var _binding: FragmentLoginBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
 
     private val authViewModel: AuthorizationViewModel by viewModels()
     private lateinit var replacefrg: replaceFragments
@@ -35,10 +33,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-
+    ): View? {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        val view = binding.root
+        val view = binding?.root
         return view
     }
 
@@ -49,19 +46,19 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         replacefrg = replaceFragments()
 
 
-        binding.loginforgotpassText.setOnClickListener(){
+        binding?.loginforgotpassText?.setOnClickListener(){
             val showpopUp = ForgotPasswordFragment()
             fragmentManager?.let { it1 -> showpopUp.show(it1,"Hello") }
         }
 
-        binding.loginbackbutton.setOnClickListener(){
+        binding?.loginbackbutton?.setOnClickListener(){
             clearInputs()
             replacefrg.replace(this, R.id.action_loginFragment_to_welcomingFragment)
         }
 
-        binding.loginLogInbutton.setOnClickListener {
-            val email = binding.loginemailinput.text.toString()
-            val password = binding.loginpasswordinput.text.toString()
+        binding?.loginLogInbutton?.setOnClickListener {
+            val email = binding?.loginemailinput?.text.toString()
+            val password = binding?.loginpasswordinput?.text.toString()
 
             if (email.isNotEmpty() && password.isNotEmpty() && password.length>=6) {
                 try {
@@ -87,7 +84,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
 
 
-        binding.logincreateaccounttext.setOnClickListener() {
+        binding?.logincreateaccounttext?.setOnClickListener() {
             clearInputs()
             replacefrg.replace(this, R.id.action_loginFragment_to_registerFragment2)
         }
@@ -115,8 +112,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     }
 
     private fun clearInputs(){
-        binding.loginemailinput.text.clear()
-        binding.loginpasswordinput.text?.clear()
+        binding?.loginemailinput?.text?.clear()
+        binding?.loginpasswordinput?.text?.clear()
     }
 
     override fun onDestroy() {
